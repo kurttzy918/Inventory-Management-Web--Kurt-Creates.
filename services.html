@@ -288,7 +288,7 @@
                 transform: translateY(0);
             }
         }
-
+        
         .hero-content {
             display: flex;
             align-items: center;
@@ -300,12 +300,20 @@
 
         .hero-text {
             max-width: 600px;
-            text-align: left;
+            text-align: center;
+        
         }
-
+        .hero-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            color: white;
+        }
         .services-hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             font-family: 'Poppins', sans-serif;
             font-weight: 900;
             line-height: 1.1;
@@ -313,6 +321,7 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: white;
         }
 
         .services-hero p {
@@ -364,10 +373,10 @@
         }
 
         .hero-image img {
-            width: 250px;
+            width: 300px;
             max-width: 100%;
             height: auto;
-            border-radius: 350px;
+            border-radius: 100px;
             object-fit: cover;
             border: 0px solid var(--primary);
             box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
@@ -396,7 +405,7 @@
             align-items: center;
             justify-content: center;
             margin-top: 10px;
-            font-size: 18px;
+            font-size: 20px;
             color: #0A66C2;
             text-decoration: none;
             transition: transform 0.3s ease, opacity 0.3s ease;
@@ -1680,7 +1689,55 @@ input, textarea, button, select {
         transform: translateX(-50%);
     }
 }
+/* Carousel container */
+.job-carousel {
+    height: 28px; /* controls visible area */
+    overflow: hidden;
+    position: relative;
+}
 
+/* Animated wrapper */
+.job-fade {
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 6s ease-in-out infinite;
+}
+
+/* Job title style */
+.job-fade span {
+    height: 28px;
+    line-height: 28px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-size: 1rem;
+
+    /* 👇 CHANGE COLOR HERE */
+    color: #efefef; /* elegant purple */
+}
+
+/* Fade up animation */
+@keyframes fadeUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    30% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-28px);
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(-28px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-56px);
+        opacity: 0;
+    }
+}
     </style>
 </head>
 <body>
@@ -1738,7 +1795,8 @@ input, textarea, button, select {
         <div class="container hero-content">
             <!-- Left Text -->
             <div class="hero-text">
-                <h1>Comprehensive Inventory Management Solutions</h1>
+                <h1>Comprehensive Inventory</h1>
+                <h2>Management Solutions</h2>
                 <p>
                     Optimize your stock control, reduce costs, and streamline operations with our advanced inventory management services designed for businesses of all sizes.
                 </p>
@@ -1760,16 +1818,24 @@ input, textarea, button, select {
                         </div>
                     </div>
                 </div>
-                
-                <img src="me.png" alt="My Photo">
-                <span class="job-title">DATA ENTRY OPERATOR | SENIOR STOCK CONTROLLER</span>
-                <a href="https://www.linkedin.com/in/courteny-madronero-16556b363/" 
-                   class="linkedin-link" 
-                   target="_blank" 
-                   aria-label="LinkedIn Profile">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
+                <div class="profile-header"></div>
+                <img src="me.png" alt="My Photo" class="profile-photo">
+
+                <!-- Infinite Job Title Carousel -->
+    <div class="job-carousel">
+    <div class="job-fade">
+        <span>DATA ENTRY OPERATOR</span>
+        <span>SENIOR STOCK CONTROLLER</span>
+        <span>DATA ENTRY OPERATOR</span> <!-- duplicate for loop -->
+    </div>
+</div>
+    <a href="https://www.linkedin.com/in/courteny-madronero-16556b363/"
+       class="linkedin-link"
+       target="_blank"
+       aria-label="LinkedIn Profile">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
+</div>
         </div>
     </section>
 
@@ -1891,7 +1957,7 @@ input, textarea, button, select {
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>IMS Services</h3>
-                    <p>Providing cutting-edge inventory management and stock control solutions for businesses worldwide since 2025.</p>
+                    <p>Helps your Business especially for Small and Medium Enterprises to automate your Inventory ,Sales Tracking and Data Insights with a Budget and User-Friendly Application.</p>
                 </div>
                 
                 <div class="footer-column">

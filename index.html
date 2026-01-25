@@ -1696,7 +1696,7 @@
         
         .footer-bottom {
             border-top: 1px solid var(--glass-border);
-            padding-top: 40px;
+            padding-top: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -2642,6 +2642,196 @@
         transform: translateX(-50%);
     }
 }
+.section-subtitle-carousel {
+    margin-top: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.subtitle-track {
+    display: inline-flex;
+    gap: 40px;
+    animation: subtitleScroll 18s linear infinite;
+}
+
+.subtitle-track span {
+    font-size: 1rem;
+    color: #9ca3af;
+    letter-spacing: 0.3px;
+}
+
+/* Animation */
+@keyframes subtitleScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover (optional) */
+.section-subtitle-carousel:hover .subtitle-track {
+    animation-play-state: paused;
+}
+.section-subtitle-carousel {
+    height: 24px;                 /* visible line */
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.subtitle-fade {
+    display: flex;
+    flex-direction: column;
+    animation: subtitleFadeUp 6s ease-in-out infinite;
+}
+
+.subtitle-fade span {
+    height: 24px;
+    line-height: 24px;
+    font-size: 1rem;
+    color: #9ca3af;
+    letter-spacing: 0.3px;
+}
+
+/* Slide up + fade */
+@keyframes subtitleFadeUp {
+    0%, 25% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    45%, 70% {
+        transform: translateY(-24px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-48px);
+        opacity: 0;
+    }
+}
+.subtitle-fade span {
+    filter: blur(0);
+}
+
+@keyframes subtitleFadeUp {
+    0%, 25% {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0);
+    }
+    45%, 70% {
+        transform: translateY(-24px);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: translateY(-48px);
+        opacity: 0;
+        filter: blur(1px);
+    }
+}
+.hours-carousel {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.hours-track {
+    display: inline-flex;
+    gap: 40px;
+    animation: hoursScroll 12s linear infinite;
+}
+
+.hours-track p {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 0.95rem;
+    color: #9ca3af;
+}
+
+/* Clock icon highlight */
+.hours-track i {
+    color: #22d3ee;
+}
+
+/* Animation */
+@keyframes hoursScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover (optional) */
+.hours-carousel:hover .hours-track {
+    animation-play-state: paused;
+}
+.hours-carousel {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+}
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #d1d5db;
+    font-size: 0.95rem;
+}
+
+/* Carousel wrapper */
+.hours-carousel {
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Moving track */
+.hours-track {
+    display: inline-flex;
+    gap: 40px;
+    animation: hoursScroll 14s linear infinite;
+}
+
+/* Match <p> style */
+.hours-track p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    white-space: nowrap;
+    color: #d1d5db;
+    font-size: 0.95rem;
+}
+
+/* Clock icon accent */
+.hours-track i {
+    color: var(--secondary);
+}
+
+/* Animation */
+@keyframes hoursScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover (nice touch) */
+.hours-carousel:hover .hours-track {
+    animation-play-state: paused;
+}
 
     </style>
 </head>
@@ -2770,9 +2960,12 @@
             <div class="section-header">
                 <div class="section-tag">CORE SERVICES</div>
                 <h2 class="section-title">Our <span class="highlight">Specialized</span> Solutions</h2>
-                <p class="section-subtitle">Automate and optimize your business operations with our cutting-edge inventory management solutions</p>
-            </div>
-            
+                <div class="section-subtitle-carousel">
+                <div class="subtitle-track">
+        <span>Automate and optimize your business operations with our cutting-edge inventory management solutions</span>
+        <span>Automate and optimize your business operations with our cutting-edge inventory management solutions</span>
+    </div>
+</div>
             <div class="parallax-grid">
                 <!-- Data Insights Card -->
                 <div class="parallax-card">
@@ -2861,9 +3054,12 @@
             <div class="section-header">
                 <div class="section-tag">VIDEO DEMOS</div>
                 <h2 class="section-title">See Our <span class="highlight">System</span> In Action</h2>
-                <p class="section-subtitle">Watch our tutorial videos and demos to see how our system works</p>
-            </div>
-            
+                <div class="section-subtitle-carousel">
+                <div class="subtitle-fade">
+        <span>Watch Our Video Guide Clip to Learn More</span>
+        <span>Automated Inventory Application</span><!-- duplicate for loop -->
+    </div>
+</div>
             <!-- Main Video Player -->
             <div class="main-video-container">
                 <div class="video-demo-container" id="mainVideoContainer">
@@ -2948,58 +3144,58 @@
                         <span class="logo-part-1">I</span><span class="logo-part-2">MS</span>
                     </a>
                     <p class="footer-description">
-                        Inventory Management System helps your business accurate and automated.
+                        Helps your Business especially for Small and Medium Enterprises to automate your Inventory ,Sales Tracking and Data Insights with a Budget and User-Friendly Application.
                     </p>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h3 class="footer-title">Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
-                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                        <li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3 class="footer-title">Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Data Insights & Analytics</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Inventory Management</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Process Automation</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Custom Development</a></li>
-                        
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3 class="footer-title">Contact Info</h3>
-                    <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> Jeddah, Saudi Arabia</p>
-                        <p><i class="fas fa-phone"></i> +966-56-922-6173</p>
-                        <p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p>
-                        <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
-                    </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Get Quote</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-col">
+                <h3 class="footer-title">Our Services</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Data Insights & Analytics</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Inventory Management</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Process Automation</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Custom Development</a></li>
+                </ul>
+            </div>
+                
+                <div class="footer-col">
+                <h3 class="footer-title">Contact Info</h3>
+
+    <div class="contact-info">
+        <p><i class="fas fa-map-marker-alt"></i> Jeddah, Saudi Arabia</p>
+        <p><i class="fas fa-phone"></i> +966-56-922-6173</p>
+        <p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p>
+
+        <!-- Business Hours Carousel -->
+        <div class="hours-carousel">
+            <div class="hours-track">
+                <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
+                <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+    </div>
+            <!-- Footer Bottom -->
             <div class="footer-bottom">
-                <p class="copyright">&copy; 2025 Inventory Management System. All rights reserved. Created with <i class="fas fa-heart" style="color: var(--secondary);"></i> by Courteny</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Cookies Policy</a>
-                    <a href="#">Sitemap</a>
-                </div>
+                <p>&copy; 2025 IMS Services. All rights reserved. | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: var(--primary); text-decoration: none;">Terms of Service</a></p>
             </div>
         </div>
     </footer>

@@ -2610,14 +2610,16 @@
     /* ===== LOGO TEXT INFINITE CAROUSEL ===== */
 .logo-text-carousel {
     overflow: hidden;
-    width: 260px;
+    width: 200px;
     position: relative;
+    margin-left: 10px;
+    height: 40px;
 }
 
 .logo-text-track {
     display: flex;
     align-items: center;
-    gap: 40px;
+    height: 100%;
     width: max-content;
     animation: logoTextScroll 12s linear infinite;
 }
@@ -2631,8 +2633,23 @@
     align-items: center;
     gap: 8px;
     white-space: nowrap;
+    flex-shrink: 0;
+    padding-right: 40px;
 }
-
+.logo-text-item .logo-part-1 {
+    color: var(--primary);
+    font-size: 28px;
+    font-weight: 900;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.5px;
+}
+.logo-text-item .logo-part-2 {
+    color: var(--secondary);
+    font-size: 28px;
+    font-weight: 900;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.5px;
+}
 /* Infinite scroll animation */
 @keyframes logoTextScroll {
     0% {
@@ -2640,6 +2657,18 @@
     }
     100% {
         transform: translateX(-50%);
+    }
+}
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .logo-text-carousel {
+        width: 160px;
+        height: 35px;
+    }
+    
+    .logo-text-item .logo-part-1,
+    .logo-text-item .logo-part-2 {
+        font-size: 24px;
     }
 }
 .section-subtitle-carousel {

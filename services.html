@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Add this right after your existing viewport meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Services - IMS | Inventory Management Solutions</title>
@@ -1738,6 +1744,81 @@ input, textarea, button, select {
         opacity: 0;
     }
 }
+/* ===== CRITICAL MOBILE FIXES ===== */
+
+/* Fix for Safari 100vh issue */
+@supports (-webkit-touch-callout: none) {
+    .video-hero,
+    .loading-screen {
+        height: -webkit-fill-available;
+    }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Fix for mobile tap highlight */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure proper touch scrolling */
+.scrollable {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+}
+
+/* Fix for mobile address bars */
+@media (max-height: 700px) and (orientation: landscape) {
+    .video-hero {
+        padding-top: 40px;
+    }
+    
+    .hero-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .stat {
+        flex: 0 0 48%;
+        margin-bottom: 10px;
+    }
+}
+
+/* iOS momentum scrolling */
+.element {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbars but keep functionality */
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+    /* Reduce GPU layers */
+    .parallax-card,
+    .video-thumbnail,
+    .carousel-item {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+    
+    /* Optimize animations */
+    .loading-image {
+        animation: floatMobile 4s ease-in-out infinite;
+    }
+}
     </style>
 </head>
 <body>
@@ -2229,104 +2310,347 @@ input, textarea, button, select {
             });
         }
         // Add to existing JavaScript section
-
-// Mobile-specific optimizations
-function initMobileOptimizations() {
-    // Disable hover effects on touch devices
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-        document.body.classList.add('touch-device');
-        
-        // Add tap effects for touch devices
-        document.querySelectorAll('.btn-primary, .btn-secondary, .nav-link, .parallax-card').forEach(element => {
-            element.addEventListener('touchstart', function() {
-                this.classList.add('touch-active');
-            }, { passive: true });
-            
-            element.addEventListener('touchend', function() {
-                this.classList.remove('touch-active');
-            }, { passive: true });
-        });
-    }
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // ===== MOBILE DETECTION =====
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
     
-    // Prevent double-tap zoom on mobile
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
-        }
-        lastTouchEnd = now;
-    }, false);
-    
-    // Handle iOS viewport height issue
+    // ===== FIX FOR iOS 100vh ISSUE =====
     function setVH() {
-        let vh = window.innerHeight * 0.01;
+        const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     }
     
-    setVH();
-    window.addEventListener('resize', setVH);
-    window.addEventListener('orientationchange', setVH);
+    if (isIOS || isAndroid) {
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', setVH);
+    }
     
-    // Improve carousel touch scrolling
-    const carouselContainer = document.querySelector('.carousel-container');
-    if (carouselContainer && 'ontouchstart' in window) {
-        let isScrolling;
-        carouselContainer.addEventListener('scroll', function() {
-            window.clearTimeout(isScrolling);
-            isScrolling = setTimeout(function() {
-                // Snap to nearest card
-                const scrollLeft = carouselContainer.scrollLeft;
-                const itemWidth = document.querySelector('.carousel-item').offsetWidth + 20; // 20px gap
-                const nearestItem = Math.round(scrollLeft / itemWidth);
-                carouselContainer.scrollTo({
-                    left: nearestItem * itemWidth,
-                    behavior: 'smooth'
-                });
-            }, 150);
+    // ===== MOBILE LOADING OPTIMIZATION =====
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        // Faster loading on mobile
+        const loadingTime = isMobile ? 1200 : 2000;
+        
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                
+                // Re-enable scrolling after loading
+                document.body.style.overflow = 'auto';
+                document.body.style.position = 'relative';
+                document.documentElement.style.overflow = 'auto';
+            }, 300);
+        }, loadingTime);
+    }
+    
+    // ===== DISABLE ELASTIC SCROLLING ON IOS =====
+    if (isIOS) {
+        document.body.addEventListener('touchmove', function(e) {
+            // Allow scrolling only on scrollable elements
+            if (!e.target.closest('.scrollable')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+    
+    // ===== MOBILE NAVIGATION =====
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+            
+            // Toggle body scroll when menu is open
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close menu on link click
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    }
+    
+    // ===== TOUCH-FRIENDLY VIDEO GALLERY =====
+    const videoGallery = document.querySelector('.video-gallery-wrapper');
+    if (videoGallery && isMobile) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        videoGallery.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - videoGallery.offsetLeft;
+            scrollLeft = videoGallery.scrollLeft;
+            videoGallery.style.scrollSnapType = 'none';
+        }, { passive: true });
+        
+        videoGallery.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - videoGallery.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            videoGallery.scrollLeft = scrollLeft - walk;
+        }, { passive: false });
+        
+        videoGallery.addEventListener('touchend', () => {
+            isDown = false;
+            setTimeout(() => {
+                videoGallery.style.scrollSnapType = 'x mandatory';
+            }, 100);
         }, { passive: true });
     }
-}
-
-// Add CSS for touch active state
-const touchCSS = `
-.touch-device .touch-active {
-    opacity: 0.8;
-    transform: scale(0.98) !important;
-    transition: transform 0.1s ease !important;
-}
-
-/* Adjust video hero height for mobile */
-.video-hero {
-    min-height: calc(var(--vh, 1vh) * 100);
-}
-
-/* Mobile-specific loading animation */
-@media (max-width: 768px) {
-    @keyframes mobilePulse {
-        0%, 100% { opacity: 0.8; }
-        50% { opacity: 1; }
+    
+    // ===== MOBILE CAROUSEL TOUCH SUPPORT =====
+    const carouselTrack = document.getElementById('carouselTrack');
+    if (carouselTrack && isMobile) {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        carouselTrack.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - carouselTrack.offsetLeft;
+            scrollLeft = carouselTrack.scrollLeft;
+            carouselTrack.style.animationPlayState = 'paused';
+        }, { passive: true });
+        
+        carouselTrack.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - carouselTrack.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            carouselTrack.scrollLeft = scrollLeft - walk;
+        }, { passive: false });
+        
+        carouselTrack.addEventListener('touchend', () => {
+            isDown = false;
+            setTimeout(() => {
+                carouselTrack.style.animationPlayState = 'running';
+            }, 2000);
+        }, { passive: true });
     }
     
-    .loading-image {
-        animation: 
-            float 3s ease-in-out infinite,
-            mobilePulse 1.5s infinite !important;
+    // ===== PREVENT DOUBLE-TAP ZOOM ON MOBILE =====
+    if (isMobile) {
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+    }
+    
+    // ===== MOBILE VIDEO AUTOPLAY =====
+    const bgVideo = document.getElementById('bgVideo');
+    if (bgVideo && isMobile) {
+        // Ensure video plays inline on mobile
+        bgVideo.setAttribute('playsinline', '');
+        bgVideo.setAttribute('muted', '');
+        bgVideo.setAttribute('autoplay', '');
+        
+        // Handle video play promise
+        const playPromise = bgVideo.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(() => {
+                // Auto-play was prevented
+                bgVideo.controls = false;
+            });
+        }
+    }
+    
+    // ===== TOUCH FEEDBACK FOR BUTTONS =====
+    if (isMobile) {
+        const interactiveElements = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-link, .video-thumbnail, .parallax-card');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('touchstart', () => {
+                el.style.transform = 'scale(0.98)';
+                el.style.transition = 'transform 0.1s ease';
+            });
+            
+            el.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    el.style.transform = 'scale(1)';
+                }, 150);
+            });
+        });
+    }
+    
+    // ===== FIX FOR MOBILE KEYBOARD =====
+    if (isMobile) {
+        const inputs = document.querySelectorAll('input, textarea');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+            });
+        });
+    }
+    
+    // ===== PERFORMANCE OPTIMIZATIONS FOR MOBILE =====
+    if (isMobile) {
+        // Reduce animation complexity
+        document.querySelectorAll('.floating-element').forEach(el => {
+            el.style.animationDuration = '60s';
+        });
+        
+        // Disable heavy effects on scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            // Throttle scroll events
+            if (!scrollTimeout) {
+                scrollTimeout = setTimeout(() => {
+                    scrollTimeout = null;
+                }, 100);
+            }
+        });
+    }
+    
+    // ===== ANDROID-SPECIFIC FIXES =====
+    if (isAndroid) {
+        // Fix for Android Chrome address bar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 1);
+            }, 100);
+        });
+        
+        // Fix for Android keyboard
+        window.addEventListener('resize', () => {
+            if (document.activeElement.tagName === 'INPUT' || 
+                document.activeElement.tagName === 'TEXTAREA') {
+                window.scrollTo(0, 0);
+            }
+        });
+    }
+    
+    // ===== INITIALIZE OTHER COMPONENTS =====
+    createFloatingElements();
+    initCarousel();
+    initAnimations();
+    initScrollEffects();
+    initPageTransitions();
+    initArrowNavigation();
+    initVideoGallery();
+    
+    // ===== MOBILE LOGO ADJUSTMENT =====
+    if (isMobile && window.innerWidth <= 768) {
+        const logoCarousel = document.querySelector('.logo-text-carousel');
+        const logoText = document.querySelector('.logo-text');
+        
+        if (logoCarousel && logoText) {
+            // Hide carousel, show simple text on mobile
+            logoCarousel.style.display = 'none';
+            logoText.style.display = 'flex';
+        }
+    }
+});
+
+// ===== EXISTING FUNCTIONS (Keep your existing ones but add mobile checks) =====
+function createFloatingElements() {
+    const container = document.getElementById('floatingElements');
+    if (!container) return;
+    
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Fewer elements on mobile for performance
+    const elementCount = isMobile ? 4 : 8;
+    
+    for (let i = 0; i < elementCount; i++) {
+        const element = document.createElement('div');
+        element.classList.add('floating-element');
+        
+        const size = isMobile ? Math.random() * 200 + 50 : Math.random() * 400 + 100;
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const delay = Math.random() * 20;
+        const duration = isMobile ? Math.random() * 40 + 40 : Math.random() * 30 + 30;
+        
+        element.style.width = `${size}px`;
+        element.style.height = `${size}px`;
+        element.style.left = `${left}%`;
+        element.style.top = `${top}%`;
+        element.style.animationDelay = `${delay}s`;
+        element.style.animationDuration = `${duration}s`;
+        
+        if (Math.random() > 0.5) {
+            element.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+        }
+        
+        container.appendChild(element);
     }
 }
-`;
 
-// Add the CSS to document
-const styleSheet = document.createElement('style');
-styleSheet.textContent = touchCSS;
-document.head.appendChild(styleSheet);
-
-// Call mobile optimizations after DOM loads
-document.addEventListener('DOMContentLoaded', () => {
-    // ... existing code ...
-    initMobileOptimizations(); // Add this line
-    // ... rest of existing code ...
+// ===== HANDLE ORIENTATION CHANGES =====
+let orientationChangeTimeout;
+window.addEventListener('orientationchange', () => {
+    clearTimeout(orientationChangeTimeout);
+    
+    orientationChangeTimeout = setTimeout(() => {
+        // Force redraw for iOS
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            const originalHeight = window.innerHeight;
+            document.body.style.height = `${originalHeight + 1}px`;
+            
+            setTimeout(() => {
+                document.body.style.height = 'auto';
+            }, 100);
+        }
+        
+        // Recalculate VH
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // Adjust video hero height
+        const videoHero = document.querySelector('.video-hero');
+        if (videoHero) {
+            videoHero.style.height = `calc(var(--vh, 1vh) * 100)`;
+        }
+    }, 300);
 });
+
+// ===== PREVENT CONTEXT MENU ON MOBILE LONG PRESS =====
+document.addEventListener('contextmenu', (e) => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+// Keep all your other existing functions (initCarousel, initAnimations, etc.)
+// They should work with the mobile optimizations above
     </script>
 </body>
 </html>

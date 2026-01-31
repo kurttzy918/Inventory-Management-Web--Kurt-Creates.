@@ -45,6 +45,10 @@
             --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
             --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
             --vh: 1vh; /* For iOS fix */
+        :root {
+    --nav-height: 100px;
+}
+
         }
 
         /* ===== RESET & BASE ===== */
@@ -442,12 +446,13 @@
         /* ===== VIDEO HERO ===== */
         .video-hero {
             height: 100vh;
-            min-height: -webkit-fill-available; /* iOS fix */
+            min-height: 100svh; /* modern mobile fix */
             position: relative;
             overflow: hidden;
             display: flex;
             align-items: center;
-            padding-top: 250px; /* pushes content below navbar */
+            padding-top: calc(var(--nav-height) + env(safe-area-inset-top));
+        
         }
         
         .video-container {
@@ -506,14 +511,22 @@
             position: relative;
             z-index: 2;
             margin-top: 60px;
+            margin-inline: auto;
+            padding-inline: 1rem;
         }
         
         .video-title {
-            font-size: 3.5rem;
+            --base-size: 4rem;
+            --scale-factor: 1;
+            font-size: calc(var(--base-size) * var(--scale-factor));
             font-weight: 700;
             margin-bottom: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+            word-break: break-word;
             text-transform: uppercase;
             font-family: 'Oswald', sans-serif;
+            transition: font-size 0.3s ease;
             
             /* AUTO-ADJUST SIZE */
     font-size: clamp(1.8rem, 6vw, 4rem);
@@ -2861,6 +2874,36 @@ window.addEventListener("load", () => {
     document.querySelector(".hero-stats")?.classList.add("animate");
     document.querySelector(".hero-buttons")?.classList.add("animate");
 });
+function setNavHeight() {
+    const nav = document.getElementById('navbar');
+    if (!nav) return;
+    document.documentElement.style.setProperty(
+        '--nav-height',
+        nav.offsetHeight + 'px'
+    );
+}
+
+window.addEventListener('load', setNavHeight);
+window.addEventListener('resize', setNavHeight);
+function autoResizeTitle() {
+    const title = document.querySelector('.video-title');
+    if (!title) return;
+
+    const textLength = title.innerText.length;
+    let scale = 1;
+
+    if (window.innerWidth <= 768) {
+        if (textLength > 25) scale = 0.85;
+        if (textLength > 35) scale = 0.75;
+        if (textLength > 45) scale = 0.65;
+    }
+
+    title.style.setProperty('--scale-factor', scale);
+}
+
+window.addEventListener('load', autoResizeTitle);
+window.addEventListener('resize', autoResizeTitle);
+window.addEventListener('orientationchange', autoResizeTitle);
     </script>
 </body>
 </html>

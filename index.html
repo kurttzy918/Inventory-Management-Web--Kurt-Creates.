@@ -510,11 +510,22 @@
         
         .video-title {
             font-size: 3.5rem;
-            font-weight: 900;
+            font-weight: 700;
             margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.1;
-            text-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            font-family: 'Oswald', sans-serif;
+            
+            /* AUTO-ADJUST SIZE */
+    font-size: clamp(1.8rem, 6vw, 4rem);
+
+    line-height: 1.05;
+    letter-spacing: 0.12em;
+    text-align: center;
+
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+
+    text-shadow: 0 5px 30px rgba(0,0,0,0.7);
         }
         
         .highlight {

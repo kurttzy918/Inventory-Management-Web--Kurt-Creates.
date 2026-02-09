@@ -94,6 +94,8 @@
             justify-content: center;
             align-items: center;
             transition: opacity 0.8s var(--transition-smooth);
+            inset: 0;
+            overflow: hidden;
         }
 
         .loading-content {
@@ -125,6 +127,7 @@
             margin-bottom: 1.5rem;
             box-shadow: 0 0 0px var(--accent-glow);
             animation: float 3s ease-in-out infinite;
+            
         }
 
         .loading-text {
@@ -2220,6 +2223,7 @@ button:focus, a:focus {
     50% { transform: translateY(-15px); }
     100% { transform: translateY(0); }
 }
+
     </style>
 </head>
 <body>
@@ -2234,15 +2238,20 @@ button:focus, a:focus {
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
-        <div class="loading-content">
-            <div class="loading-image-container">
-                <img src="gtaversion.png" alt="IMS Services Logo" class="loading-image">
-                <div class="loading-text">
-                    <span class="loading-text-part1">IMS</span>
-                    <span class="loading-text-part2">Services</span>
-                    <span class="loading-text-part3">Created By Courteny</span>
-                </div>
-            </div>
+  <div class="loading-bg">
+    <img src="gtaversion.png" alt="Loading" />
+  </div>
+
+  <div class="loading-overlay"></div>
+
+  <div class="loading-content">
+    <div class="loading-text">
+      <div class="loading-text-part1">KURT</div>
+      <div class="loading-text-part2">CREATES</div>
+      <div class="loading-text-part3">LOADING EXPERIENCE</div>
+    </div>
+  </div>
+</div>
             <div class="loading-progress-mobile">
                 <div style="width:100%;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
                     <div style="width:0%;height:100%;background:var(--gradient-primary);animation:loadingProgress 1.5s ease-in-out forwards;"></div>

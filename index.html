@@ -119,13 +119,11 @@
         }
 
         .loading-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
             margin-bottom: 1.5rem;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 30px var(--accent-glow);
+            box-shadow: 0 0 0px var(--accent-glow);
             animation: float 3s ease-in-out infinite;
         }
 
@@ -2190,6 +2188,38 @@ button:focus, a:focus {
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
+#offlineOverlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #0a0a0a, #000);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+#offlineOverlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.offline-content {
+    text-align: center;
+}
+
+.offline-img {
+    width: 150px;
+    animation: floatOffline 3s ease-in-out infinite;
+}
+
+@keyframes floatOffline {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
     </style>
 </head>
 <body>
@@ -2206,7 +2236,7 @@ button:focus, a:focus {
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
             <div class="loading-image-container">
-                <img src="1.png" alt="IMS Services Logo" class="loading-image">
+                <img src="gtaversion.png" alt="IMS Services Logo" class="loading-image">
                 <div class="loading-text">
                     <span class="loading-text-part1">IMS</span>
                     <span class="loading-text-part2">Services</span>
@@ -2997,7 +3027,7 @@ const offlineOverlay = document.getElementById('offlineOverlay');
 
     // Initial check
     updateOnlineStatus();
-
+src="offline.js"
 </script>
 </body>
 </html>

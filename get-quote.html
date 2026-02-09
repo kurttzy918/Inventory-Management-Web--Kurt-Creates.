@@ -59,155 +59,6 @@
             to { opacity: 1; }
         }
 
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark-bg);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.8s var(--transition-smooth);
-        }
-
-        .loading-content {
-            text-align: center;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: loadingFadeIn 0.6s var(--transition-smooth) 0.3s forwards;
-        }
-
-        @keyframes loadingFadeIn {
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .loading-logo {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 2rem;
-            display: inline-block;
-        }
-
-        .loading-logo span:first-child {
-            color: var(--primary);
-            text-shadow: 0 0 30px var(--accent-glow);
-        }
-
-        .loading-logo span:last-child {
-            color: var(--secondary);
-            text-shadow: 0 0 30px var(--accent-glow-secondary);
-        }
-
-        .loading-bar {
-            width: 300px;
-            height: 4px;
-            background: var(--dark-surface);
-            border-radius: 2px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .loading-progress {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0%;
-            background: var(--gradient-primary);
-            animation: loadingProgress 1.8s var(--transition-smooth) forwards;
-        }
-
-        @keyframes loadingProgress {
-            0% { width: 0%; }
-            70% { width: 85%; }
-            100% { width: 100%; }
-        }
-         /* Updated Loading Screen with Photo */
-.loading-image-container {
-    text-align: center;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: loadingFadeIn 0.6s var(--transition-smooth) 0.3s forwards;
-}
-
-.loading-image {
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
-    object-fit: cover;
-    margin-bottom: 2rem;
-    border: 0px solid var(--primary);
-    box-shadow: 
-        0 0 50px var(--accent-glow),
-        0 0 100px rgba(0, 217, 255, 0.3),
-        0 0 150px rgba(0, 217, 255, 0.1);
-    animation: 
-        float 3s ease-in-out infinite,
-        pulse 2s infinite;
-    transition: all 0.4s var(--transition-smooth);
-}
-
-.loading-text {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-top: 1rem;
-    font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-}
-
-.loading-text-part1 {
-    color: var(--primary);
-    font-size: 3rem;
-    font-weight: 900;
-    font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-    text-shadow: 0 0 30px var(--accent-glow);
-    letter-spacing: 1px; /* Adjusted for tall font */
-}
-
-.loading-text-part2 {
-    color: var(--secondary);
-    font-size: 3rem;
-    font-weight: 900;
-    font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-    text-shadow: 0 0 30px var(--accent-glow-secondary);
-    letter-spacing: 1px; /* Adjusted for tall font */
-}
-
-.loading-text-part3 {
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-    font-weight: 400;
-    font-family: 'Inter', sans-serif;
-    margin-top: 10px;
-    letter-spacing: 2px;
-}
-
-/* Fade out animation for page transitions */
-.loading-screen.fade-out {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s var(--transition-smooth);
-}
-
-/* Optional: Add a subtle zoom effect on the image */
-@keyframes imageZoom {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-.loading-image {
-    animation: 
-        float 3s ease-in-out infinite,
-        pulse 2s infinite,
-        imageZoom 3s ease-in-out infinite;
-}
         /* Page Transition */
         .page-transition {
             position: fixed;
@@ -1882,6 +1733,94 @@
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
+/* ===== LOADING SCREEN (Keep from about.html) ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s var(--transition-smooth);
+        }
+
+        .loading-content {
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: loadingFadeIn 0.6s var(--transition-smooth) 0.3s forwards;
+        }
+
+        @keyframes loadingFadeIn {
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .loading-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite, tallPulse 2s infinite alternate;
+        }
+
+        @keyframes tallPulse {
+            0% { transform: scaleY(1.05) scaleX(1); }
+            100% { transform: scaleY(1.1) scaleX(0.95); }
+        }
+
+        .loading-text {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 1rem;
+        }
+
+        .loading-text-part1 {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-size: 3.5rem;
+            line-height: var(--line-height-tall);
+            text-shadow: 0 0 20px var(--accent-glow);
+            color: var(--primary);
+        }
+
+        .loading-text-part2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 3.5rem;
+            line-height: var(--line-height-tall);
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+            color: var(--secondary);
+        }
+
+        .loading-text-part3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
     </style>
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1898,18 +1837,19 @@
 </div>
 
     <!-- Loading Screen -->
-<div class="loading-screen" id="loadingScreen">
-    <div class="loading-content">
-        <div class="loading-image-container">
-            <img src="1.png" alt="IMS Services Logo" class="loading-image">
-            <div class="loading-text">
-                <span class="loading-text-part1">IMS</span>
-                <span class="loading-text-part2">Services</span>
-                <span class="loading-text-part3">By Courteny</span>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-image-container">
+                <img src="gtaversion.png" alt="IMS Services Logo" class="loading-image">
+                <div class="loading-text">
+                    <span class="loading-text-part1">IMS</span>
+                    <span class="loading-text-part2">Services</span>
+                    <span class="loading-text-part3">Created By Courteny</span>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
     <!-- Page Transition -->
     <div class="page-transition" id="pageTransition"></div>
 
@@ -2770,6 +2710,7 @@
 
     // Initial check
     updateOnlineStatus();
+    src="offline.js"
     </script>
 </body>
 </html>

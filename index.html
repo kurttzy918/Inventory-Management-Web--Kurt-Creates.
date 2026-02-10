@@ -96,6 +96,12 @@
             transition: opacity 0.8s var(--transition-smooth);
             inset: 0;
             overflow: hidden;
+            min-height: 100svh;        /* modern mobile browsers */
+            height: calc(var(--vh, 1vh) * 100);
+            padding: env(safe-area-inset-top)
+             env(safe-area-inset-right)
+             env(safe-area-inset-bottom)
+             env(safe-area-inset-left);
         }
 
         .loading-content {
@@ -199,10 +205,32 @@
             
             .loading-text-part1,
             .loading-text-part2 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
+                letter-spacing: 0.1em;
             }
         }
+            .loading-text-part3{
+                font-size: 0.75rem;
 
+            }
+        @media (max-width: 768px) {
+            .loading-content {
+          transform: none;
+          padding: 16px;
+    }
+
+    .loading-image-container {
+        gap: 12px;
+    }
+}
+body.loading {
+    overflow: hidden;
+    touch-action: none;
+}
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
         /* ===== PAGE TRANSITION ===== */
         .page-transition {
             position: fixed;
@@ -3036,6 +3064,19 @@ const offlineOverlay = document.getElementById('offlineOverlay');
 
     // Initial check
     updateOnlineStatus();
+    function setVH() {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+setVH();
+window.addEventListener('resize', setVH);
+document.body.classList.add('loading');
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelector('.loading-screen')?.classList.add('hidden');
+    document.body.classList.remove('loading');
+  }, 1200);
+});
 src="offline.js"
 </script>
 </body>

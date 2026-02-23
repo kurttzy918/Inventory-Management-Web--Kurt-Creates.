@@ -45,7 +45,6 @@
             --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
             --vh: 1vh;
             
-            /* Tall font variables */
             --font-tall-title: 'Oswald', 'Staatliches', sans-serif;
             --font-tall-bold: 'Anton', 'Bebas Neue', sans-serif;
             --font-tall-condensed: 'Roboto Condensed', 'Rajdhani', sans-serif;
@@ -88,7 +87,7 @@
             to { opacity: 1; }
         }
 
-        /* ===== LOADING SCREEN ===== */
+        /* ===== LOADING SCREEN (identical to index) ===== */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -101,52 +100,47 @@
             justify-content: center;
             align-items: center;
             transition: opacity 0.8s var(--transition-smooth);
+            overflow: hidden;
         }
-
+        .loading-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .loading-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            filter: blur(8px);
+            animation: slowZoom 20s infinite alternate;
+        }
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent 0%, var(--dark-bg) 90%);
+            z-index: 2;
+        }
         .loading-content {
+            position: relative;
+            z-index: 3;
             text-align: center;
             transform: translateY(20px);
             opacity: 0;
             animation: loadingFadeIn 0.6s var(--transition-smooth) 0.3s forwards;
         }
-
         @keyframes loadingFadeIn {
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .loading-image-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .loading-image {
-            width: 180px;
-            height: 180px;
-            border-radius: 0;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 0 0px var(--accent-glow);
-            animation: float 3s ease-in-out infinite, tallPulse 2s infinite alternate;
-        }
-
-        @keyframes tallPulse {
-            0% { transform: scaleY(1.05) scaleX(1); }
-            100% { transform: scaleY(1.1) scaleX(0.95); }
-        }
-
         .loading-text {
             display: flex;
             flex-direction: column;
             gap: 5px;
-            margin-top: 1rem;
         }
-
         .loading-text-part1 {
             font-family: 'Anton', sans-serif;
             font-weight: 400;
@@ -157,7 +151,6 @@
             text-shadow: 0 0 20px var(--accent-glow);
             color: var(--primary);
         }
-
         .loading-text-part2 {
             font-family: 'Bebas Neue', sans-serif;
             font-weight: 400;
@@ -168,7 +161,6 @@
             text-shadow: 0 0 20px var(--accent-glow-secondary);
             color: var(--secondary);
         }
-
         .loading-text-part3 {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 600;
@@ -177,6 +169,11 @@
             margin-top: 20px;
             text-transform: uppercase;
             color: var(--text-secondary);
+        }
+        /* mobile loading adjustments */
+        @media (max-width: 768px) {
+            .loading-text-part1, .loading-text-part2 { font-size: 2.5rem; }
+            .loading-text-part3 { font-size: 0.8rem; }
         }
 
         /* ===== NAVIGATION ===== */
@@ -310,13 +307,11 @@
         
         .nav-link:hover {
             background: var(--glass-bg);
-            border-color: var(--glass-border);
             transform: translateY(-2px);
         }
 
         .nav-link.active {
             background: rgba(0, 217, 255, 0.1);
-            border-color: var(--primary);
             color: var(--primary);
         }
         
@@ -338,7 +333,6 @@
             align-items: center;
             gap: 10px;
             transform: scaleY(1.05);
-            border-width: 2px;
         }
         
         .nav-toggle {
@@ -348,7 +342,6 @@
             cursor: pointer;
             padding: 10px;
             background: var(--glass-bg);
-            border-radius: 0;
             border: 1px solid var(--glass-border);
         }
         
@@ -366,7 +359,7 @@
             padding: 180px 0 120px;
             margin-top: 80px;
             position: relative;
-            overflow: visible; /* Changed from hidden to visible */
+            overflow: visible;
         }
 
         .hero-bg {
@@ -404,13 +397,13 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .hero-text {
@@ -425,7 +418,6 @@
             background: rgba(67, 97, 238, 0.1);
             border: 1px solid rgba(67, 97, 238, 0.3);
             padding: 12px 24px;
-            border-radius: 0;
             margin-bottom: 40px;
             animation: slideUp 0.8s ease 0.7s forwards;
             opacity: 0;
@@ -433,10 +425,7 @@
         }
 
         @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-badge i {
@@ -477,10 +466,7 @@
         }
 
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-subtitle {
@@ -496,13 +482,12 @@
         .hero-description {
             font-family: 'Roboto Condensed', sans-serif;
             font-weight: 400;
-            line-height: 1.5;
-            letter-spacing: 0.1em;
             font-size: 1.2rem;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.8;
             margin-bottom: 50px;
+            letter-spacing: 0.1em;
         }
 
         .hero-cta {
@@ -513,24 +498,28 @@
             transform: translateY(30px);
         }
 
-        /* Hero Image Styles */
+        /* Hero Image */
         .hero-image {
             position: relative;
             text-align: center;
-            padding-bottom: 80px; /* Added padding for social carousel */
-            z-index: 10; /* Added z-index */
+            padding-bottom: 80px;
+            z-index: 10;
         }
 
         .hero-image img {
             width: 260px;
             max-width: 100%;
             height: auto;
-            border-radius: 0;
-            object-fit: cover;
-            box-shadow: 0 0px 60px rgba(0, 217, 255, 0.3);
             animation: floatImage 4s ease-in-out infinite;
-            border: 0px solid var(--primary);
-            margin-bottom: 20px; /* Space for job carousel */
+            margin-bottom: 20px;
+        }
+
+        /* Minimalist profile photo – no border, no shadow */
+        .profile-photo {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            outline: none;
         }
 
         @keyframes floatImage {
@@ -539,20 +528,24 @@
             100% { transform: translateY(0); }
         }
 
+        /* ===== JOB TITLE FADE CAROUSEL ===== */
         .job-carousel {
             height: 28px;
-            overflow: hidden;
             position: relative;
-            margin: 10px 0 30px; /* Added bottom margin for social carousel */
+            margin: 10px 0 30px;
         }
 
         .job-fade {
-            display: flex;
-            flex-direction: column;
-            animation: fadeUp 6s ease-in-out infinite;
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         .job-fade span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 28px;
             line-height: 28px;
             font-weight: 700;
@@ -561,183 +554,141 @@
             color: #efefef;
             font-family: 'Rajdhani', sans-serif;
             text-transform: uppercase;
+            opacity: 0;
+            animation: fadeText 9s linear infinite;
+            background: transparent;
+            border: none;
         }
 
-        @keyframes fadeUp {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            30% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(-28px);
-                opacity: 1;
-            }
-            80% {
-                transform: translateY(-28px);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-56px);
-                opacity: 0;
-            }
+        .job-fade span:nth-child(1) { animation-delay: 0s; }
+        .job-fade span:nth-child(2) { animation-delay: 3s; }
+        .job-fade span:nth-child(3) { animation-delay: 6s; }
+
+        @keyframes fadeText {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            30% { opacity: 1; }
+            40% { opacity: 0; }
+            100% { opacity: 0; }
         }
 
-        /* Social Media Carousel - Bottom of Hero Image */
+        /* ===== SOCIAL CAROUSEL – FADE SMOOTH (replaces infinite scroll) ===== */
         .hero-socials {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
-            max-width: 400px;
-            padding: 15px 0;
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid var(--glass-border);
+            max-width: 450px;
+            height: 60px; /* fixed height for container */
+            padding: 0;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
             z-index: 10;
+            pointer-events: none; /* allow clicks through container, but icons are clickable */
         }
 
-        .social-carousel {
-            width: 100%;
-            overflow: hidden;
+        .fade-social-carousel {
             position: relative;
-        }
-
-        .social-track {
+            width: 100%;
+            height: 100%;
             display: flex;
-            width: max-content;
-            animation: scrollSocials 20s linear infinite;
-            padding: 0 10px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .social-track a {
-            min-width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--glass-border);
+        .fade-social-carousel a {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-primary);
-            font-size: 18px;
-            margin: 0 8px;
-            transition: all 0.35s var(--transition-smooth);
+            font-size: 20px;
             text-decoration: none;
+            border: none;
             border-radius: 0;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.4s ease;
+            pointer-events: auto;
+            opacity: 0;
+            animation: fadeSocial 28s infinite;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .social-track a:hover {
+        .fade-social-carousel a:hover {
             background: var(--gradient-primary);
             color: white;
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 25px var(--accent-glow);
-            border-color: var(--primary);
+            transform: scale(1.15);
+            box-shadow: 0 8px 20px var(--accent-glow);
         }
 
-        .social-track a:nth-child(2):hover {
-            background: linear-gradient(135deg, #EA4335, #FBBC05, #34A853, #4285F4);
+        /* assign delays for each icon (7 icons + 7 duplicates for smooth loop? but we want only one visible at a time) */
+        /* we'll create a sequence: each icon fades in and out over 4s, with 2s overlap? better: 7 icons, total cycle 28s, each visible for 4s */
+        .fade-social-carousel a:nth-child(1) { animation-delay: 0s; }
+        .fade-social-carousel a:nth-child(2) { animation-delay: 4s; }
+        .fade-social-carousel a:nth-child(3) { animation-delay: 8s; }
+        .fade-social-carousel a:nth-child(4) { animation-delay: 12s; }
+        .fade-social-carousel a:nth-child(5) { animation-delay: 16s; }
+        .fade-social-carousel a:nth-child(6) { animation-delay: 20s; }
+        .fade-social-carousel a:nth-child(7) { animation-delay: 24s; }
+        /* duplicates will have same delays? we don't need duplicates for fade, so we'll only include 7 unique icons */
+
+        @keyframes fadeSocial {
+            0%, 10%, 100% { opacity: 0; transform: scale(0.9); }
+            5% { opacity: 1; transform: scale(1); }
+            15% { opacity: 0; transform: scale(0.9); }
         }
 
-        .social-track a:nth-child(3):hover {
-            background: #333;
-        }
-
-        .social-track a:nth-child(4):hover {
-            background: #1877F2;
-        }
-
-        .social-track a:nth-child(5):hover {
-            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
-        }
-
-        .social-carousel:hover .social-track {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollSocials {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .linkedin-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            font-size: 20px;
-            color: #0A66C2;
-            text-decoration: none;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        /* Sentence Cloud - FIXED POSITIONING */
+        /* ===== SENTENCE CLOUD – typing effect ===== */
         .sentence-cloud-container {
             position: absolute;
-            top: -40px; /* Changed from -80px to bring it into view */
-            right: 40px; /* Changed from -20px to bring it into view */
-            width: 320px;
+            top: -70px;
+            right: -40px;
+            width: 330px;
             height: auto;
-            z-index: 1000; /* Increased z-index */
-            pointer-events: auto; /* Changed from none to auto */
+            z-index: 1000;
+            pointer-events: auto;
         }
 
         .sentence-cloud {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px 20px 20px 0;
-            padding: 20px 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(20, 20, 30, 0.95);
+            backdrop-filter: blur(4px);
+            border-radius: 24px 24px 24px 4px;
+            padding: 20px 28px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             position: relative;
-            opacity: 1; /* Changed from 0 to 1 */
-            transform: translateY(0) scale(1); /* Changed from translateY(20px) scale(0.9) */
-            animation: cloudAppear 1s ease-out forwards 1.2s;
-            max-width: 300px;
-            border: 2px solid var(--secondary);
-            z-index: 1001;
-        }
-
-        @keyframes cloudAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(10px) scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            border: 1px solid var(--secondary);
+            max-width: 320px;
         }
 
         .cloud-text {
             font-family: 'Rajdhani', sans-serif;
-            font-size: 18px; /* Increased font size */
+            font-size: 20px;
             font-weight: 700;
-            color: #333; /* Changed to dark color for better visibility */
-            text-align: center;
-            line-height: 1.4;
+            color: #ffffff;
+            text-align: left;
+            line-height: 1.3;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
+            min-height: 3.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid var(--secondary);
+            width: 0;
+            animation: typing 3.5s steps(34, end) 1.5s forwards, blink-caret 0.85s step-end infinite;
         }
 
-        .cloud-text span {
-            display: inline-block;
-            margin: 0 2px;
-            animation: wordFadeIn 0.5s ease forwards;
-            animation-delay: calc(1.5s + var(--i) * 0.2s);
-            opacity: 0;
-            transform: translateY(5px);
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
-        @keyframes wordFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--secondary); }
         }
 
         .cloud-icon {
@@ -745,14 +696,14 @@
             top: -15px;
             right: -15px;
             background: var(--secondary);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 20px;
+            font-size: 22px;
             box-shadow: 0 5px 20px rgba(255, 0, 128, 0.5);
             animation: iconPulse 2s infinite 3s;
             z-index: 1002;
@@ -766,7 +717,6 @@
         /* ===== SERVICES SECTION ===== */
         .services-section {
             padding: 120px 0;
-            position: relative;
             background: var(--dark-bg);
         }
 
@@ -775,11 +725,6 @@
             margin-bottom: 80px;
             transform: translateY(30px);
             animation: fadeInUp 0.8s ease forwards 0.7s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
         }
 
         .section-title h2 {
@@ -792,69 +737,43 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-align: center;
-            width: 100%;
         }
 
         .section-title p {
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             font-size: 1.2rem;
             font-family: 'Roboto Condensed', sans-serif;
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            text-align: center;
+            line-height: 1.6;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
-            margin-bottom: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .service-card {
             background: var(--gradient-dark);
-            border-radius: 0;
-            overflow: hidden;
-            box-shadow: var(--glass-shadow);
-            transition: all 0.6s var(--transition-smooth);
-            height: 100%;
             border: 1px solid var(--glass-border);
+            transition: all 0.6s var(--transition-smooth);
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 0.8s ease forwards;
-            position: relative;
-            overflow: hidden;
         }
 
         .service-card:nth-child(1) { animation-delay: 0.2s; }
         .service-card:nth-child(2) { animation-delay: 0.3s; }
         .service-card:nth-child(3) { animation-delay: 0.4s; }
 
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient-primary);
-            transform: translateX(-100%);
-            transition: transform 0.6s var(--transition-smooth);
-        }
-
-        .service-card:hover::before {
-            transform: translateX(0);
-        }
-
         .service-card:hover {
-            transform: translateY(-15px);
+            transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: var(--glass-shadow), 0 30px 60px var(--accent-glow);
+            box-shadow: 0 30px 50px var(--accent-glow);
         }
 
         .service-icon {
@@ -865,37 +784,22 @@
             justify-content: center;
             font-size: 2.5rem;
             color: white;
-            transition: all 0.4s var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
         }
 
         .service-content {
-            padding: 40px;
+            padding: 35px;
         }
 
         .service-content h3 {
             font-size: 1.8rem;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            transition: var(--transition-smooth);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .service-card:hover .service-content h3 {
-            color: var(--primary);
         }
 
         .service-content p {
             color: var(--text-secondary);
             margin-bottom: 25px;
-            line-height: 1.7;
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.3px;
         }
 
         .service-features {
@@ -904,29 +808,16 @@
         }
 
         .service-features li {
-            padding: 12px 0;
+            padding: 10px 0;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 15px;
-            font-family: 'Inter', sans-serif;
             border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s var(--transition-smooth);
-        }
-
-        .service-features li:hover {
-            color: var(--text-primary);
-            padding-left: 10px;
         }
 
         .service-features li i {
             color: #00ff88;
-            font-size: 1.2rem;
-            transition: transform 0.3s var(--transition-bounce);
-        }
-
-        .service-features li:hover i {
-            transform: scale(1.3);
         }
 
         .service-btn {
@@ -934,17 +825,10 @@
             background: var(--gradient-secondary);
             color: white;
             padding: 14px 30px;
-            border-radius: 0;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.4s var(--transition-bounce);
-            border: none;
             font-family: 'Rajdhani', sans-serif;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            transition: 0.3s;
         }
 
         /* ===== PROCESS SECTION ===== */
@@ -952,29 +836,25 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #111 100%);
             padding: 120px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .process-steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
-            margin-top: 60px;
-            position: relative;
+            max-width: 1400px;
+            margin: 60px auto 0;
+            padding: 0 40px;
         }
 
         .process-step {
-            position: relative;
-            z-index: 2;
+            background: var(--gradient-dark);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            transition: 0.4s;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s ease forwards;
-            background: var(--gradient-dark);
-            border-radius: 0;
-            padding: 40px 30px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.6s var(--transition-smooth);
         }
 
         .process-step:nth-child(1) { animation-delay: 0.2s; }
@@ -982,28 +862,22 @@
         .process-step:nth-child(3) { animation-delay: 0.6s; }
 
         .process-step:hover {
-            transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: var(--glass-shadow), 0 20px 40px var(--accent-glow);
+            transform: translateY(-8px);
         }
 
         .step-number {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient-primary);
-            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             font-weight: 800;
             color: white;
-            margin: 0 auto 30px;
-            box-shadow: 0 10px 30px var(--accent-glow);
-            border: 5px solid var(--dark-bg);
-            transition: all 0.4s var(--transition-bounce);
-            position: relative;
-            overflow: hidden;
+            margin: 0 auto 25px;
+            border: 3px solid var(--dark-bg);
         }
 
         .process-step h4 {
@@ -1011,48 +885,19 @@
             margin-bottom: 15px;
             font-size: 1.5rem;
             font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            transition: var(--transition-smooth);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .process-step:hover h4 {
-            color: var(--primary);
-        }
-
-        .process-step p {
-            color: var(--text-secondary);
-            font-family: 'Roboto Condensed', sans-serif;
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: 0.3px;
         }
 
         /* ===== CTA SECTION ===== */
         .cta-section {
-            background: rgb(11, 11, 11);
-            color: white;
+            background: #0b0b0b;
             padding: 120px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
         }
 
         .cta-content h2 {
             font-size: 3rem;
             margin-bottom: 30px;
             font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-align: center;
         }
 
         .cta-content p {
@@ -1060,11 +905,6 @@
             max-width: 700px;
             margin: 0 auto 50px;
             opacity: 0.9;
-            font-family: 'Roboto Condensed', sans-serif;
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            text-align: center;
         }
 
         .cta-buttons {
@@ -1074,166 +914,103 @@
             flex-wrap: wrap;
         }
 
-        /* ===== BUTTONS ===== */
         .btn-primary {
             font-family: 'Staatliches', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            line-height: 1;
             background: var(--gradient-primary);
             color: white;
             padding: 18px 36px;
-            border-radius: 0;
             text-decoration: none;
-            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            transition: all var(--transition-smooth);
+            transition: 0.3s;
             border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(67, 97, 238, 0.3);
-            position: relative;
-            overflow: hidden;
-            transform: scaleY(1.05);
-            border-width: 2px;
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.05) scaleY(1.05);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
 
         .btn-secondary {
             font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-size: 1.2rem;
-            line-height: 1;
             background: transparent;
             color: var(--primary);
             padding: 18px 36px;
-            border-radius: 0;
             text-decoration: none;
-            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            transition: all var(--transition-smooth);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-            transform: scaleY(1.05);
+            border: 2px solid rgba(255,255,255,0.2);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.05);
             border-color: white;
-            transform: translateY(-3px) scaleY(1.05);
         }
 
         /* ===== FOOTER ===== */
         .footer {
-            position: relative;
-            overflow: hidden;
             background: var(--dark-card);
             padding: 80px 0 40px;
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
-        
         .footer-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
             gap: 60px;
-            margin-bottom: 80px;
-            align-items: flex-start;
             max-width: 1400px;
-            margin: 0 auto 80px;
+            margin: 0 auto 60px;
             padding: 0 40px;
         }
-        
-        .footer-col {
-            display: flex;
-            flex-direction: column;
-            margin: auto;
-        }
-        
+
         .footer-logo {
             font-family: 'Anton', sans-serif;
-            font-weight: 400;
-            font-size: 5rem;
-            letter-spacing: 0.3em;
-            line-height: 0.7;
-            text-transform: uppercase;
+            font-size: 4rem;
+            letter-spacing: 0.2em;
+            line-height: 0.8;
             text-decoration: none;
             display: inline-block;
-            margin-bottom: 30px;
-            padding-bottom: 5px;
+            margin-bottom: 25px;
         }
-        
+
         .footer-description {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 300;
-            line-height: 1.6;
-            font-size: 1.05rem;
-            letter-spacing: 0.05em;
             color: var(--text-secondary);
             line-height: 1.8;
-            margin-bottom: 40px;
-            flex-grow: 1;
-            max-width: 380px;
+            max-width: 350px;
         }
-        
+
         .footer-social {
             display: flex;
             gap: 14px;
-            margin-top: 30px;
+            margin-top: 25px;
         }
-        
+
         .social-icon {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             background: var(--glass-bg);
-            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.4s var(--transition-bounce);
             border: 1px solid var(--glass-border);
+            transition: 0.3s;
         }
-        
+
         .social-icon:hover {
-            transform: translateY(-6px) scale(1.05);
             background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 12px 30px rgba(0, 217, 255, 0.45);
+            transform: translateY(-5px);
         }
-        
+
         .footer-title {
             font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            line-height: var(--line-height-tall);
-            margin-bottom: 30px;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
             color: white;
             position: relative;
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
 
         .footer-title::after {
@@ -1242,428 +1019,169 @@
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 4px;
+            height: 3px;
             background: var(--gradient-primary);
-            border-radius: 0;
-            transition: width 0.4s ease;
         }
 
-        .footer-col:hover .footer-title::after {
-            width: 80px;
-        }
-        
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
-        
+
         .footer-links a {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
             color: var(--text-secondary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 15px;
-            position: relative;
-            transition: all 0.35s ease;
-            padding: 10px 0;
+            gap: 12px;
+            transition: 0.3s;
         }
-        
+
         .footer-links a:hover {
             color: var(--primary);
             transform: translateX(6px);
         }
 
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
         .contact-info p {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: 300;
-            font-size: 1rem;
-            letter-spacing: 0.05em;
             color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 12px 0;
-            transition: all 0.35s ease;
+            margin-bottom: 15px;
         }
 
-        .contact-info p:hover {
-            color: var(--primary);
-            transform: translateX(6px);
-        }
-
-        .contact-info p i {
+        .contact-info i {
             color: var(--primary);
             width: 24px;
-            font-size: 1.2rem;
-            transition: transform 0.35s ease;
         }
 
-        .contact-info p:hover i {
-            transform: scale(1.2);
-        }
-        
         .footer-bottom {
-            flex-direction: column;
             text-align: center;
-            gap: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
+            padding: 30px 40px 0;
+            border-top: 1px solid var(--glass-border);
         }
-        
+
         .copyright {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
             color: var(--text-tertiary);
+            font-size: 0.9rem;
         }
-        
+
         .footer-bottom-links {
             display: flex;
             gap: 30px;
             justify-content: center;
+            margin-top: 15px;
         }
-        
+
         .footer-bottom-links a {
-            font-family: 'Staatliches', sans-serif;
-            font-weight: 400;
-            font-size: 1rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.3s var(--transition-smooth);
-            position: relative;
-            padding: 5px 0;
         }
 
         .footer-bottom-links a:hover {
             color: var(--primary);
         }
 
-        /* ===== UTILITY CLASSES ===== */
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-
-        section {
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reveal {
-            position: relative;
-            transform: translateY(50px);
-            opacity: 0;
-            transition: all 0.8s var(--transition-smooth);
-        }
-
-        .reveal.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
+        /* ===== RESPONSIVE TWEAKS ===== */
         @media (max-width: 1200px) {
-            .container, .navbar .container, .footer-grid, .footer-bottom {
-                padding: 0 30px;
-            }
-            
-            .hero-title {
-                font-size: 3rem;
-            }
-            
-            .section-title h2 {
-                font-size: 3rem;
-            }
-            
-            .sentence-cloud-container {
-                right: 30px;
-                width: 300px;
-            }
+            .hero-title { font-size: 3rem; }
+            .section-title h2 { font-size: 3rem; }
+            .sentence-cloud-container { right: -20px; top: -60px; width: 300px; }
         }
-        
+
         @media (max-width: 992px) {
-            .nav-menu {
-                position: fixed;
-                top: 100px;
-                right: -100%;
-                width: 300px;
-                height: calc(100vh - 100px);
-                background: rgba(10, 10, 10, 0.98);
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 40px;
-                transition: 0.6s var(--transition-smooth);
-                backdrop-filter: blur(20px);
-                border-left: 1px solid var(--glass-border);
-                z-index: 1001;
-                gap: 10px;
-            }
-            
-            .nav-menu.active {
-                right: 0;
-            }
-            
-            .nav-toggle {
-                display: flex;
-            }
-            
-            .nav-link {
-                width: 100%;
-                justify-content: flex-start;
-            }
-            
-            .btn-nav {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero-text {
-                text-align: center;
-                max-width: 100%;
-            }
-            
+            .hero-content { flex-direction: column; text-align: center; }
+            .hero-text { text-align: center; max-width: 100%; }
+            .hero-cta { justify-content: center; }
             .sentence-cloud-container {
-                position: absolute;
-                top: -50px;
-                right: 50%;
-                transform: translateX(50%);
+                top: -80px;
+                right: 20px;
                 width: 280px;
             }
-            
-            .sentence-cloud {
-                border-radius: 20px;
-                max-width: 260px;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
-            }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
         }
 
         @media (max-width: 768px) {
-            .container, .navbar .container, .footer-grid, .footer-bottom {
-                padding: 0 20px;
+            .nav-menu {
+                position: fixed;
+                top: 90px;
+                right: -100%;
+                width: 270px;
+                height: calc(100vh - 90px);
+                background: rgba(10,10,10,0.98);
+                flex-direction: column;
+                padding: 40px 25px;
+                transition: 0.4s;
+                backdrop-filter: blur(15px);
+                border-left: 1px solid var(--glass-border);
             }
-            
-            .hero-title {
-                font-size: 2rem;
-                letter-spacing: 0.1em;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-                letter-spacing: 0.1em;
-            }
-            
+            .nav-menu.active { right: 0; }
+            .nav-toggle { display: flex; }
+            .hero-title { font-size: 2.2rem; }
+            .section-title h2 { font-size: 2.2rem; }
             .sentence-cloud-container {
-                top: -40px;
+                top: -70px;
+                right: 10px;
                 width: 260px;
             }
-            
-            .sentence-cloud {
-                max-width: 240px;
-                padding: 15px 20px;
-            }
-            
-            .cloud-text {
-                font-size: 16px;
-            }
-            
-            .hero-socials {
-                max-width: 300px;
-                padding: 12px 0;
-            }
-            
-            .social-track a {
-                min-width: 40px;
-                height: 40px;
-                font-size: 16px;
-                margin: 0 6px;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: center;
-            }
-            
-            .footer-social {
-                justify-content: center;
-            }
+            .cloud-text { font-size: 18px; }
+            .hero-socials { max-width: 300px; }
+            .fade-social-carousel a { width: 40px; height: 40px; font-size: 18px; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-social { justify-content: center; }
+            .footer-title::after { left: 50%; transform: translateX(-50%); }
         }
 
         @media (max-width: 576px) {
-            .hero-title {
-                font-size: 1.8rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .service-content {
-                padding: 30px 20px;
-            }
-            
+            .container { padding: 0 20px; }
+            .hero-content { padding: 0 20px; }
+            .hero-title { font-size: 1.8rem; }
             .sentence-cloud-container {
-                top: -30px;
+                top: -60px;
+                right: 0;
                 width: 240px;
             }
-            
-            .sentence-cloud {
-                max-width: 220px;
-                padding: 12px 18px;
-            }
-            
-            .cloud-text {
-                font-size: 14px;
-            }
-            
-            .hero-socials {
-                max-width: 280px;
-            }
-            
-            .social-track a {
-                min-width: 36px;
-                height: 36px;
-                font-size: 15px;
-                margin: 0 4px;
-            }
-            
-            .btn-primary, .btn-secondary {
-                padding: 15px 30px;
-                font-size: 0.9rem;
-            }
+            .cloud-text { font-size: 16px; }
+            .service-content { padding: 25px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
         }
 
-        /* ===== IOS SPECIFIC FIXES ===== */
-        @supports (-webkit-touch-callout: none) {
-            /* Fix for Safari backdrop-filter */
-            .navbar, .service-card, .process-step {
-                -webkit-backdrop-filter: blur(20px);
-            }
+        /* Offline overlay */
+        #offlineOverlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, #0a0a0a, #000);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
         }
-        /* ===== OFFLINE OVERLAY ===== */
-#offlineOverlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle, #0a0a0a, #000);
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-}
-
-#offlineOverlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.offline-content {
-    text-align: center;
-    animation: offlineFadeIn 0.8s ease forwards;
-}
-
-.offline-img {
-    width: 160px;
-    margin-bottom: 20px;
-    animation: floatOffline 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 25px rgba(0, 217, 255, 0.4));
-}
-
-@keyframes floatOffline {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-    100% { transform: translateY(0); }
-}
-
-@keyframes offlineFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.offline-content h2 {
-    color: var(--primary);
-    letter-spacing: 0.2em;
-    margin-bottom: 8px;
-}
-
-.offline-content p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
+        #offlineOverlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .offline-content { text-align: center; }
+        .offline-img { width: 140px; margin-bottom: 20px; filter: drop-shadow(0 0 20px var(--accent-glow)); }
     </style>
 </head>
 <body>
     <!-- OFFLINE OVERLAY -->
-<div id="offlineOverlay">
-    <div class="offline-content">
-        <img src="gtaversion.png" alt="Offline" class="offline-img">
-        <h2>You’re Offline</h2>
-        <p>Check your internet connection</p>
+    <div id="offlineOverlay">
+        <div class="offline-content">
+            <img src="gtaversion.png" alt="Offline" class="offline-img">
+            <h2 style="color: var(--primary);">You’re Offline</h2>
+            <p style="color: var(--text-secondary);">Check your internet connection</p>
+        </div>
     </div>
-</div>
 
+    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
   <div class="loading-bg">
     <img src="gtaversion.png" alt="Loading" />
@@ -1680,32 +1198,21 @@
   </div>
 </div>
 
-    <!-- Navigation -->
+    <!-- NAVIGATION -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">
                 <img src="watermark.png" alt="IMS Logo">
                 <div class="logo-text-carousel">
                     <div class="logo-text-track">
-                        <div class="logo-text-item">
-                            <span class="logo-part-1">IMS</span>
-                            <span class="logo-part-2">Services</span>
-                        </div>
-                        <div class="logo-text-item">
-                            <span class="logo-part-1">IMS</span>
-                            <span class="logo-part-2">Services</span>
-                        </div>
-                        <div class="logo-text-item">
-                            <span class="logo-part-1">IMS</span>
-                            <span class="logo-part-2">Services</span>
-                        </div>
+                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
+                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
+                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
                     </div>
                 </div>
             </a>
             <div class="nav-toggle" id="navToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
@@ -1716,497 +1223,147 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- HERO SECTION -->
     <section class="services-hero">
         <div class="hero-bg"></div>
         <div class="hero-grid"></div>
-        
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="hero-badge">
-                        <i class="fas fa-rocket"></i>
-                        <span>Professional Services</span>
-                    </div>
-                    
-                    <h1 class="hero-title">
-                        Comprehensive Inventory Management Solutions
-                    </h1>
-                    
-                    <h2 class="hero-subtitle">Optimize Your Business Operations</h2>
-                    
-                    <p class="hero-description">
-                        Optimize your stock control, reduce costs, and streamline operations with our advanced inventory management services designed for all kind of businesses.
-                    </p>
-                    
-                    <div class="hero-cta">
-                        <a href="get-quote.html" class="btn-primary">
-                            <i class="fas fa-chart-line"></i>
-                            Get Custom Solution
-                        </a>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge"><i class="fas fa-rocket"></i><span>Professional Services</span></div>
+                <h1 class="hero-title">Comprehensive Inventory Management Solutions</h1>
+                <h2 class="hero-subtitle">Optimize Your Business Operations</h2>
+                <p class="hero-description">Optimize your stock control, reduce costs, and streamline operations with our advanced inventory management services designed for all kind of businesses.</p>
+                <div class="hero-cta"><a href="get-quote.html" class="btn-primary"><i class="fas fa-chart-line"></i> Get Custom Solution</a></div>
+            </div>
+
+            <!-- Hero Image with cloud, profile, carousels -->
+            <div class="hero-image">
+                <!-- Sentence cloud with typing effect (repositioned) -->
+                <div class="sentence-cloud-container">
+                    <div class="sentence-cloud">
+                        <div class="cloud-text" id="typingCloud">Ready To Help!</div>
+                        <div class="cloud-icon"><i class="fas fa-comment-alt"></i></div>
                     </div>
                 </div>
 
-                <!-- Right Image with Sentence Cloud -->
-                <div class="hero-image">
-                    <!-- Sentence Cloud - FIXED -->
-                    <div class="sentence-cloud-container">
-                        <div class="sentence-cloud">
-                            <div class="cloud-text">
-                                <span style="--i:0">Inventory</span>
-                                <span style="--i:1">Management</span>
-                                <span style="--i:2">Expert</span>
-                                <span style="--i:3">Ready</span>
-                                <span style="--i:4">To Help!</span>
-                            </div>
-                            <div class="cloud-icon">
-                                <i class="fas fa-comment-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <img src="Zoro.png" alt="My Photo" class="profile-photo">
+                <!-- Minimalist profile photo (no border/shadow) -->
+                <img src="gamer.png" alt="My Photo" class="profile-photo">
 
-                    <!-- Infinite Job Title Carousel -->
-                    <div class="job-carousel">
-                        <div class="job-fade">
-                            <span>DATA ENTRY OPERATOR</span>
-                            <span>SENIOR STOCK CONTROLLER</span>
-                            <span>DATA ENTRY OPERATOR</span>
-                        </div>
+                <!-- Infinite fade job carousel -->
+                <div class="job-carousel">
+                    <div class="job-fade">
+                        <span>DATA ENTRY OPERATOR</span>
+                        <span>SENIOR STOCK CONTROLLER</span>
+                        <span>DATA ENTRY OPERATOR</span>
                     </div>
+                </div>
 
-                    <!-- Social Media Carousel - Bottom of Hero Image -->
-                    <div class="hero-socials">
-                        <div class="social-carousel">
-                            <div class="social-track">
-                                <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="mailto:madronerokurt04@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-                                <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                                <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://wa.me/966569226173" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                                
-                                <!-- Duplicate for seamless loop -->
-                                <a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="mailto:madronerokurt04@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
-                                <a href="https://github.com" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                                <a href="https://facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                                <a href="https://twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-                                <a href="https://wa.me/966569226173" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            </div>
-                        </div>
+                <!-- NEW: SMOOTH FADE SOCIAL CAROUSEL (no borders, infinite fade) -->
+                <div class="hero-socials">
+                    <div class="fade-social-carousel">
+                        <!-- only 7 unique icons; each fades in and out sequentially -->
+                        <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:test@example.com" title="Email"><i class="fas fa-envelope"></i></a>
+                        <a href="#" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- SERVICES SECTION -->
     <section class="services-section reveal">
         <div class="container">
-            <div class="section-title">
-                <h2>Our Core Services</h2>
-                <p>We provide end-to-end inventory management solutions that transform how you handle stock, orders, and supply chain operations.</p>
-            </div>
-            
+            <div class="section-title"><h2>Our Core Services</h2><p>We provide end-to-end inventory management solutions that transform how you handle stock, orders, and supply chain operations.</p></div>
             <div class="services-grid">
-                <!-- Service 1 -->
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-boxes"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Real-Time Tracking</h3>
-                        <p>Monitor stock levels, and products expiry in real-time with our advanced tracking system.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check-circle"></i> Stocks level monitoring</li>
-                            <li><i class="fas fa-check-circle"></i> Product Expiry Notifications</li>
-                            <li><i class="fas fa-check-circle"></i> Automated stock alerts</li>
-                        </ul>
-                        <a href="get-quote.html" class="service-btn">Learn More</a>
-                    </div>
-                </div>
-                
-                <!-- Service 2 -->
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Automated Reordering</h3>
-                        <p>Never run out of stock with our intelligent automated purchase order generation system.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check-circle"></i> Re-order Status Monitoring</li>
-                            <li><i class="fas fa-check-circle"></i> Purchase order automation</li>
-                            <li><i class="fas fa-check-circle"></i> Bulk order optimization</li>
-                        </ul>
-                        <a href="get-quote.html" class="service-btn">Learn More</a>
-                    </div>
-                </div>
-                
-                <!-- Service 3 -->
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3>Data Insights</h3>
-                        <p>Gain actionable insights from your inventory data with advanced analytics and reporting.</p>
-                        <ul class="service-features">
-                            <li><i class="fas fa-check-circle"></i> Dynamic Dashboards Overview</li>
-                            <li><i class="fas fa-check-circle"></i> Inventory Analytics</li>
-                            <li><i class="fas fa-check-circle"></i> Custom Reports Generation</li>
-                        </ul>
-                        <a href="get-quote.html" class="service-btn">Learn More</a>
-                    </div>
-                </div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-boxes"></i></div><div class="service-content"><h3>Real-Time Tracking</h3><p>Monitor stock levels, expiry in real-time.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Stock level monitoring</li><li><i class="fas fa-check-circle"></i> Expiry notifications</li><li><i class="fas fa-check-circle"></i> Automated alerts</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-robot"></i></div><div class="service-content"><h3>Automated Reordering</h3><p>Never run out of stock with intelligent automation.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Re-order monitoring</li><li><i class="fas fa-check-circle"></i> PO automation</li><li><i class="fas fa-check-circle"></i> Bulk optimization</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
+                <div class="service-card"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><div class="service-content"><h3>Data Insights</h3><p>Actionable insights from inventory data.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Dynamic dashboards</li><li><i class="fas fa-check-circle"></i> Inventory analytics</li><li><i class="fas fa-check-circle"></i> Custom reports</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Process Section -->
+    <!-- PROCESS SECTION -->
     <section class="process-section reveal">
         <div class="container">
-            <div class="section-title">
-                <h2>Our Implementation Process</h2>
-                <p>We follow a structured approach to ensure seamless integration and maximum value from our inventory solutions.</p>
-            </div>
-            
+            <div class="section-title"><h2>Our Implementation Process</h2><p>Seamless integration and maximum value.</p></div>
             <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h4>Needs Assessment</h4>
-                    <p>We analyze your current inventory processes and identify improvement areas.</p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h4>Solution Design</h4>
-                    <p>Customized inventory management plan tailored to your business requirements.</p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h4>Implementation</h4>
-                    <p>Seamless integration with your existing systems and comprehensive training.</p>
-                </div>
+                <div class="process-step"><div class="step-number">1</div><h4>Needs Assessment</h4><p>We analyze your current processes.</p></div>
+                <div class="process-step"><div class="step-number">2</div><h4>Solution Design</h4><p>Customized plan for your business.</p></div>
+                <div class="process-step"><div class="step-number">3</div><h4>Implementation</h4><p>Integration and training.</p></div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- CTA SECTION -->
     <section class="cta-section reveal">
         <div class="container">
             <div class="cta-content">
                 <h2>Ready to Transform Your Inventory Management?</h2>
-                <p>Automate your business with our cutting-edge inventory solutions and experience unprecedented efficiency.</p>
+                <p>Automate your business with our cutting-edge inventory solutions.</p>
                 <div class="cta-buttons">
-                    <a href="get-quote.html" class="btn-primary">
-                        <i class="fas fa-chart-line"></i> Get Your Custom Quote
-                    </a>
-                    <a href="contact.html" class="btn-secondary">
-                        <i class="fas fa-phone-alt"></i> Schedule a Demo
-                    </a>
+                    <a href="get-quote.html" class="btn-primary"><i class="fas fa-chart-line"></i> Get Your Custom Quote</a>
+                    <a href="contact.html" class="btn-secondary"><i class="fas fa-phone-alt"></i> Schedule a Demo</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer reveal" id="contact">
+    <!-- FOOTER -->
+    <footer class="footer reveal">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="index.html" class="footer-logo">
-                        <span class="logo-part-1">I</span><span class="logo-part-2">MS</span>     
-                    </a>
-                    <p class="footer-description">
-                        Helps your Business especially for Small and Medium Enterprises to automate your Inventory, Sales Tracking and Data Insights with a Budget and User-Friendly Application.
-                    </p>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="footer-title">Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
-                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                        <li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Get Quote</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="footer-title">Our Services</h3>
-                    <ul class="footer-links">
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Data Insights & Analytics</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Inventory Management</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Process Automation</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Custom Development</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3 class="footer-title">Contact Info</h3>
-                    <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> Jeddah, Saudi Arabia</p>
-                        <p><i class="fas fa-phone"></i> +966-56-922-6173</p>
-                        <p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p>
-                        <p><i class="fas fa-clock"></i> Mon – Fri: 9:00 AM – 6:00 PM</p>
-                    </div>
-                </div>
+                <div class="footer-col"><a href="index.html" class="footer-logo"><span class="logo-part-1">I</span><span class="logo-part-2">MS</span></a><p class="footer-description">Helping SMEs automate inventory, sales tracking & data insights.</p><div class="footer-social"><a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon"><i class="fab fa-github"></i></a><a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon"><i class="fab fa-instagram"></i></a></div></div>
+                <div class="footer-col"><h3 class="footer-title">Quick Links</h3><ul class="footer-links"><li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li><li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li><li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li><li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Get Quote</a></li></ul></div>
+                <div class="footer-col"><h3 class="footer-title">Services</h3><ul class="footer-links"><li><a href="#"><i class="fas fa-chevron-right"></i> Data Insights</a></li><li><a href="#"><i class="fas fa-chevron-right"></i> Inventory Mgmt</a></li><li><a href="#"><i class="fas fa-chevron-right"></i> Automation</a></li></ul></div>
+                <div class="footer-col"><h3 class="footer-title">Contact</h3><div class="contact-info"><p><i class="fas fa-map-marker-alt"></i> Jeddah, KSA</p><p><i class="fas fa-phone"></i> +966-56-922-6173</p><p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p></div></div>
             </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2025 IMS Services. All rights reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a>
-                    <a href="#" style="color: var(--primary); text-decoration: none;">Terms of Service</a>
-                </div>
-            </div>
+            <div class="footer-bottom"><p class="copyright">&copy; 2025 IMS Services. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
         </div>
     </footer>
 
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize loading screen
-            initLoadingScreen();
-            
-            // Initialize navigation
-            initNavigation();
-            
-            // Initialize animations
-            initAnimations();
-            
-            // Initialize scroll effects
-            initScrollEffects();
-            
-            // Initialize interactive elements from services page
-            initServicesElements();
-            
-            // Initialize cloud text animation
-            initCloudText();
-        });
+            // Loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => document.getElementById('loadingScreen').style.display = 'none', 600);
+            }, 1800);
 
-        function initLoadingScreen() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            if (isMobile) {
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                    }, 500);
-                }, 1500);
-            } else {
-                setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                    }, 800);
-                }, 2000);
-            }
-        }
-
-        function initNavigation() {
+            // Navigation toggle
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
-            const navbar = document.getElementById('navbar');
-            
-            if (navToggle && navMenu) {
-                navToggle.addEventListener('click', () => {
-                    navMenu.classList.toggle('active');
-                    navToggle.classList.toggle('active');
-                });
-                
-                // Close menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                        navMenu.classList.remove('active');
-                        navToggle.classList.remove('active');
-                    }
-                });
-                
-                // Close menu on link click
-                navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navMenu.classList.remove('active');
-                        navToggle.classList.remove('active');
-                    });
-                });
-            }
-            
+            navToggle?.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+
             // Navbar scroll effect
-            if (navbar) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 100) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                });
-            }
-        }
-
-        function initAnimations() {
-            const revealElements = document.querySelectorAll('.reveal');
-            
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            });
-            
-            revealElements.forEach(element => {
-                revealObserver.observe(element);
-            });
-        }
-
-        function initScrollEffects() {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        }
-
-        function initCloudText() {
-            // Animate cloud text words
-            const cloudWords = document.querySelectorAll('.cloud-text span');
-            cloudWords.forEach((word, index) => {
-                const delay = 1.5 + (index * 0.2);
-                word.style.animation = `wordFadeIn 0.5s ease forwards ${delay}s`;
-                
-                // Add hover effect
-                word.addEventListener('mouseenter', () => {
-                    word.style.transform = 'scale(1.2)';
-                    word.style.color = 'var(--secondary)';
-                    word.style.textShadow = '0 0 10px rgba(255, 0, 128, 0.5)';
-                });
-                
-                word.addEventListener('mouseleave', () => {
-                    word.style.transform = 'scale(1)';
-                    word.style.color = '';
-                    word.style.textShadow = '';
-                });
-            });
-        }
-
-        function initServicesElements() {
-            // Make cloud disappear on click after 5 seconds
-            setTimeout(() => {
-                const sentenceCloud = document.querySelector('.sentence-cloud-container');
-                if (sentenceCloud) {
-                    sentenceCloud.style.cursor = 'pointer';
-                    sentenceCloud.style.pointerEvents = 'auto';
-                    sentenceCloud.addEventListener('click', () => {
-                        sentenceCloud.style.opacity = '0';
-                        sentenceCloud.style.transform = 'translateY(-20px) scale(0.9)';
-                        sentenceCloud.style.transition = 'opacity 0.5s, transform 0.5s';
-                        
-                        setTimeout(() => {
-                            sentenceCloud.style.display = 'none';
-                        }, 500);
-                    });
-                }
-            }, 5000);
-            
-            // Make cloud disappear on scroll
             window.addEventListener('scroll', () => {
-                const sentenceCloud = document.querySelector('.sentence-cloud-container');
-                if (sentenceCloud && window.scrollY > 300) {
-                    sentenceCloud.style.opacity = '0';
-                    sentenceCloud.style.transform = 'translateY(-20px) scale(0.9)';
-                    sentenceCloud.style.transition = 'opacity 0.5s, transform 0.5s';
-                    
-                    setTimeout(() => {
-                        sentenceCloud.style.display = 'none';
-                    }, 500);
-                }
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 80) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
             });
 
-            // Create floating shapes
-            createFloatingShapes();
-        }
+            // Reveal animations
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
+            }, { threshold: 0.1 });
+            reveals.forEach(r => observer.observe(r));
 
-        function createFloatingShapes() {
-            const container = document.querySelector('.services-hero');
-            if (!container) return;
-            
-            for (let i = 0; i < 10; i++) {
-                const shape = document.createElement('div');
-                shape.classList.add('shape');
-                
-                const size = Math.random() * 300 + 100;
-                const left = Math.random() * 100;
-                const top = Math.random() * 100;
-                const delay = Math.random() * 20;
-                const duration = Math.random() * 30 + 30;
-                
-                shape.style.width = `${size}px`;
-                shape.style.height = `${size}px`;
-                shape.style.left = `${left}%`;
-                shape.style.top = `${top}%`;
-                shape.style.animationDelay = `${delay}s`;
-                shape.style.animationDuration = `${duration}s`;
-                shape.style.position = 'absolute';
-                shape.style.borderRadius = '50%';
-                shape.style.background = 'var(--gradient-primary)';
-                shape.style.opacity = '0.05';
-                shape.style.filter = 'blur(40px)';
-                shape.style.animation = 'float 20s infinite linear';
-                shape.style.zIndex = '1';
-                
-                if (Math.random() > 0.5) {
-                    shape.style.background = 'var(--gradient-secondary)';
-                }
-                
-                container.appendChild(shape);
-            }
-        }
-        const offlineOverlay = document.getElementById('offlineOverlay');
-
-    function updateOnlineStatus() {
-        if (!navigator.onLine) {
-            offlineOverlay.classList.add('active');
-        } else {
-            offlineOverlay.classList.remove('active');
-        }
-    }
-
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-
-    // Initial check
-    updateOnlineStatus();
-    src="offline.js"
+            // Offline overlay
+            const offline = document.getElementById('offlineOverlay');
+            function updateOnline() { offline.classList.toggle('active', !navigator.onLine); }
+            window.addEventListener('online', updateOnline);
+            window.addEventListener('offline', updateOnline);
+            updateOnline();
+        });
     </script>
 </body>
 </html>

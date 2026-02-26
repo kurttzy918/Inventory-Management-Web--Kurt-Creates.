@@ -2251,7 +2251,78 @@ button:focus, a:focus {
     50% { transform: translateY(-15px); }
     100% { transform: translateY(0); }
 }
+/* ===== SERVICE VIDEO MODAL ===== */
+.service-video-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
 
+.service-video-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.video-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 217, 255, 0.4);
+    transform: scale(0.8);
+    transition: 0.4s ease;
+}
+
+.service-video-modal.active .video-modal-content {
+    transform: scale(1);
+}
+
+.video-modal-content video {
+    width: 100%;
+    display: block;
+}
+
+.close-video {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+}
+/* ===== SERVICE CARD HOVER EFFECT ===== */
+.parallax-card {
+    transition: all 0.5s ease;
+}
+
+.parallax-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 217, 255, 0.25);
+    border-color: var(--primary);
+}
+
+.parallax-card:hover .parallax-img {
+    transform: scale(1.1);
+}
+
+.parallax-card:hover .service-icon {
+    transform: rotate(10deg) scale(1.1);
+}
+
+.service-link:hover {
+    letter-spacing: 2px;
+    transform: translateX(5px);
+}
     </style>
 </head>
 <body>
@@ -2412,12 +2483,23 @@ button:focus, a:focus {
                             <li><i class="fas fa-check-circle"></i> Real-time Charts & Graphs</li>
                             <li><i class="fas fa-check-circle"></i> Dynamic Pivot Tables</li>
                         </ul>
-                        <a href="services.html" class="service-link">
-                            Learn More <i class="fas fa-arrow-right"></i>
+                        <a href="#" class="service-link open-video">
+                        Learn More <i class="fas fa-play"></i>
                         </a>
                     </div>
                 </div>
                 
+                <!-- ===== SERVICE VIDEO MODAL ===== -->
+                <div class="service-video-modal" id="serviceVideoModal">
+                <div class="video-modal-content">
+                <span class="close-video">&times;</span>
+                <video id="serviceVideoPlayer" controls>
+                <source src="mixkit-person-typing-on-a-computer-in-detail-4907-full-hd (1).mp4" type="video/mp4">
+                 Your browser does not support the video tag.
+        </video>
+            </div>
+                </div>
+
                 <!-- Service Card 2 -->
                 <div class="parallax-card">
                     <div class="parallax-img-container">
@@ -2438,10 +2520,21 @@ button:focus, a:focus {
                             <li><i class="fas fa-check-circle"></i> Automated Forms</li>
                             <li><i class="fas fa-check-circle"></i> Item Lookup</li>
                         </ul>
-                        <a href="services.html" class="service-link">
-                            Learn More <i class="fas fa-arrow-right"></i>
+                        <a href="#" class="service-link open-video">
+                        Learn More <i class="fas fa-play"></i>
                         </a>
                     </div>
+                </div>
+
+                <!-- ===== SERVICE VIDEO MODAL ===== -->
+                <div class="service-video-modal" id="serviceVideoModal">
+                <div class="video-modal-content">
+                <span class="close-video">&times;</span>
+                <video id="serviceVideoPlayer" controls>
+                <source src="mixkit-person-typing-on-a-computer-in-detail-4907-full-hd (1).mp4" type="video/mp4">
+                 Your browser does not support the video tag.
+        </video>
+            </div>
                 </div>
                 
                 <!-- Service Card 3 -->
@@ -2464,10 +2557,21 @@ button:focus, a:focus {
                             <li><i class="fas fa-check-circle"></i> Automated Expiry Notifications</li>
                             <li><i class="fas fa-check-circle"></i> Dynamic Balance Monitoring</li>
                         </ul>
-                        <a href="services.html" class="service-link">
-                            Learn More <i class="fas fa-arrow-right"></i>
+                        <a href="#" class="service-link open-video">
+                        Learn More <i class="fas fa-play"></i>
                         </a>
                     </div>
+                </div>
+
+                <!-- ===== SERVICE VIDEO MODAL ===== -->
+                <div class="service-video-modal" id="serviceVideoModal">
+                <div class="video-modal-content">
+                <span class="close-video">&times;</span>
+                <video id="serviceVideoPlayer" controls>
+                <source src="mixkit-person-typing-on-a-computer-in-detail-4907-full-hd (1).mp4" type="video/mp4">
+                 Your browser does not support the video tag.
+        </video>
+            </div>
                 </div>
             </div>
         </div>
@@ -3078,6 +3182,32 @@ window.addEventListener('load', () => {
   }, 1200);
 });
 src="offline.js"
+const modal = document.getElementById("serviceVideoModal");
+const openBtns = document.querySelectorAll(".open-video");
+const closeBtn = document.querySelector(".close-video");
+const video = document.getElementById("serviceVideoPlayer");
+
+openBtns.forEach(btn => {
+    btn.addEventListener("click", function(e){
+        e.preventDefault();
+        modal.classList.add("active");
+        video.play();
+    });
+});
+
+closeBtn.addEventListener("click", function(){
+    modal.classList.remove("active");
+    video.pause();
+    video.currentTime = 0;
+});
+
+modal.addEventListener("click", function(e){
+    if(e.target === modal){
+        modal.classList.remove("active");
+        video.pause();
+        video.currentTime = 0;
+    }
+});
 </script>
 </body>
 </html>

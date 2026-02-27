@@ -7,6 +7,9 @@
     
     <!-- Updated fonts - Removed playful fonts, added Bebas Neue for tall/bold look -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tall, bold, condensed fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Anton&family=Bebas+Neue&family=Archivo+Black&family=Kanit:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@300;400;700&family=Staatliches&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
         /* ===== CUSTOM PROPERTIES ===== */
         :root {
@@ -58,7 +61,94 @@
         @keyframes bodyFadeIn {
             to { opacity: 1; }
         }
-
+        /* ===== LOADING SCREEN (identical to index) ===== */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s var(--transition-smooth);
+            overflow: hidden;
+        }
+        .loading-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+        .loading-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.15;
+            filter: blur(8px);
+            animation: slowZoom 20s infinite alternate;
+        }
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, transparent 0%, var(--dark-bg) 90%);
+            z-index: 2;
+        }
+        .loading-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: loadingFadeIn 0.6s var(--transition-smooth) 0.3s forwards;
+        }
+        @keyframes loadingFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .loading-text {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .loading-text-part1 {
+            font-family: 'Anton', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-size: 3.5rem;
+            line-height: var(--line-height-tall);
+            text-shadow: 0 0 20px var(--accent-glow);
+            color: var(--primary);
+        }
+        .loading-text-part2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 3.5rem;
+            line-height: var(--line-height-tall);
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+            color: var(--secondary);
+        }
+        .loading-text-part3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+        /* mobile loading adjustments */
+        @media (max-width: 768px) {
+            .loading-text-part1, .loading-text-part2 { font-size: 2.5rem; }
+            .loading-text-part3 { font-size: 0.8rem; }
+        }
         /* Page Transition */
         .page-transition {
             position: fixed;
@@ -220,8 +310,8 @@
             color: var(--primary);
             font-size: 28px;
             font-weight: 900;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-            letter-spacing: 1px; /* Adjusted for tall font */
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
             text-shadow: 0 0 20px var(--accent-glow);
         }
         
@@ -229,8 +319,8 @@
             color: var(--secondary);
             font-size: 28px;
             font-weight: 900;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-            letter-spacing: 1px; /* Adjusted for tall font */
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
             text-shadow: 0 0 20px var(--accent-glow-secondary);
         }
         
@@ -357,10 +447,10 @@
             font-size: 4.5rem;
             font-weight: 900;
             margin-bottom: 30px;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             line-height: 1.1;
             text-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .highlight {
@@ -399,12 +489,12 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             line-height: 1.7;
             transform: translateY(30px);
             opacity: 0;
             animation: fadeInUp 0.8s var(--transition-smooth) 1.2s forwards;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
 
         /* Animated Background Elements */
@@ -445,12 +535,12 @@
             font-size: 3.5rem;
             text-align: center;
             margin-bottom: 20px;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             font-weight: 800;
             transform: translateY(30px);
             opacity: 0;
             animation: fadeInUp 0.8s var(--transition-smooth) 0.2s forwards;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .section-subtitle {
@@ -461,11 +551,11 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             transform: translateY(30px);
             opacity: 0;
             animation: fadeInUp 0.8s var(--transition-smooth) 0.4s forwards;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .quote-container {
@@ -588,11 +678,11 @@
             font-size: 1.5rem;
             margin-bottom: 25px;
             color: var(--primary);
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             display: flex;
             align-items: center;
             gap: 15px;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
 
         .contact-info-title i {
@@ -723,11 +813,11 @@
             margin-bottom: 40px;
             color: var(--primary);
             text-align: center;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             font-weight: 700;
             position: relative;
             padding-bottom: 20px;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
 
         .pricing-title::after {
@@ -785,17 +875,17 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: white;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-            letter-spacing: 1px; /* Adjusted for tall font */
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
         }
         
         .price-amount {
             font-size: 2.5rem;
             font-weight: 800;
             color: var(--primary);
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             text-shadow: 0 0 20px var(--accent-glow);
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .price-features {
@@ -879,8 +969,8 @@
             margin-bottom: 25px;
             color: var(--text-secondary);
             text-align: center;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-            letter-spacing: 1px; /* Adjusted for tall font */
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
         }
         
         .payment-icons {
@@ -989,9 +1079,9 @@
             margin-bottom: 30px;
             color: var(--primary);
             text-align: center;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             font-weight: 700;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .payment-option {
@@ -1060,8 +1150,8 @@
             font-size: 1.3rem;
             font-weight: 600;
             color: white;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
-            letter-spacing: 1px; /* Adjusted for tall font */
+            font-family: 'Bebas Neue', cursive;
+            letter-spacing: 1px;
         }
         
         .payment-desc {
@@ -1160,11 +1250,11 @@
             font-size: 3.5rem;
             margin-bottom: 25px;
             color: #00ff88;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             font-weight: 800;
             text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
             animation: fadeInUp 0.8s var(--transition-smooth) 0.5s both;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
         
         .success-text {
@@ -1221,11 +1311,11 @@
             text-decoration: none;
             display: inline-block;
             margin-bottom: 30px;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             position: relative;
             overflow: hidden;
             padding-bottom: 10px;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
 
         .footer-logo::after {
@@ -1299,11 +1389,11 @@
             font-size: 1.5rem;
             margin-bottom: 30px;
             color: white;
-            font-family: 'Bebas Neue', cursive; /* Changed to SCHABO alternative */
+            font-family: 'Bebas Neue', cursive;
             font-weight: 600;
             position: relative;
             padding-bottom: 15px;
-            letter-spacing: 1px; /* Adjusted for tall font */
+            letter-spacing: 1px;
         }
 
         .footer-title::after {
@@ -2083,6 +2173,22 @@
                         </button>
                     </div>
                 
+                    <!-- NEW: Excel Inventory Template Card -->
+                    <div class="price-card">
+                        <div class="price-header">
+                            <h4 class="price-title">Excel Inventory Template</h4>
+                            <div class="price-amount">₱100</div>
+                        </div>
+                        <ul class="price-features">
+                            <li><i class="fas fa-check-circle"></i> Ready-to-use Excel file</li>
+                            <li><i class="fas fa-check-circle"></i> Stock tracking & alerts</li>
+                            <li><i class="fas fa-check-circle"></i> Easy to customize</li>
+                            <li><i class="fas fa-check-circle"></i> Instant download after payment</li>
+                        </ul>
+                        <button class="buy-btn" data-package="excel">
+                            <i class="fas fa-file-excel"></i> Purchase Excel File
+                        </button>
+                    </div>
                     
                     <div class="payment-methods">
     <h4 class="payment-title">Accepted Payment Methods</h4>
@@ -2187,20 +2293,10 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    <!-- Success Message (will be dynamically updated) -->
     <div class="success-message" id="successMessage">
-        <div class="container">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2 class="success-title">Payment Successful!</h2>
-            <p class="success-text">
-                Thank you for your purchase! We've received your payment and will process your order shortly. 
-                You'll receive the Inventory Management System file and installation instructions via email within 24 hours.
-            </p>
-            <a href="index.html" class="submit-btn" style="max-width: 300px; margin: 0 auto;">
-                <i class="fas fa-home"></i> Return to Home
-            </a>
+        <div class="container" id="successContent">
+            <!-- Content injected by JS -->
         </div>
     </div>
 
@@ -2283,7 +2379,7 @@
             initFormAnimations();
             initScrollAnimations();
             initPageTransitions();
-            initPaymentModal();
+            initPaymentModal(); // this now handles dynamic success message for excel
             
             // Add ripple effects to buttons
             initRippleEffects();
@@ -2301,7 +2397,6 @@
                 const element = document.createElement('div');
                 element.classList.add('floating-element');
                 
-                // Random size and position
                 const size = Math.random() * 400 + 100;
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
@@ -2315,7 +2410,6 @@
                 element.style.animationDelay = `${delay}s`;
                 element.style.animationDuration = `${duration}s`;
                 
-                // Random gradient
                 if (Math.random() > 0.5) {
                     element.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
                 }
@@ -2333,7 +2427,6 @@
                 const orb = document.createElement('div');
                 orb.classList.add('hero-orb');
                 
-                // Random size and position
                 const size = Math.random() * 300 + 200;
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
@@ -2347,7 +2440,6 @@
                 orb.style.animationDelay = `${delay}s`;
                 orb.style.animationDuration = `${duration}s`;
                 
-                // Random color
                 if (Math.random() > 0.7) {
                     orb.style.background = 'var(--gradient-secondary)';
                     orb.style.opacity = '0.08';
@@ -2370,7 +2462,6 @@
                     navToggle.classList.toggle('active');
                 });
                 
-                // Close menu when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                         navMenu.classList.remove('active');
@@ -2378,7 +2469,6 @@
                     }
                 });
                 
-                // Close menu on link click
                 navMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
                         navMenu.classList.remove('active');
@@ -2387,7 +2477,6 @@
                 });
             }
             
-            // Navbar scroll effect
             if (navbar) {
                 window.addEventListener('scroll', () => {
                     if (window.scrollY > 100) {
@@ -2401,7 +2490,6 @@
 
         // Form animations
         function initFormAnimations() {
-            // Form focus effects
             const formControls = document.querySelectorAll('.form-control');
             formControls.forEach(control => {
                 control.addEventListener('focus', () => {
@@ -2415,23 +2503,16 @@
                 });
             });
             
-            // Quote form submission
             const quoteForm = document.getElementById('quoteForm');
             quoteForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 
-                // Get form data
-                const formData = new FormData(quoteForm);
-                
-                // Show loading state
                 const submitBtn = quoteForm.querySelector('.submit-btn');
                 const originalText = submitBtn.innerHTML;
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 submitBtn.disabled = true;
                 
-                // Simulate API call
                 setTimeout(() => {
-                    // Show success message
                     const successMessage = document.createElement('div');
                     successMessage.className = 'form-success';
                     successMessage.innerHTML = `
@@ -2444,17 +2525,13 @@
                     `;
                     
                     quoteForm.appendChild(successMessage);
-                    
-                    // Scroll to success message
                     successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     
-                    // Reset form
                     setTimeout(() => {
                         quoteForm.reset();
                         submitBtn.innerHTML = originalText;
                         submitBtn.disabled = false;
                         
-                        // Remove success message after 5 seconds
                         setTimeout(() => {
                             successMessage.remove();
                         }, 5000);
@@ -2489,16 +2566,13 @@
             
             document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 link.addEventListener('click', function(e) {
-                    // Skip for external links or same page
                     if (this.target === '_blank' || this.href === window.location.href) return;
                     
                     e.preventDefault();
                     const targetUrl = this.href;
                     
-                    // Show transition
                     transition.classList.add('active');
                     
-                    // Navigate after animation
                     setTimeout(() => {
                         window.location.href = targetUrl;
                     }, 800);
@@ -2506,7 +2580,7 @@
             });
         }
 
-        // Payment modal functionality
+        // Payment modal functionality with dynamic success for Excel
         function initPaymentModal() {
             const paymentModal = document.getElementById('paymentModal');
             const modalClose = document.getElementById('modalClose');
@@ -2514,30 +2588,27 @@
             const paymentOptions = document.querySelectorAll('.payment-option');
             const payNowBtn = document.getElementById('payNowBtn');
             const successMessage = document.getElementById('successMessage');
+            const successContent = document.getElementById('successContent');
             
             let selectedPackage = '';
             let selectedPaymentMethod = '';
             
-            // Buy button click
             buyButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     selectedPackage = button.getAttribute('data-package');
                     paymentModal.classList.add('active');
                     document.body.style.overflow = 'hidden';
                     
-                    // Add entrance animation to modal content
                     const modalContent = paymentModal.querySelector('.modal-content');
                     modalContent.style.animation = 'modalSlideUp 0.5s var(--transition-bounce)';
                 });
             });
             
-            // Close modal
             modalClose.addEventListener('click', () => {
                 paymentModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             });
             
-            // Click outside modal to close
             paymentModal.addEventListener('click', (e) => {
                 if (e.target === paymentModal) {
                     paymentModal.classList.remove('active');
@@ -2545,7 +2616,6 @@
                 }
             });
             
-            // Payment option selection
             paymentOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     paymentOptions.forEach(opt => {
@@ -2558,27 +2628,54 @@
                 });
             });
             
-            // Pay Now button
             payNowBtn.addEventListener('click', () => {
                 if (!selectedPaymentMethod) {
                     showPaymentError('Please select a payment method');
                     return;
                 }
                 
-                // Simulate payment processing
                 payNowBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
                 payNowBtn.disabled = true;
                 
-                // Add loading animation to modal
                 const modalContent = paymentModal.querySelector('.modal-content');
                 modalContent.style.animation = 'pulse 1s infinite';
                 
                 setTimeout(() => {
                     paymentModal.classList.remove('active');
-                    successMessage.style.display = 'block';
                     document.body.style.overflow = 'auto';
                     
-                    // Scroll to success message
+                    // Customize success message based on package
+                    if (selectedPackage === 'excel') {
+                        successContent.innerHTML = `
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2 class="success-title">Payment Successful!</h2>
+                            <p class="success-text">
+                                Thank you for purchasing the Excel Inventory Template! Your download link is ready.
+                            </p>
+                            <a href="inventory_template.xlsx" download class="submit-btn" style="max-width: 300px; margin: 0 auto;">
+                                <i class="fas fa-download"></i> Download Excel File
+                            </a>
+                            <p style="color: var(--text-tertiary); margin-top: 20px;">The file will be saved to your device.</p>
+                        `;
+                    } else {
+                        successContent.innerHTML = `
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2 class="success-title">Payment Successful!</h2>
+                            <p class="success-text">
+                                Thank you for your purchase! We've received your payment and will process your order shortly. 
+                                You'll receive the Inventory Management System file and installation instructions via email within 24 hours.
+                            </p>
+                            <a href="index.html" class="submit-btn" style="max-width: 300px; margin: 0 auto;">
+                                <i class="fas fa-home"></i> Return to Home
+                            </a>
+                        `;
+                    }
+                    
+                    successMessage.style.display = 'block';
                     successMessage.scrollIntoView({ behavior: 'smooth' });
                     
                     // Reset for next purchase
@@ -2658,14 +2755,12 @@
                     charIndex++;
                     setTimeout(typeWriter, 30 + Math.random() * 20);
                 } else {
-                    // Restore original HTML after typing
                     setTimeout(() => {
                         heroTitle.innerHTML = originalHTML;
                     }, 500);
                 }
             }
             
-            // Start typing after initial animations
             setTimeout(typeWriter, 1500);
         }
 
@@ -2693,22 +2788,21 @@
             }
         `;
         document.head.appendChild(additionalStyles);
+        
         const offlineOverlay = document.getElementById('offlineOverlay');
 
-    function updateOnlineStatus() {
-        if (!navigator.onLine) {
-            offlineOverlay.classList.add('active');
-        } else {
-            offlineOverlay.classList.remove('active');
+        function updateOnlineStatus() {
+            if (!navigator.onLine) {
+                offlineOverlay.classList.add('active');
+            } else {
+                offlineOverlay.classList.remove('active');
+            }
         }
-    }
 
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
 
-    // Initial check
-    updateOnlineStatus();
-    src="offline.js"
+        updateOnlineStatus();
     </script>
 </body>
 </html>

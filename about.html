@@ -377,6 +377,15 @@
                 radial-gradient(circle at 80% 20%, rgba(114, 9, 183, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, rgba(247, 37, 133, 0.05) 0%, transparent 50%);
             z-index: 1;
+            /* === NEW: animated gradient movement === */
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         .hero-grid {
@@ -415,7 +424,7 @@
             padding: 12px 24px;
             border-radius: 0;
             margin-bottom: 40px;
-            animation: slideUp 0.8s ease 0.7s forwards;
+            animation: slideUp 0.8s ease 0.7s forwards, floatBadge 4s ease-in-out infinite 1.5s;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -427,15 +436,28 @@
             }
         }
 
+        /* === NEW: floating animation for badge icon === */
+        @keyframes floatBadge {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+
         .hero-badge i {
             color: var(--primary);
             font-size: 18px;
-            animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite, softPulse 2s ease-in-out infinite;
         }
 
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes softPulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.8; transform: scale(1); }
         }
 
         .hero-badge span {
@@ -568,12 +590,19 @@
             height: 2px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 0;
-            animation: expandLine 1s ease-out;
+            animation: expandLine 1s ease-out, shimmer 3s infinite 1s;
         }
 
         @keyframes expandLine {
             from { width: 0; }
             to { width: 40px; }
+        }
+
+        /* === NEW: shimmer effect for label underline === */
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; width: 60px; }
+            100% { opacity: 1; width: 40px; }
         }
 
         .section-title {
@@ -801,6 +830,14 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            /* === NEW: pulse animation === */
+            animation: pulseBtn 3s infinite;
+        }
+
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.3); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 217, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0); }
         }
 
         .carousel-btn::before {
@@ -818,6 +855,7 @@
             background: var(--primary);
             transform: translateY(-5px) scale(1.1);
             box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
+            animation: none; /* stop pulse on hover */
         }
 
         .carousel-btn:hover::before {
@@ -839,6 +877,7 @@
             margin-top: 60px;
         }
 
+        /* === NEW: staggered entrance for feature cards === */
         .feature-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -847,7 +886,20 @@
             transition: all var(--transition-smooth);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .features-section.reveal.active .feature-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-section.reveal.active .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .features-section.reveal.active .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .features-section.reveal.active .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .features-section.reveal.active .feature-card:nth-child(4) { transition-delay: 0.4s; }
 
         .feature-card::before {
             content: '';
@@ -883,6 +935,14 @@
             margin-bottom: 25px;
             position: relative;
             overflow: hidden;
+            /* === NEW: gentle float animation === */
+            animation: floatIcon 4s ease-in-out infinite;
+        }
+
+        @keyframes floatIcon {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
         }
 
         .feature-icon i {
@@ -966,6 +1026,14 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
             line-height: 1;
+            /* === NEW: subtle pulse on stat numbers === */
+            animation: statPulse 3s infinite;
+        }
+
+        @keyframes statPulse {
+            0% { text-shadow: 0 0 0 rgba(0,217,255,0); }
+            50% { text-shadow: 0 0 15px rgba(0,217,255,0.5); }
+            100% { text-shadow: 0 0 0 rgba(0,217,255,0); }
         }
 
         .stat-label {
@@ -1111,26 +1179,8 @@
             overflow: hidden;
             transform: scaleY(1.05);
             border-width: 2px;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.6s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px) scale(1.05) scaleY(1.05);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
+            /* === NEW: gentle pulse animation === */
+            animation: btnPulse 3s infinite;
         }
 
         .btn-secondary {
@@ -1154,27 +1204,48 @@
             position: relative;
             overflow: hidden;
             transform: scaleY(1.05);
+            animation: btnPulseSecondary 3s infinite;
         }
 
-        .btn-secondary::before {
+        @keyframes btnPulse {
+            0% { box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3); }
+            50% { box-shadow: 0 4px 30px rgba(0, 217, 255, 0.7); }
+            100% { box-shadow: 0 4px 20px rgba(0, 217, 255, 0.3); }
+        }
+
+        @keyframes btnPulseSecondary {
+            0% { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 0 rgba(0,217,255,0); }
+            50% { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,217,255,0.5); }
+            100% { border-color: rgba(255,255,255,0.2); box-shadow: 0 0 0 rgba(0,217,255,0); }
+        }
+
+        .btn-primary::before, .btn-secondary::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: 0.6s;
             z-index: -1;
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-3px) scaleY(1.05);
+            animation: none; /* stop pulse on hover */
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.5);
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: white;
-            transform: translateY(-3px) scaleY(1.05);
         }
 
-        .btn-secondary:hover::before {
+        .btn-primary:hover::before, .btn-secondary:hover::before {
             left: 100%;
         }
 

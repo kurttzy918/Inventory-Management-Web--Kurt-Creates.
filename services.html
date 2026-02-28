@@ -222,8 +222,8 @@
         }
 
         .logo img {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 0;
             object-fit: cover;
             transition: all 0.4s var(--transition-bounce);
@@ -828,6 +828,8 @@
             font-family: 'Rajdhani', sans-serif;
             text-transform: uppercase;
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         /* ===== PROCESS SECTION ===== */
@@ -946,6 +948,87 @@
         .btn-secondary:hover {
             background: rgba(255,255,255,0.05);
             border-color: white;
+        }
+
+        /* ===== VIDEO MODAL ===== */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            animation: modalFadeIn 0.3s ease;
+            padding: 20px;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--dark-card);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            border: 1px solid var(--primary);
+            box-shadow: 0 30px 60px var(--accent-glow);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 45px;
+            height: 45px;
+            background: var(--secondary);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s var(--transition-bounce);
+            z-index: 10001;
+            box-shadow: 0 5px 20px rgba(255,0,128,0.5);
+        }
+
+        .modal-close:hover {
+            transform: scale(1.15) rotate(90deg);
+            background: var(--primary);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* ===== FOOTER ===== */
@@ -1295,9 +1378,53 @@
         <div class="container">
             <div class="section-title"><h2>Our Core Services</h2><p>We provide end-to-end inventory management solutions that transform how you handle stock, orders, and supply chain operations.</p></div>
             <div class="services-grid">
-                <div class="service-card"><div class="service-icon"><i class="fas fa-boxes"></i></div><div class="service-content"><h3>Real-Time Tracking</h3><p>Monitor stock levels, expiry in real-time.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Stock level monitoring</li><li><i class="fas fa-check-circle"></i> Expiry notifications</li><li><i class="fas fa-check-circle"></i> Automated alerts</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
-                <div class="service-card"><div class="service-icon"><i class="fas fa-robot"></i></div><div class="service-content"><h3>Automated Reordering</h3><p>Never run out of stock with intelligent automation.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Re-order monitoring</li><li><i class="fas fa-check-circle"></i> PO automation</li><li><i class="fas fa-check-circle"></i> Bulk optimization</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
-                <div class="service-card"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><div class="service-content"><h3>Data Insights</h3><p>Actionable insights from inventory data.</p><ul class="service-features"><li><i class="fas fa-check-circle"></i> Dynamic dashboards</li><li><i class="fas fa-check-circle"></i> Inventory analytics</li><li><i class="fas fa-check-circle"></i> Custom reports</li></ul><a href="get-quote.html" class="service-btn">Learn More</a></div></div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-boxes"></i></div>
+                    <div class="service-content">
+                        <h3>Real-Time Tracking</h3>
+                        <p>Monitor your Inventory in real-time.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Stock level monitoring</li>
+                            <li><i class="fas fa-check-circle"></i> Expiry notifications</li>
+                            <li><i class="fas fa-check-circle"></i> Stocks alert</li>
+                            <li><i class="fas fa-check-circle"></i> Re-Order Notifications</li>
+                            <li><i class="fas fa-check-circle"></i> Duplicate Detection</li>
+                            <li><i class="fas fa-check-circle"></i> Zero Stock Alerts</li>
+                        </ul>
+                        <button class="service-btn learn-more" data-video="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560">Learn More</button>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-robot"></i></div>
+                    <div class="service-content">
+                        <h3>Automated Userforms</h3>
+                        <p>Streamline data entry with intelligent, automated forms.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Form validation</li>
+                            <li><i class="fas fa-check-circle"></i> Add-ins Product Images</li>
+                            <li><i class="fas fa-check-circle"></i> Automated Product Entry</li>
+                            <li><i class="fas fa-check-circle"></i> Item Lookup</li>
+                            <li><i class="fas fa-check-circle"></i> Inventory Summary Interface</li>
+                            <li><i class="fas fa-check-circle"></i> Downloadable Reports Converted to PDF & Excel</li>
+                        </ul>
+                        <button class="service-btn learn-more" data-video="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560">Learn More</button>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="service-content">
+                        <h3>Data Insights</h3>
+                        <p>Actionable insights from inventory data.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check-circle"></i> Dynamic dashboards</li>
+                            <li><i class="fas fa-check-circle"></i> Inventory analytics</li>
+                            <li><i class="fas fa-check-circle"></i> Pie Charts & Graphs</li>
+                            <li><i class="fas fa-check-circle"></i> Revenue & Profit Percentage</li>
+                            <li><i class="fas fa-check-circle"></i> Slicers for Filtering Data</li>
+                        </ul>
+                        <button class="service-btn learn-more" data-video="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560">Learn More</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1328,7 +1455,67 @@
         </div>
     </section>
 
-    <div class="footer-bottom">
+    <!-- VIDEO MODAL -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+            <div class="video-wrapper" id="videoWrapper">
+                <!-- iframe will be inserted here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer reveal">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="footer-logo">
+                        <span class="logo-part-1">I</span><span class="logo-part-2">MS</span>
+                    </a>
+                    <p class="footer-description">
+                        Helps your Business especially for Small and Medium Enterprises to automate your Inventory, Sales Tracking and Data Insights with a Budget and User-Friendly Application.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Get Quote</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Data Entry Services</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Inventory Management</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Data Automation</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Process Optimization</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 class="footer-title">Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i>Jeddah Kingdom of Saudi Arabia</p>
+                        <p><i class="fas fa-phone"></i>+966-56-922-6173</p>
+                        <p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
                 <p>&copy; 2025 IMS Services. All rights reserved. | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: var(--primary); text-decoration: none;">Terms of Service</a></p>
             </div>
         </div>
@@ -1371,6 +1558,40 @@
             window.addEventListener('online', updateOnline);
             window.addEventListener('offline', updateOnline);
             updateOnline();
+
+            // Video modal functionality
+            const modal = document.getElementById('videoModal');
+            const closeBtn = document.getElementById('closeModal');
+            const videoWrapper = document.getElementById('videoWrapper');
+            const learnMoreBtns = document.querySelectorAll('.learn-more');
+
+            function closeModal() {
+                modal.classList.remove('active');
+                videoWrapper.innerHTML = ''; // Remove iframe to stop video
+                document.body.style.overflow = 'auto';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+
+            learnMoreBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const videoUrl = btn.getAttribute('data-video');
+                    // Create iframe with Facebook embed
+                    const iframe = document.createElement('iframe');
+                    iframe.src = videoUrl;
+                    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+                    iframe.allowFullscreen = true;
+                    iframe.title = 'Facebook Video';
+                    videoWrapper.innerHTML = ''; // Clear previous
+                    videoWrapper.appendChild(iframe);
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
         });
     </script>
 </body>

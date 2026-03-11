@@ -1713,6 +1713,63 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .video-hero{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.video-container{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-2;
+}
+
+.bg-video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* overlay */
+.video-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    z-index:-1;
+}
+
+/* keep content above video */
+.video-content{
+    position:relative;
+    z-index:2;
+    color:white;
+}
+
+/* responsive text */
+@media (max-width:768px){
+
+.video-title{
+    font-size:32px;
+}
+
+.video-subtitle{
+    font-size:16px;
+}
+
+.hero-buttons{
+    flex-direction:column;
+    gap:10px;
+}
+
+}
     </style>
 </head>
 <body>
@@ -1751,7 +1808,7 @@
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="watermark.png" alt="IMS Logo">
+                <img src="gta.png" alt="IMS Logo">
                 <div class="logo-text-carousel">
                     <div class="logo-text-track">
                         <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
@@ -1767,58 +1824,65 @@
                 <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
                 <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
                 <!-- 🌙 DARK / LIGHT TOGGLE (minimalist & modern) -->
                 <li>
                     <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
                         <i class="fas fa-moon"></i>
                     </button>
                 </li>
-                <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Video Hero -->
-    <section class="video-hero">
-        <div class="animated-grid"></div>
-        <div class="video-container">
-            <video autoplay muted loop playsinline id="bgVideo">
-                <source src="final.mp4" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
-        </div>
-        <div class="container">
-            <div class="video-content">
-                <h1 class="video-title">
-                    <div>Inventory Management</div>
-                    <div class="highlight">System</div>
-                </h1>
-                <p class="video-subtitle">
-                    Take full control of your wholesale, retail, or food business with our all-in-one 
-                    Inventory Management Solution—automating operations, simplifying processes, 
-                    and boosting efficiency.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">99%</span>
-                        <span class="stat-label">Accuracy</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Support</span>
-                    </div>
+<section class="video-hero">
+    <div class="animated-grid"></div>
+
+    <div class="video-container">
+        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="final.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="container">
+        <div class="video-content">
+            <h1 class="video-title">
+                <div>Inventory Management</div>
+                <div class="highlight">System</div>
+            </h1>
+
+            <p class="video-subtitle">
+                Take full control of your wholesale, retail, or food business with our all-in-one 
+                Inventory Management Solution—automating operations, simplifying processes, 
+                and boosting efficiency.
+            </p>
+
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">99%</span>
+                    <span class="stat-label">Accuracy</span>
                 </div>
-                <div class="hero-buttons">
-                    <a href="#services" class="btn-primary">
-                        <i class="fas fa-play-circle"></i> Explore Services
-                    </a>
-                    <a href="#contact" class="btn-secondary">
-                        <i class="fas fa-calendar-check"></i> Schedule Demo
-                    </a>
+
+                <div class="stat">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
                 </div>
             </div>
+
+            <div class="hero-buttons">
+                <a href="#services" class="btn-primary">
+                    <i class="fas fa-play-circle"></i> Explore Services
+                </a>
+
+                <a href="#contact" class="btn-secondary">
+                    <i class="fas fa-calendar-check"></i> Schedule Demo
+                </a>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Services Section -->
     <section class="parallax-services reveal" id="services">
@@ -2036,7 +2100,7 @@
                     <ul class="footer-links">
                         <li><a href="services.html"><i class="fas fa-chevron-right"></i> Inventory Management System</a></li>
                         <li><a href="services.html"><i class="fas fa-chevron-right"></i> Product Entry</a></li>
-                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Process Automation</a></li>
+                        <li><a href="services.html"><i class="fas fa-chevron-right"></i> Automation Process</a></li>
                     </ul>
                 </div>
                 

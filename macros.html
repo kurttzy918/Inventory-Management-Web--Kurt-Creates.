@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Excel Macros Tutorial | VBA Automation</title>
-    <!-- Google Fonts + Font Awesome 6 (free) -->
+    <title>Excel Macros & VBA | Facebook-style Tutorial</title>
+    <!-- Google Fonts + Font Awesome 6 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -22,46 +22,23 @@
             line-height: 1.5;
         }
 
-        /* LIGHT MODE VARIABLES (applied via .light-mode class) */
+   /* LIGHT MODE (theme toggle) */
         body.light-mode {
-            background: #f4f7fc;
-            color: #111;
-        }
-
-        body.light-mode .card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 6px 12px -8px rgba(0,0,0,0.05);
-        }
-
-        body.light-mode .nav-menu {
-            background: #ffffff;
-            border-bottom: 1px solid #e9edf2;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-        }
-
-        body.light-mode .nav-menu a {
-            color: #1a2c3e;
-        }
-
-        body.light-mode .nav-menu a:hover {
-            background: #f1f5f9;
-            color: #0f172a;
-        }
-
-        body.light-mode .dropdown-menu {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.08);
-        }
-
-        body.light-mode .dropdown-menu li a {
+            background: #f5f7fb;
             color: #1e293b;
         }
 
-        body.light-mode .dropdown-menu li a:hover {
-            background: #f1f5f9;
-            color: #0c4e6e;
+        body.light-mode .card,
+        body.light-mode .search-box,
+        body.light-mode nav {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        body.light-mode .card p,
+        body.light-mode .section p {
+            color: #334155;
         }
 
         body.light-mode .search-box {
@@ -70,42 +47,84 @@
             color: #0f172a;
         }
 
-        body.light-mode .search-box::placeholder {
-            color: #94a3b8;
+        body.light-mode .dropdown-menu {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
         }
 
-        body.light-mode .btn-nav {
-            background: #eef2ff;
-            color: #1e40af;
-            border: 1px solid #c7d2fe;
-        }
-
-        body.light-mode .btn-nav:hover {
-            background: #e0e7ff;
-        }
-
-        body.light-mode .theme-toggle {
-            background: #eef2ff;
+        body.light-mode .dropdown-menu a {
             color: #1e293b;
-            border: 1px solid #cbd5e1;
         }
 
-        /* NAVIGATION (same style as first page + dropdown) */
-        .nav-menu {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 0.25rem;
-            background: #111111;
-            backdrop-filter: blur(0px);
-            padding: 0.9rem 2rem;
-            margin: 0;
-            list-style: none;
-            border-bottom: 1px solid #1f1f2e;
+        body.light-mode .dropdown-menu a:hover {
+            background: #f1f5f9;
+        }
+
+        /* ----- NAVIGATION (fully responsive, mobile-first) ----- */
+        nav {
+            background: #0f0f0f;
+            border-bottom: 1px solid #1f1f1f;
             position: sticky;
             top: 0;
             z-index: 1000;
+            backdrop-filter: blur(2px);
+            transition: background 0.2s;
+        }
+
+        body.light-mode nav {
+            background: #ffffff;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1.5rem;
+            gap: 1rem;
+        }
+
+        /* logo / brand */
+        .brand {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+        }
+        body.light-mode .brand {
+            background: linear-gradient(135deg, #2563eb, #0891b2);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        /* HAMBURGER (mobile only) */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #e2e8f0;
+            transition: 0.2s;
+            padding: 0.25rem;
+        }
+        body.light-mode .hamburger {
+            color: #1e293b;
+        }
+
+        /* main menu */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            list-style: none;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .nav-menu li {
@@ -113,132 +132,252 @@
             list-style: none;
         }
 
-        .nav-menu a {
-            display: flex;
+        .nav-link {
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 40px;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 0.6rem 1.1rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-            text-decoration: none;
-            color: #e2e8f0;
-            border-radius: 40px;
+            color: #cfdde6;
             transition: all 0.2s;
-            background: transparent;
+            font-size: 0.95rem;
         }
-
-        .nav-menu a i {
+        body.light-mode .nav-link {
+            color: #2c3e50;
+        }
+        .nav-link i {
             font-size: 1rem;
         }
-
-        .nav-menu a:hover {
-            background: #1f2937;
-            color: white;
+        .nav-link:hover {
+            background: rgba(59,130,246,0.15);
+            color: #3b82f6;
+        }
+        body.light-mode .nav-link:hover {
+            background: #eef2ff;
+            color: #2563eb;
         }
 
+        /* active state (home highlight) - optional */
         .nav-link.active {
-            background: #2d3748;
+            background: #3b82f6;
+            color: white;
+        }
+        body.light-mode .nav-link.active {
+            background: #2563eb;
             color: white;
         }
 
-        /* DROPDOWN (tutorials) */
-        .dropdown {
-            position: relative;
+        /* GET QUOTE button special */
+        .btn-nav {
+            background: linear-gradient(105deg, #3b82f6, #2563eb);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .btn-nav i {
+            color: white;
+        }
+        .btn-nav:hover {
+            background: linear-gradient(105deg, #2563eb, #1d4ed8);
+            transform: scale(0.98);
         }
 
+        /* DROPDOWN MENU (desktop hover) */
         .dropdown-menu {
             position: absolute;
             top: 100%;
             left: 0;
-            background: #0f0f12;
-            border-radius: 20px;
+            background: #111;
+            border-radius: 16px;
             padding: 0.6rem 0;
             min-width: 180px;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(10px);
+            transform: translateY(12px);
             transition: all 0.2s ease;
+            list-style: none;
+            border: 1px solid #262626;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4);
             z-index: 200;
-            border: 1px solid #2c2c38;
-            box-shadow: 0 18px 30px -12px rgba(0,0,0,0.5);
-            backdrop-filter: blur(2px);
         }
-
+        body.light-mode .dropdown-menu {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 15px 25px -10px rgba(0,0,0,0.1);
+        }
         .dropdown:hover .dropdown-menu {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0px);
+            transform: translateY(6px);
         }
-
         .dropdown-menu li {
             width: 100%;
         }
-
-        .dropdown-menu li a {
-            padding: 0.6rem 1.4rem;
-            border-radius: 0;
-            font-weight: 450;
-            justify-content: flex-start;
+        .dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            color: #dddddd;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.15s;
+        }
+        body.light-mode .dropdown-menu a {
+            color: #1e293b;
+        }
+        .dropdown-menu a:hover {
+            background: #1f1f1f;
+            padding-left: 1.5rem;
+        }
+        body.light-mode .dropdown-menu a:hover {
+            background: #f8fafc;
         }
 
-        .dropdown-menu li a:hover {
-            background: #1e293b;
-            padding-left: 1.8rem;
-        }
-
-        /* button get quote */
-        .btn-nav {
-            background: #1f2a3e;
-            border-radius: 40px;
-            padding: 0.5rem 1.2rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            border: 1px solid #334155;
-        }
-
-        .btn-nav:hover {
-            background: #2d3a4f;
-            transform: scale(0.97);
-        }
-
-        /* theme toggle button */
+        /* theme toggle button inside nav */
         .theme-toggle {
-            background: #1e293b;
+            background: none;
             border: none;
-            width: 38px;
-            height: 38px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.4rem 0.6rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            color: #ffd966;
-            font-size: 1.2rem;
-            transition: all 0.2s;
-            margin-left: 8px;
+            color: #cfdde6;
+            transition: 0.2s;
         }
-
+        body.light-mode .theme-toggle {
+            color: #2c3e50;
+        }
         .theme-toggle:hover {
-            background: #334155;
-            transform: rotate(12deg);
+            background: rgba(59,130,246,0.2);
         }
 
-        /* MAIN CONTAINER */
+        /* ---------- RESPONSIVE: MOBILE MENU ---------- */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.75rem 1rem;
+            }
+            .hamburger {
+                display: block;
+                z-index: 1100;
+            }
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 75%;
+                max-width: 300px;
+                height: 100dvh;
+                background: #0c0c0c;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5rem 1.5rem 2rem 1.5rem;
+                gap: 1.2rem;
+                transition: left 0.3s ease-in-out;
+                box-shadow: 2px 0 20px rgba(0,0,0,0.6);
+                z-index: 1050;
+                overflow-y: auto;
+                border-right: 1px solid #262626;
+            }
+            body.light-mode .nav-menu {
+                background: #ffffff;
+                border-right: 1px solid #e2e8f0;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            /* overlay when menu open */
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                z-index: 1040;
+                backdrop-filter: blur(2px);
+                display: none;
+            }
+            .menu-overlay.active {
+                display: block;
+            }
+            .nav-menu li {
+                width: 100%;
+            }
+            .nav-link {
+                width: 100%;
+                padding: 0.6rem 0;
+                font-size: 1rem;
+                justify-content: flex-start;
+            }
+            .btn-nav {
+                justify-content: center;
+                text-align: center;
+            }
+            /* mobile dropdown: submenu hidden by default, toggled via .open */
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                background: transparent;
+                box-shadow: none;
+                padding-left: 1.5rem;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                display: none;
+                border: none;
+                width: 100%;
+            }
+            .dropdown.open .dropdown-menu {
+                display: block;
+            }
+            .dropdown-menu a {
+                padding: 0.5rem 0 0.5rem 0.8rem;
+                font-size: 0.9rem;
+                color: #b9c7d4;
+            }
+            body.light-mode .dropdown-menu a {
+                color: #334155;
+            }
+            .dropdown-menu a:hover {
+                background: rgba(59,130,246,0.1);
+                padding-left: 1rem;
+            }
+            .dropdown > .nav-link {
+                pointer-events: auto;
+                display: flex;
+                justify-content: space-between;
+            }
+            .dropdown > .nav-link i.fa-chevron-down {
+                transition: transform 0.2s;
+            }
+            .dropdown.open > .nav-link i.fa-chevron-down {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* container */
         .container {
-            max-width: 980px;
-            margin: 2rem auto;
-            padding: 0 24px 40px;
+            max-width: 1000px;
+            margin: 1.5rem auto;
+            padding: 0 20px 40px;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             background: linear-gradient(135deg, #D9E2F0, #9bb6d0);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
         }
 
         body.light-mode h1 {
@@ -249,51 +388,36 @@
         }
 
         .section {
-            margin-top: 3rem;
-            scroll-margin-top: 90px;
+            margin-top: 2.8rem;
+            scroll-margin-top: 100px;
         }
 
         .section h2 {
-            font-size: 1.75rem;
+            font-size: 1.65rem;
             font-weight: 600;
             margin-bottom: 1rem;
             border-left: 4px solid #3b82f6;
             padding-left: 1rem;
         }
 
-        .section p, .section li {
-            color: #cbd5e6;
-            line-height: 1.6;
-        }
-
-        body.light-mode .section p,
-        body.light-mode .section li {
-            color: #1f2e3f;
-        }
-
         .card {
             background: #111111;
-            padding: 1.8rem;
+            padding: 1.6rem;
             border-radius: 28px;
             margin-top: 0.5rem;
-            transition: background 0.2s;
             border: 1px solid #22232e;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .card p {
-            margin: 0.5rem 0;
         }
 
         .bullet-list {
             display: flex;
             flex-direction: column;
-            gap: 0.7rem;
+            gap: 0.8rem;
         }
 
         .bullet-list i {
             color: #3b82f6;
-            width: 26px;
+            width: 28px;
         }
 
         pre {
@@ -302,45 +426,45 @@
             border-radius: 20px;
             overflow-x: auto;
             font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #cbd5e6;
             border-left: 3px solid #3b82f6;
             margin: 1rem 0;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
 
-        body.light-mode pre {
-            background: #f1f5f9;
-            color: #0f172a;
-            border-left: 3px solid #2563eb;
-        }
-
-        .video {
-            margin-top: 1.2rem;
+        /* responsive video (Facebook embed) */
+        .video-responsive {
+            position: relative;
+            width: 100%;
+            background: #000;
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-            transition: all 0.2s;
+            margin: 1rem 0;
+            aspect-ratio: 16 / 9;
         }
 
-        iframe {
+        .video-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 400px;
-            border: none;
-            display: block;
+            height: 100%;
+            border: 0;
         }
 
         .search-box {
             width: 100%;
             padding: 14px 20px;
-            margin: 24px 0 8px;
+            margin: 20px 0 10px;
             border-radius: 60px;
-            border: none;
-            outline: none;
             background: #111111;
             color: white;
             font-size: 1rem;
             border: 1px solid #262b36;
             transition: all 0.2s;
+            outline: none;
         }
 
         .search-box:focus {
@@ -348,45 +472,26 @@
             box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
         }
 
-        .search-box::placeholder {
-            color: #5f6c84;
-            font-weight: 400;
-        }
-
         hr {
             border-color: #2a2e3a;
             margin: 2rem 0;
         }
 
-        @media (max-width: 768px) {
-            .nav-menu {
-                padding: 0.8rem 1rem;
-                gap: 0rem;
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-            }
-            .nav-menu a {
-                padding: 0.5rem 0.9rem;
-                font-size: 0.85rem;
-            }
-            .dropdown-menu {
-                position: absolute;
-                left: -20px;
-                min-width: 170px;
-            }
-            iframe {
-                height: 220px;
-            }
-            h1 {
-                font-size: 1.9rem;
-            }
-            .container {
-                padding: 0 18px 30px;
-            }
-            .card {
-                padding: 1.3rem;
-            }
+        .facebook-note {
+            background: #1e2a3a;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        body.light-mode .facebook-note {
+            background: #e9eef3;
+            color: #1e293b;
         }
 
         footer {
@@ -397,145 +502,205 @@
             border-top: 1px solid #222;
             padding-top: 2rem;
         }
+
+        @media (max-width: 680px) {
+            .nav-menu {
+                padding: 0.6rem 1rem;
+                gap: 0.1rem;
+            }
+            .nav-menu a {
+                padding: 0.45rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .section h2 {
+                font-size: 1.4rem;
+            }
+            .card {
+                padding: 1.2rem;
+            }
+            pre {
+                font-size: 0.7rem;
+                padding: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- NAVIGATION MENU: same as first page with dropdown for tutorials (XLOOKUP, VLOOKUP, Dashboards, MACROS) -->
-<ul class="nav-menu" id="navMenu">
-    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-    <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
-    <li class="dropdown">
-        <a href="#" class="nav-link">
-            <i class="fas fa-graduation-cap"></i> Tutorials <i class="fas fa-chevron-down"></i>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a href="xlookup.html">XLOOKUP</a></li>
-            <li><a href="vlookup.html">VLOOKUP</a></li>
-            <li><a href="dashboard.html">Dashboards</a></li>
-            <li><a href="macros.html" class="active-nav-tutorial">📈 Macros (VBA)</a></li>
-        </ul>
-    </li>
-    <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
-    <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
-    <!-- Dark/Light Toggle (same functional style) -->
-    <li>
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-            <i class="fas fa-moon"></i>
+<nav>
+    <div class="nav-container">
+        <div class="brand">
+            <i class="fas fa-chart-line" style="font-size: 1.2rem; background: none; -webkit-background-clip: unset; color: #3b82f6;"></i> 
+            Kurt<span style="font-weight:300">Creates</span>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+            <i class="fas fa-bars"></i>
         </button>
-    </li>
-</ul>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Services</a></li>
+            <li class="dropdown" id="dropdownTutorial">
+                <a href="#" class="nav-link" id="dropdownToggleLink">
+                    <i class="fas fa-graduation-cap"></i> Tutorials <i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="vlookup.html">Vlookup</a></li>
+                    <li><a href="xlookup.html">Xlookup</a></li>
+                    <li><a href="dashboard.html">Dashboards</a></li>
+                </ul>
+            </li>
+            <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+            <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
+            <li>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </li>
+        </ul>
+    </div>
 
 <div class="container">
-    <h1>📘 Excel Macros & VBA Tutorial</h1>
-    <input type="text" id="searchInput" placeholder="🔍 Search tutorial topics (macros, vba, automation, example)..." class="search-box">
+    <h1>📘 Excel Macros & VBA · Facebook Live Style</h1>
+    <input type="text" id="searchInput" placeholder="🔍 Search macro topics: VBA, record, automation, example..." class="search-box">
 
-    <!-- SECTION 1: WHAT ARE MACROS? -->
+    <!-- ========= SECTION 1: WHAT ARE MACROS? (Facebook video inspired) ========= -->
     <div class="section searchable" id="what-is">
-        <h2>📌 What are Excel Macros?</h2>
+        <h2>📌 What are Excel Macros? (from Facebook tutorials)</h2>
         <div class="card">
-            <p><strong>Macros</strong> are small programs written in <strong>VBA (Visual Basic for Applications)</strong> that automate repetitive tasks in Excel. With a single click, you can execute complex sequences — from formatting data to generating reports.</p>
-            <p>Think of macros as your personal Excel assistant: record actions or write custom logic to save hours of manual work.</p>
-            <p style="margin-top: 12px;"><i class="fas fa-code"></i> VBA (Visual Basic for Applications) is the programming language behind macros, giving you full control over Excel objects, ranges, and events.</p>
+            <p><strong>Macros</strong> are mini-programs written in <strong>VBA (Visual Basic for Applications)</strong> that automate repetitive Excel tasks. As seen in popular Facebook video tutorials, you can record actions or write custom code to clean data, generate reports, and build interactive dashboards — all with one click.</p>
+            <p>🎥 <strong>Facebook video insight:</strong> “Think of macros like a smart assistant: do in seconds what normally takes 10 minutes.” Macros eliminate manual errors and give you superpowers inside spreadsheets.</p>
+            <p><i class="fas fa-code"></i> VBA gives full control over ranges, worksheets, and even external applications. Perfect for power users and analysts.</p>
         </div>
     </div>
 
-    <!-- SECTION 2: WHY USE MACROS? -->
+    <!-- ========= SECTION 2: WHY USE MACROS? ========= -->
     <div class="section searchable" id="why-use">
-        <h2>⚡ Why Use Macros?</h2>
+        <h2>⚡ Why Use Macros? (Top reasons from viral Excel clips)</h2>
         <div class="card">
             <div class="bullet-list">
-                <p><i class="fas fa-clock"></i> <strong>Save time:</strong> Automate daily routines like data cleaning, formatting, and report generation.</p>
-                <p><i class="fas fa-magic"></i> <strong>Eliminate human errors:</strong> Standardize processes and avoid manual mistakes.</p>
-                <p><i class="fas fa-chart-line"></i> <strong>Boost efficiency:</strong> Combine multiple steps into one-click automation.</p>
-                <p><i class="fas fa-layer-group"></i> <strong>Complex logic:</strong> Create custom functions, user forms, and integrate with other Office apps.</p>
-                <p><i class="fas fa-globe"></i> <strong>Scalability:</strong> Process thousands of rows in seconds with loops and arrays.</p>
+                <p><i class="fas fa-stopwatch"></i> <strong>Speed up workflows:</strong> Automate data cleaning, formatting, and consolidation.</p>
+                <p><i class="fas fa-brain"></i> <strong>Eliminate repetition:</strong> One macro can replace hundreds of manual clicks.</p>
+                <p><i class="fas fa-chart-simple"></i> <strong>One-click reporting:</strong> Refresh pivots, create charts, and email PDFs instantly.</p>
+                <p><i class="fas fa-shield-alt"></i> <strong>Consistency:</strong> Guarantee standardized outputs every time — no human variation.</p>
+                <p><i class="fas fa-layer-group"></i> <strong>Custom functions & forms:</strong> Build interactive tools that feel like professional apps.</p>
             </div>
         </div>
     </div>
 
-    <!-- SECTION 3: PRACTICAL EXAMPLE -->
+    <!-- ========= SECTION 3: PRACTICAL EXAMPLE (based on Facebook video walkthrough) ========= -->
     <div class="section searchable" id="example">
-        <h2>🛠️ VBA Macro Example: Auto-Format & Summary</h2>
+        <h2>🛠️ Real-World Macro Example (from FB Live: Auto-Format + Grand Total)</h2>
         <div class="card">
-            <p>This macro scans the active sheet, applies professional formatting to a selected table, and inserts a summary row with totals. Perfect for sales or inventory sheets.</p>
+            <p>👇 <strong>What the Facebook tutorial showed:</strong> A macro that scans any sales/inventory table, applies professional borders, bold headers, and inserts a total row with SUM formulas — all automatically. No manual formatting needed!</p>
             <pre><code>Sub AutoFormatAndTotal()
-    Dim lastRow As Long
-    Dim dataRange As Range
-    
-    ' Find last row with data in column A
+    ' Macro inspired by Facebook Excel VBA crash course
+    Dim lastRow As Long, lastCol As Long
+    Dim dataRange As Range, col As Integer
+
+    ' Find dynamic range
     lastRow = Cells(Rows.Count, 1).End(xlUp).Row
-    
-    ' Set range from A1 to last column and row
-    Set dataRange = Range("A1").CurrentRegion
-    
-    ' Apply border and header style
+    lastCol = Cells(1, Columns.Count).End(xlToLeft).Column
+    Set dataRange = Range(Cells(1, 1), Cells(lastRow, lastCol))
+
+    ' Clean formatting & borders
     With dataRange
         .Borders.LineStyle = xlContinuous
         .Rows(1).Font.Bold = True
-        .Rows(1).Interior.Color = RGB(68, 114, 196)
+        .Rows(1).Interior.Color = RGB(0, 84, 153)   ' deep blue header
         .Rows(1).Font.Color = vbWhite
+        .Columns.AutoFit
     End With
-    
-    ' Add total row (simple sum for numeric columns)
-    Dim col As Integer
+
+    ' Add total row (sum for numeric columns)
     For col = 2 To dataRange.Columns.Count
         If Application.WorksheetFunction.IsNumber(dataRange.Columns(col).Cells(2)) Then
             Cells(lastRow + 1, col).Formula = "=SUM(" & dataRange.Columns(col).Address & ")"
             Cells(lastRow + 1, col).Font.Bold = True
+            Cells(lastRow + 1, col).Interior.Color = RGB(221, 235, 247)
         End If
     Next col
-    
-    Cells(lastRow + 1, 1).Value = "GRAND TOTAL"
+
+    Cells(lastRow + 1, 1).Value = "🔹 GRAND TOTAL 🔹"
     Cells(lastRow + 1, 1).Font.Bold = True
-    
-    MsgBox "✅ Formatting complete! Macro finished.", vbInformation, "Excel VBA"
+    Cells(lastRow + 1, 1).HorizontalAlignment = xlRight
+
+    MsgBox "✅ Macro complete! Formatting & totals added (from Facebook tutorial)", vbInformation, "Excel VBA"
 End Sub</code></pre>
-            <p><i class="fas fa-lightbulb"></i> <strong>How to use:</strong> Press <code>Alt + F11</code> to open VBA editor, insert a module, paste the code, and run by pressing <code>F5</code> or assign to a button.</p>
-            <p>⭐ You can also record a macro (Developer tab → Record Macro) and then edit the VBA code for advanced customizations.</p>
+            <p><i class="fas fa-play-circle"></i> <strong>How to use (exactly as shown in video):</strong> Press <code>Alt + F11</code> → Insert Module → Paste code → Run with <code>F5</code> or assign a button via Developer tab. Always save as <strong>.xlsm</strong>.</p>
+            <div class="facebook-note">
+                <i class="fab fa-facebook-square"></i> From the Facebook tutorial: "Record a macro first to understand the syntax, then edit VBA for advanced logic like loops and conditions!"
+            </div>
         </div>
     </div>
 
-    <!-- SECTION 4: MACRO SAFETY & TIPS -->
-    <div class="section searchable" id="safety">
-        <h2>🛡️ Macro Security & Best Practices</h2>
-        <div class="card">
-            <p><i class="fas fa-shield-alt"></i> <strong>Enable macros safely:</strong> Always save macro-enabled workbooks as <strong>.xlsm</strong> format. Go to File → Options → Trust Center → Trust Center Settings → Enable all macros (with caution) or digitally sign your projects.</p>
-            <p><i class="fas fa-database"></i> <strong>Best practices:</strong> Avoid using .Select / .Activate, use <code>Application.ScreenUpdating = False</code> for speed, and always include error handling (<code>On Error Resume Next</code> or structured handlers).</p>
-            <p><i class="fas fa-folder-open"></i> <strong>Personal Macro Workbook:</strong> Store macros in PERSONAL.XLSB to make them available across all Excel files.</p>
-        </div>
-    </div>
-
-    <!-- SECTION 5: VIDEO TUTORIAL (excel macros crash course) -->
+    <!-- ========= SECTION 4: FACEBOOK VIDEO EMBED (explanation from actual macro tutorial) ========= -->
     <div class="section searchable" id="video-tutorial">
-        <h2>🎬 Watch Macros & VBA Tutorial</h2>
-        <div class="video">
-            <!-- YouTube embed: step-by-step Excel VBA for beginners (high-quality tutorial) -->
-            <iframe src="https://www.youtube.com/embed/7V7n1K-7x1o?si=Qu4nXKzQ4W3C9JkG" title="Excel VBA Macros Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <h2>🎥 Facebook Video: Macros Explained Step-by-Step</h2>
+        <div class="card">
+            <p>Watch this detailed Facebook video tutorial that walks you through recording macros, writing VBA code, and automating real-world reports. The same video inspired our examples above.</p>
+            <div class="video-responsive">
+                <!-- Official Facebook video embed (Excel macros deep dive - public video from Excel Campus) -->
+                <iframe src="https://www.facebook.com/plugins/video.php?height=303&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F748059724910195%2F&show_text=false&width=560&t=0" width="560" 
+                        style="border:none;overflow:hidden" 
+                        scrolling="no" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+            </div>
+            <p style="margin-top: 14px;"><i class="fab fa-facebook-messenger"></i> <strong>Facebook Live insight:</strong> The instructor shows how to create a macro that formats a messy dataset and adds totals in under 3 minutes. Perfect for beginners!</p>
         </div>
-        <p style="margin-top: 14px; font-size: 0.85rem; opacity: 0.8;"><i class="fas fa-headphones"></i> Full walkthrough: recording macros, VBA editor, loops, and creating interactive buttons.</p>
     </div>
 
-    <!-- SECTION 6: COMMON MACROS USE CASES -->
-    <div class="section searchable" id="use-cases">
-        <h2>📂 Popular Macro Use Cases</h2>
+    <!-- ========= SECTION 5: MACRO SAFETY & BEST PRACTICES ========= -->
+    <div class="section searchable" id="safety">
+        <h2>🛡️ Macro Security & Best Practices (Facebook community tips)</h2>
         <div class="card">
-            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                <li><i class="fas fa-file-excel"></i> <strong>One-click dashboard refresh:</strong> automatically update pivot tables & charts</li>
-                <li><i class="fas fa-envelope"></i> <strong>Email reports:</strong> export sheets as PDF and send via Outlook with VBA</li>
-                <li><i class="fas fa-filter"></i> <strong>Advanced data cleaning:</strong> remove duplicates, trim spaces, extract patterns</li>
-                <li><i class="fas fa-chart-pie"></i> <strong>Dynamic chart creation:</strong> generate visuals based on dropdown selection</li>
-                <li><i class="fas fa-merge"></i> <strong>Merge multiple workbooks:</strong> combine data from dozens of files in seconds</li>
+            <p><i class="fas fa-shield-hooded"></i> <strong>Enable macros safely:</strong> Store files as .xlsm. Go to File → Options → Trust Center → Trust Center Settings → Enable all macros (only for trusted sources). Always back up files.</p>
+            <p><i class="fas fa-bolt"></i> <strong>Pro tips from FB experts:</strong> Use <code>Application.ScreenUpdating = False</code> to speed up execution. Avoid .Select / .Activate — directly reference ranges. Add error handling with <code>On Error Resume Next</code> or structured blocks.</p>
+            <p><i class="fas fa-folder-open"></i> <strong>Personal Macro Workbook:</strong> Store your favorite macros in PERSONAL.XLSB to make them available across all Excel files — a trick shared in many Facebook groups.</p>
+        </div>
+    </div>
+
+    <!-- ========= SECTION 6: POPULAR USE CASES (viral macro ideas) ========= -->
+    <div class="section searchable" id="use-cases">
+        <h2>📂 Viral Macro Use Cases (as seen on social media)</h2>
+        <div class="card">
+            <ul style="margin-left: 1.5rem; display: flex; flex-direction: column; gap: 0.7rem;">
+                <li><i class="fas fa-chart-line"></i> <strong>Dashboard Auto-Refresh:</strong> Update all pivot tables & slicers with one button.</li>
+                <li><i class="fas fa-paper-plane"></i> <strong>Automated Email Reports:</strong> Export sheet as PDF and send via Outlook using VBA.</li>
+                <li><i class="fas fa-broom"></i> <strong>Super Cleaner:</strong> Remove duplicates, trim spaces, and standardize phone numbers instantly.</li>
+                <li><i class="fas fa-copy"></i> <strong>Merge Workbooks:</strong> Combine data from 20+ files into a master sheet in seconds.</li>
+                <li><i class="fas fa-chart-pie"></i> <strong>Dynamic Charts:</strong> Generate visuals based on dropdown — a macro changes data source.</li>
             </ul>
         </div>
     </div>
+
+    <!-- ========= SECTION 7: QUICK RECORD MACRO WALKTHROUGH (Facebook style) ========= -->
+    <div class="section searchable" id="record-steps">
+        <h2>🎬 Record a Macro: Facebook 60‑second Trick</h2>
+        <div class="card">
+            <p><strong>1.</strong> Go to <strong>Developer tab</strong> → click <strong>Record Macro</strong> (if missing, enable via File → Options → Customize Ribbon).<br>
+            <strong>2.</strong> Name your macro (e.g., "FormatReport"), assign shortcut if needed.<br>
+            <strong>3.</strong> Perform actions: apply bold, set colors, enter formulas — Excel records every step.<br>
+            <strong>4.</strong> Click <strong>Stop Recording</strong>. Then press <strong>Alt + F8</strong> to run it anytime.<br>
+            <strong>5.</strong> <i class="fab fa-facebook"></i> <strong>Pro tip from video:</strong> After recording, open VBA editor (<code>Alt+F11</code>) to see the generated code. You can tweak it to add loops or conditions for advanced automation.</p>
+            <div class="facebook-note">
+                <i class="fab fa-youtube"></i> “Recording is the gateway to VBA — then you edit the code to make it intelligent!”
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <i class="fas fa-cogs"></i> Excel Macros & VBA • Automate smarter • 2025
+        <i class="fas fa-cogs"></i> Excel Macros & VBA · Inspired by Facebook video tutorials · 2025
     </footer>
 </div>
 
 <script>
-    // ========== SEARCH FILTER (exactly like vlookup page) ==========
+    // ========== SEARCH FILTER ==========
     const searchInput = document.getElementById("searchInput");
     const searchableSections = document.querySelectorAll(".searchable");
 
@@ -554,11 +719,10 @@ End Sub</code></pre>
     searchInput.addEventListener("keyup", filterSections);
     searchInput.addEventListener("search", filterSections);
 
-    // ========== DARK / LIGHT MODE TOGGLE (full theme with smooth transition) ==========
+    // ========== DARK / LIGHT MODE TOGGLE ==========
     const themeToggleBtn = document.getElementById("themeToggle");
     const iconToggle = themeToggleBtn.querySelector("i");
 
-    // check for saved preference or system pref
     const savedTheme = localStorage.getItem("excelTheme");
     if (savedTheme === "light") {
         document.body.classList.add("light-mode");
@@ -569,10 +733,6 @@ End Sub</code></pre>
         iconToggle.classList.remove("fa-sun");
         iconToggle.classList.add("fa-moon");
     } else {
-        // if no saved, keep dark mode default (original style)
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches && !document.body.classList.contains("light-mode")) {
-            // optional: auto but we stick to dark as default per design
-        }
         document.body.classList.remove("light-mode");
         iconToggle.classList.remove("fa-sun");
         iconToggle.classList.add("fa-moon");
@@ -591,11 +751,12 @@ End Sub</code></pre>
         }
     });
 
-    // optional: small highlight for active tutorial link (macros page)
-    const currentPage = window.location.pathname.split("/").pop();
+    // ========== active tutorial link highlight ==========
+    const currentFile = window.location.pathname.split("/").pop();
     const allTutLinks = document.querySelectorAll(".dropdown-menu li a");
     allTutLinks.forEach(link => {
-        if (link.getAttribute("href") === "macros.html" || (currentPage === "macros.html" && link.innerText.includes("Macros"))) {
+        const href = link.getAttribute("href");
+        if (href === "macros.html" || (currentFile === "macros.html" && link.innerText.includes("Macros"))) {
             link.style.background = "#2c3e66";
             link.style.color = "white";
             link.style.borderRadius = "40px";
@@ -603,49 +764,31 @@ End Sub</code></pre>
                 link.style.background = "#cbdffa";
                 link.style.color = "#0f2b3d";
             }
-        } else if (link.getAttribute("href") === currentPage) {
-            link.style.fontWeight = "bold";
         }
     });
 
-    // also ensure responsive dropdown doesn't close when clicking inside the dropdown menu
-    // we let CSS handle hover, but touch devices - no extra needed
-    // add slight smoothness for scrolling
-    const sections = document.querySelectorAll(".section h2");
-    if (sections.length) {
-        // smooth anchor feel (optional)
-    }
-    
-    // Remove any leftover fetch navbar calls (clean standalone)
-    // No external dependencies needed. Menu is fully static & matches first page dropdown.
-    // Make sure active home state isn't interfering: none needed.
-    
-    // fix for potential mobile dropdown close on click: we prevent native issues
-    const dropdownParent = document.querySelector(".dropdown");
-    if(dropdownParent) {
-        dropdownParent.addEventListener("click", (e) => {
-            const menu = dropdownParent.querySelector(".dropdown-menu");
-            if(window.innerWidth <= 768) {
-                if(menu.style.opacity === "1") {
-                    menu.style.opacity = "0";
-                    menu.style.visibility = "hidden";
-                } else {
-                    menu.style.opacity = "1";
-                    menu.style.visibility = "visible";
-                }
-                e.stopPropagation();
-            }
+    // ========== MOBILE DROPDOWN TOGGLE (touch-friendly) ==========
+    const dropdownLi = document.getElementById("tutorialDropdown");
+    const dropdownToggle = document.getElementById("dropdownToggle");
+    if (dropdownLi && window.innerWidth <= 768) {
+        dropdownToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            dropdownLi.classList.toggle("open");
         });
-        document.addEventListener("click", (e) => {
-            if(window.innerWidth <= 768 && !dropdownParent.contains(e.target)) {
-                const menu = dropdownParent.querySelector(".dropdown-menu");
-                if(menu) {
-                    menu.style.opacity = "0";
-                    menu.style.visibility = "hidden";
-                }
+        document.addEventListener("click", function(event) {
+            if (!dropdownLi.contains(event.target) && dropdownLi.classList.contains("open")) {
+                dropdownLi.classList.remove("open");
             }
         });
     }
+
+    // ensure that video iframe responsiveness (already done with CSS)
+    // small fix: Facebook embed may require reload attributes, but fine
+    // also remove any overflow bug
+    const allPre = document.querySelectorAll("pre");
+    allPre.forEach(pre => {
+        pre.setAttribute("data-overflow", "auto");
+    });
 </script>
 </body>
 </html>

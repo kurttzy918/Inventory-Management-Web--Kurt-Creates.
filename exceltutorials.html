@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Excel Tutorials | VLOOKUP · XLOOKUP · Macros · FILTER</title>
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-card: #111111;
+            --surface: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+            --text-dim: #888888;
+            --accent-cyan: #00d9ff;
+            --accent-pink: #ff0080;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --gradient-cyan: linear-gradient(135deg, #00d9ff, #0066ff);
+            --shadow-glow: 0 10px 30px rgba(0, 217, 255, 0.15);
+            --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* minimalist container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* navigation (minimal) */
+        .mini-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.7);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 16px 0;
+        }
+
+        .nav-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            background: var(--gradient-cyan);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .back-home {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-glass);
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-home:hover {
+            background: var(--accent-cyan);
+            color: #0a0a0a;
+            border-color: var(--accent-cyan);
+        }
+
+        /* page header */
+        .page-header {
+            text-align: center;
+            padding: 70px 0 40px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 217, 255, 0.12);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 8vw, 3.6rem);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 30%, #00d9ff 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .subhead {
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+        }
+
+        /* tutorial sections */
+        .tutorial-section {
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .section-title h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title h2 i {
+            color: var(--accent-cyan);
+            margin-right: 12px;
+        }
+
+        .func-desc {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            max-width: 500px;
+        }
+
+        /* CAROUSEL SYSTEM (minimal & touch ready) */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            margin-top: 24px;
+            border-radius: 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 24px 12px 20px 12px;
+            backdrop-filter: blur(2px);
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.4s ease-out;
+            will-change: transform;
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            padding: 0 8px;
+        }
+
+        .video-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+            transition: var(--transition);
+        }
+
+        .video-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .video-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 20px;
+        }
+
+        .video-caption {
+            padding: 14px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* carousel controls */
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .carousel-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-glass);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-main);
+            font-size: 1.3rem;
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+            color: #0a0a0a;
+            transform: scale(1.02);
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-dim);
+            border-radius: 20px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            width: 28px;
+            background: var(--accent-cyan);
+        }
+
+        /* footer minimal */
+        .footer-mini {
+            text-align: center;
+            padding: 48px 24px;
+            border-top: 1px solid var(--border-glass);
+            margin-top: 20px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            .tutorial-section {
+                padding: 50px 0;
+            }
+            .carousel-wrapper {
+                padding: 16px 8px;
+            }
+            .carousel-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* smooth reveal (light) */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* custom scroll */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mini-nav">
+    <div class="container">
+        <div class="nav-flex">
+            <a href="index.html" class="logo-area">
+                <i class="fas fa-file-excel logo-icon"></i>
+                <span class="logo-text">KURT<span style="color:#dfe7e9;">·</span>CREATES
+            </a>
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to IMS</a>
+        </div>
+    </div>
+</div>
+
+<main>
+    <div class="container">
+        <div class="page-header fade-up">
+            <div class="badge"><i class="fab fa-facebook"></i> FACEBOOK VIDEO TUTORIALS</div>
+            <h1>Excel mastery <br>through reels & guides</h1>
+            <p class="subhead">VLOOKUP · XLOOKUP · VBA Macros · FILTER function — interactive carousels with handpicked Facebook video lessons</p>
+        </div>
+    </div>
+
+    <!-- ================= SECTION 1: VLOOKUP ================= -->
+    <section class="tutorial-section fade-up" id="vlookup">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-search"></i> VLOOKUP · vertical lookup</h2>
+                <div class="func-desc">Master the classic lookup function — merge tables, find values, and boost reporting.</div>
+            </div>
+            <div class="carousel-wrapper" data-carousel="vlookup-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slides" id="vlookupSlides">
+                        <!-- slide 1 -->
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F972708301930682%2F&show_text=false&width=560&t=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook" style="color:#00d9ff;"></i>  VLOOKUP basics — ExcelJet</div>
+                            </div>
+                        </div>
+                        <!-- slide 2 -->
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMicrosoftExcel%2Fvideos%2F10155646670751118%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Microsoft Excel: VLOOKUP pro tips</div>
+                            </div>
+                        </div>
+                        <!-- slide 3 -->
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FExcelCampus%2Fvideos%2F10153890274447465%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  VLOOKUP + error handling</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" data-carousel-id="vlookup"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-dots" id="vlookupDots"></div>
+                    <button class="carousel-btn next-btn" data-carousel-id="vlookup"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 2: XLOOKUP ================= -->
+    <section class="tutorial-section fade-up" id="xlookup">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-arrow-right-arrow-left"></i> XLOOKUP · modern revolution</h2>
+                <div class="func-desc">The future of lookup — flexible, powerful, and easier than VLOOKUP.</div>
+            </div>
+            <div class="carousel-wrapper" data-carousel="xlookup-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slides" id="xlookupSlides">
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FExcelJet%2Fvideos%2F10157707523210218%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  XLOOKUP deep dive (ExcelJet)</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMyExcelOnline%2Fvideos%2F284934955014375%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  XLOOKUP vs VLOOKUP showdown</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMicrosoftExcel%2Fvideos%2F10155968327331118%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Official Microsoft XLOOKUP</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" data-carousel-id="xlookup"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-dots" id="xlookupDots"></div>
+                    <button class="carousel-btn next-btn" data-carousel-id="xlookup"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 3: MACROS (VBA) ================= -->
+    <section class="tutorial-section fade-up" id="macros">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-code"></i> Macros & VBA automation</h2>
+                <div class="func-desc">Automate repetitive tasks, record macros, and write custom VBA scripts.</div>
+            </div>
+            <div class="carousel-wrapper" data-carousel="macros-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slides" id="macrosSlides">
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?height=303&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F748059724910195%2F&show_text=false&width=560&t=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Intro to Macros (Excel Campus)</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FExcelJet%2Fvideos%2F10153782595045218%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  VBA Editor & first macro</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FExcelWithBusiness%2Fvideos%2F10153625426770912%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Automate reports using macros</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" data-carousel-id="macros"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-dots" id="macrosDots"></div>
+                    <button class="carousel-btn next-btn" data-carousel-id="macros"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SECTION 4: FILTER FUNCTION ================= -->
+    <section class="tutorial-section fade-up" id="filter">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-filter"></i> FILTER function · dynamic arrays</h2>
+                <div class="func-desc">Extract data dynamically — the modern way to filter ranges without formulas hassle.</div>
+            </div>
+            <div class="carousel-wrapper" data-carousel="filter-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slides" id="filterSlides">
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FExcelJet%2Fvideos%2F10157327725075218%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  FILTER function tutorial (ExcelJet)</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMicrosoftExcel%2Fvideos%2F10155862829251118%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Microsoft Excel: FILTER + SORT combo</div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="video-card">
+                                <div class="video-frame">
+                                    <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FMyOnlineTrainingHub%2Fvideos%2F10157783403923680%2F&show_text=0&width=560&autoplay=0" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" loading="lazy"></iframe>
+                                </div>
+                                <div class="video-caption"><i class="fab fa-facebook"></i>  Advanced FILTER with multiple criteria</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" data-carousel-id="filter"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-dots" id="filterDots"></div>
+                    <button class="carousel-btn next-btn" data-carousel-id="filter"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer-mini">
+        <p><i class="fab fa-facebook"></i>  Facebook video tutorials — curated for Excel learners | <strong>VLOOKUP · XLOOKUP · Macros · FILTER</strong></p>
+        <p style="margin-top: 12px;">© 2025 Excel Hub — part of IMS Services | <a href="index.html" style="color: #00d9ff; text-decoration: none;">Back to Inventory System</a></p>
+    </div>
+</main>
+
+<script>
+    (function() {
+        // carousel manager: handles multiple independent carousels
+        class Carousel {
+            constructor(containerId, slidesId, dotsId, prevBtn, nextBtn) {
+                this.slidesContainer = document.getElementById(slidesId);
+                this.slides = this.slidesContainer ? Array.from(this.slidesContainer.children) : [];
+                this.dotsContainer = document.getElementById(dotsId);
+                this.prevBtn = prevBtn;
+                this.nextBtn = nextBtn;
+                this.currentIndex = 0;
+                this.totalSlides = this.slides.length;
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+                this.isSwiping = false;
+                if (this.totalSlides === 0) return;
+                this.init();
+            }
+
+            init() {
+                this.updateCarousel();
+                this.createDots();
+                if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.prev());
+                if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.next());
+                // touch events for mobile
+                const container = this.slidesContainer?.parentElement;
+                if (container) {
+                    container.addEventListener('touchstart', (e) => {
+                        this.touchStartX = e.changedTouches[0].screenX;
+                    }, {passive: true});
+                    container.addEventListener('touchend', (e) => {
+                        this.touchEndX = e.changedTouches[0].screenX;
+                        this.handleSwipe();
+                    });
+                }
+                window.addEventListener('resize', () => this.updateCarousel());
+            }
+
+            handleSwipe() {
+                const threshold = 50;
+                if (this.touchStartX - this.touchEndX > threshold) {
+                    this.next();
+                } else if (this.touchEndX - this.touchStartX > threshold) {
+                    this.prev();
+                }
+            }
+
+            updateCarousel() {
+                if (!this.slidesContainer) return;
+                const shiftPercent = -this.currentIndex * 100;
+                this.slidesContainer.style.transform = `translateX(${shiftPercent}%)`;
+                this.updateDotsActive();
+            }
+
+            createDots() {
+                if (!this.dotsContainer) return;
+                this.dotsContainer.innerHTML = '';
+                for (let i = 0; i < this.totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    if (i === this.currentIndex) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        this.currentIndex = i;
+                        this.updateCarousel();
+                    });
+                    this.dotsContainer.appendChild(dot);
+                }
+            }
+
+            updateDotsActive() {
+                if (!this.dotsContainer) return;
+                const dots = this.dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, idx) => {
+                    if (idx === this.currentIndex) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                });
+            }
+
+            next() {
+                if (this.totalSlides === 0) return;
+                this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                this.updateCarousel();
+            }
+
+            prev() {
+                if (this.totalSlides === 0) return;
+                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                this.updateCarousel();
+            }
+        }
+
+        // initialization for each section
+        const carouselMapping = [
+            { slidesId: 'vlookupSlides', dotsId: 'vlookupDots', carouselKey: 'vlookup' },
+            { slidesId: 'xlookupSlides', dotsId: 'xlookupDots', carouselKey: 'xlookup' },
+            { slidesId: 'macrosSlides', dotsId: 'macrosDots', carouselKey: 'macros' },
+            { slidesId: 'filterSlides', dotsId: 'filterDots', carouselKey: 'filter' }
+        ];
+
+        carouselMapping.forEach(item => {
+            const prevBtn = document.querySelector(`.prev-btn[data-carousel-id="${item.carouselKey}"]`);
+            const nextBtn = document.querySelector(`.next-btn[data-carousel-id="${item.carouselKey}"]`);
+            if (document.getElementById(item.slidesId)) {
+                new Carousel(item.carouselKey, item.slidesId, item.dotsId, prevBtn, nextBtn);
+            }
+        });
+
+        // fade-up on scroll (minimal reveal)
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
+        fadeElements.forEach(el => observer.observe(el));
+
+        // make sure dynamic elements have small active state
+        const allBtns = document.querySelectorAll('.carousel-btn');
+        allBtns.forEach(btn => {
+            btn.addEventListener('touchstart', function() { this.style.transform = 'scale(0.96)'; });
+            btn.addEventListener('touchend', function() { this.style.transform = ''; });
+        });
+    })();
+</script>
+</body>
+</html>

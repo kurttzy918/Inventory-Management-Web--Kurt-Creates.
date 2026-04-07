@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0a0a">
+    <!-- Dynamic theme-color based on mode (will be updated by JS) -->
+    <meta name="theme-color" content="#0a0a0a" id="themeColorMeta">
     <meta name="description" content="Smart Inventory Management System for small businesses + Excel mastery tutorials. Streamline operations and boost productivity.">
     <title>Nexus Inventory · Excel Mastery</title>
     <!-- Font Awesome 6 -->
@@ -13,7 +14,7 @@
     <!-- SheetJS for Excel generation -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
-        /* ----- GLOBAL RESET & VARIABLES (same as services page) ----- */
+        /* ----- GLOBAL RESET & VARIABLES (enhanced) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -64,178 +65,473 @@
             padding: 0 28px;
         }
 
-        /* ----- UNIFIED NAVBAR (glass, sticky) ----- */
-        .glass-nav {
-            position: sticky;
+        /* ===== NAVBAR (EXACT MATCH WITH SERVICES.HTML) ===== */
+        .navbar {
+            position: fixed;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(16px);
-            background: rgba(3, 5, 11, 0.7);
-            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
-            padding: 18px 0;
-            transition: all 0.3s;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(3, 5, 11, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            transform: translateY(-100%);
+            animation: slideDownNav 0.8s var(--transition-smooth) 0.8s forwards;
+            transition: background 0.4s ease, padding 0.4s var(--transition-smooth);
         }
 
-        .nav-flex {
+        @keyframes slideDownNav {
+            to { transform: translateY(0); }
+        }
+
+        .navbar.scrolled {
+            padding: 15px 0;
+            background: rgba(3, 5, 11, 0.9);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            border-bottom-color: rgba(0,0,0,0.1);
+        }
+        body.light-mode .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .logo {
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .logo {
+        .logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 0;
+            object-fit: cover;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 0px solid var(--accent-primary);
+        }
+
+        .logo-text-carousel {
+            overflow: hidden;
+            width: 160px;
+            position: relative;
+            height: 50px;
+        }
+
+        .logo-text-track {
             display: flex;
-            align-items: baseline;
+            align-items: center;
+            height: 100%;
+            width: max-content;
+            animation: logoTextScroll 12s linear infinite;
+        }
+
+        @keyframes logoTextScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .logo-text-item {
+            display: flex;
+            align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            padding-right: 40px;
+        }
+
+        .logo-part-1 {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.65rem;
-            letter-spacing: -0.02em;
-            text-decoration: none;
-        }
-
-        .logo span:first-child {
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 28px;
             background: linear-gradient(135deg, #00E5FF, #B936FF);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
 
-        .logo span:last-child {
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-primary);
-        }
-
-        .btn-outline-glow {
-            background: transparent;
-            border: 1px solid var(--accent-primary);
-            padding: 8px 20px;
-            border-radius: 40px;
-            color: var(--accent-primary);
+        .logo-part-2 {
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
-            transition: all 0.25s;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            font-size: 28px;
+            color: var(--text-light);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 15px 25px;
+            border-radius: 0;
+            transition: all 0.4s var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            min-height: 44px;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
         }
 
-        .btn-outline-glow:hover {
+        .nav-link.active {
             background: rgba(0, 229, 255, 0.1);
-            box-shadow: 0 0 10px rgba(0,229,255,0.3);
+            color: var(--accent-primary);
+        }
+        
+        .btn-nav {
+            background: linear-gradient(100deg, #00E5FF, #0099CC);
+            color: #03050B;
+            padding: 18px 24px;
+            border-radius: 0;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: scaleY(1.05);
+            min-height: 44px;
+            touch-action: manipulation;
         }
 
+        .btn-nav:hover {
+            transform: scaleY(1.1) scaleX(1.05);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+        }
+        
         .theme-toggle {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            border: 1px solid rgba(0,229,255,0.3);
-            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-light);
             cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+            transition: all 0.4s var(--transition-smooth);
             font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            margin-left: 5px;
         }
 
         .theme-toggle:hover {
             background: var(--accent-primary);
             color: #03050B;
-            transform: rotate(15deg);
+            border-color: var(--accent-primary);
+            transform: rotate(15deg) scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+        
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--text-light);
+            transition: 0.4s var(--transition-smooth);
+            border-radius: 0;
         }
 
-        /* ----- HERO (intro specific) ----- */
-        .hero {
-            padding: 100px 0 80px;
+        /* ----- HERO CAROUSEL (existing) ----- */
+        .hero-carousel {
             position: relative;
+            width: 100%;
+            height: 90vh;
+            min-height: 580px;
             overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        .carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(3,5,11,0.65), rgba(0,0,0,0.8));
+            z-index: 1;
+        }
+
+        body.light-mode .carousel-overlay {
+            background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.5), rgba(0,0,0,0.3));
+        }
+
+        .carousel-content {
+            position: relative;
+            z-index: 3;
+            max-width: 680px;
+            color: white;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-badge {
             display: inline-flex;
-            background: rgba(0, 229, 255, 0.12);
-            backdrop-filter: blur(4px);
-            padding: 6px 16px;
+            background: rgba(0, 229, 255, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 6px 18px;
             border-radius: 60px;
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--accent-primary);
-            margin-bottom: 28px;
-            border: 0.5px solid rgba(0,229,255,0.3);
+            margin-bottom: 24px;
+            border: 0.5px solid rgba(0,229,255,0.5);
         }
 
-        .hero h1 {
+        .carousel-content h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(2.8rem, 8vw, 5rem);
-            font-weight: 700;
+            font-size: clamp(2.5rem, 6vw, 4.8rem);
+            font-weight: 800;
             line-height: 1.2;
+            margin-bottom: 20px;
             background: linear-gradient(to right, #FFFFFF, #A0ECFF, #D9A7FF);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 24px;
         }
 
-        .hero-highlight {
-            color: var(--accent-primary);
-            background: none;
-            -webkit-text-fill-color: var(--accent-primary);
+        .carousel-content p {
+            font-size: 1.15rem;
+            color: rgba(240, 243, 250, 0.85);
+            margin-bottom: 32px;
+            max-width: 560px;
         }
 
-        .hero-desc {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 580px;
-            margin-bottom: 40px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: linear-gradient(100deg, #00E5FF, #0099CC);
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-weight: 600;
+        .click-here-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent-primary);
             color: #03050B;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
             text-decoration: none;
-            transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(0,229,255,0.3);
+            transition: all 0.25s;
+            box-shadow: 0 8px 20px rgba(0,229,255,0.3);
         }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
+        .click-here-btn:hover {
+            transform: scale(1.03);
+            background: #00d4f0;
+            box-shadow: 0 12px 28px rgba(0,229,255,0.5);
+        }
+
+        .carousel-prev, .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(0,229,255,0.4);
-            padding: 12px 30px;
-            border-radius: 40px;
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ----- Cards & features ----- */
+        .carousel-prev { left: 24px; }
+        .carousel-next { right: 24px; }
+
+        .carousel-prev:hover, .carousel-next:hover {
+            background: var(--accent-primary);
+            color: #03050B;
+            border-color: var(--accent-primary);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 28px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: var(--accent-primary);
+            width: 28px;
+            border-radius: 20px;
+            box-shadow: 0 0 8px var(--accent-primary);
+        }
+
+        /* Image upload panel */
+        .carousel-upload-panel {
+            margin: 20px auto 0;
+            max-width: 900px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 20px 24px;
+            border: 1px solid rgba(0,229,255,0.3);
+            transition: all 0.3s;
+        }
+        .upload-toggle {
+            background: var(--accent-primary);
+            border: none;
+            color: #03050B;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        .upload-controls {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 16px;
+        }
+        .upload-controls.show {
+            display: flex;
+        }
+        .upload-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: rgba(0,0,0,0.3);
+            padding: 12px 18px;
+            border-radius: 28px;
+        }
+        .upload-item label {
+            font-weight: 600;
+            min-width: 80px;
+            color: var(--accent-primary);
+        }
+        .upload-item input {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,229,255,0.4);
+            padding: 10px 16px;
+            border-radius: 60px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        .reset-default-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--text-muted);
+            color: var(--text-light);
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+        @media (max-width: 768px) {
+            .upload-item { flex-direction: column; align-items: flex-start; }
+        }
+
+        /* ----- REST OF ORIGINAL SECTIONS (cards, download, parallax) ----- */
         .grid-2col {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -281,7 +577,7 @@
             font-size: 0.75rem;
         }
 
-        /* ----- Parallax search ----- */
+        /* Parallax search section (existing) */
         .parallax-search {
             position: relative;
             margin: 80px 0;
@@ -362,7 +658,6 @@
             cursor: pointer;
         }
 
-        /* ----- Download section (new) ----- */
         .download-section {
             background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(185,54,255,0.05));
             border-radius: 48px;
@@ -386,12 +681,7 @@
             transition: 0.2s;
             margin-top: 20px;
         }
-        .download-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 20px rgba(0,229,255,0.4);
-        }
 
-        /* ----- Footer (unified) ----- */
         .footer {
             border-top: 1px solid rgba(0,229,255,0.1);
             padding: 56px 0 32px;
@@ -420,15 +710,6 @@
             color: var(--text-dim);
         }
 
-        @media (max-width: 700px) {
-            .nav-links {
-                gap: 20px;
-            }
-            .container {
-                padding: 0 20px;
-            }
-        }
-
         .reveal {
             opacity: 0;
             transform: translateY(28px);
@@ -438,476 +719,515 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--glass-border);
-            transform: translateY(-100%);
-            animation: slideDownNav 0.8s var(--transition-smooth) 0.8s forwards;
-            transition: background 0.4s ease, padding 0.4s var(--transition-smooth);
+
+        @media (max-width: 1200px) {
+            .navbar .container { padding: 0 30px; }
         }
 
-        @keyframes slideDownNav {
-            to { transform: translateY(0); }
+        @media (max-width: 768px) {
+            .navbar .container { padding: 0 20px; }
+            .nav-toggle { display: flex; }
+            .nav-menu {
+                position: fixed;
+                top: 100px;
+                right: -100%;
+                width: 300px;
+                height: calc(100vh - 100px);
+                background: var(--bg-surface);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 40px;
+                transition: 0.6s var(--transition-smooth);
+                border-left: 1px solid var(--accent-primary);
+                z-index: 1001;
+            }
+            .nav-menu.active { right: 0; }
+            .nav-link { width: 100%; justify-content: flex-start; }
+            .btn-nav { width: 100%; justify-content: center; }
+            .carousel-prev, .carousel-next {
+                width: 40px;
+                height: 40px;
+            }
+            .hero-carousel {
+                min-height: 520px;
+            }
+        }
+        /* page header */
+        .page-header {
+            text-align: center;
+            padding: 120px 0 40px;
         }
 
-        .navbar.scrolled {
-            padding: 15px 0;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            box-shadow: var(--glass-shadow);
-        }
-        
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-        
-        .logo {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo img {
-            width: 80px;
-            height: 80px;
-            border-radius: 0;
-            object-fit: cover;
-            transition: all 0.4s var(--transition-bounce);
-            border: 0px solid var(--primary);
-        }
-
-        .logo-text-carousel {
-            overflow: hidden;
-            width: 160px;
-            position: relative;
-            height: 50px;
-        }
-
-        .logo-text-track {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            width: max-content;
-            animation: logoTextScroll 12s linear infinite;
-        }
-
-        @keyframes logoTextScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .logo-text-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            padding-right: 40px;
-        }
-
-        .logo-part-1 {
-            font-family: 'Anton', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            font-size: clamp(24px, 5vw, 36px);
-            line-height: 0.8;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            color: var(--primary);
-        }
-
-        .logo-part-2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            font-size: clamp(24px, 5vw, 36px);
-            line-height: 0.8;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            color: var(--secondary);
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 5px;
-            align-items: center;
-        }
-        
-        .nav-link {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 15px 25px;
-            border-radius: 0;
-            transition: all 0.4s var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .badge {
+            display: inline-block;
+            background: rgba(0, 217, 255, 0.12);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
             font-family: 'Rajdhani', sans-serif;
             font-weight: 600;
-            letter-spacing: 0.1em;
-            font-size: 1rem;
-            text-transform: uppercase;
-            min-height: 44px;
-        }
-        
-        .nav-link:hover {
-            background: var(--glass-bg);
-            transform: translateY(-2px);
+            letter-spacing: 2px;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            margin-bottom: 24px;
         }
 
-        .nav-link.active {
-            background: rgba(0, 217, 255, 0.1);
-            color: var(--primary);
+        h1 {
+            font-size: clamp(2.2rem, 8vw, 3.6rem);
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff 30%, #00d9ff 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        
-        .btn-nav {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 18px 24px;
-            border-radius: 0;
-            text-decoration: none;
-            font-family: 'Staatliches', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
+
+        .subhead {
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 20px auto 0;
             font-size: 1.1rem;
-            transition: all 0.4s var(--transition-bounce);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: scaleY(1.05);
-            min-height: 44px;
-            touch-action: manipulation;
         }
-        
-        /* ----- MODERN MINIMAL TOGGLE ----- */
-        .theme-toggle {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s var(--transition-smooth);
-            font-size: 1.2rem;
-            backdrop-filter: blur(10px);
-            margin-left: 5px;
-        }
-        .theme-toggle:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: rotate(15deg) scale(1.05);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-        
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            padding: 10px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            min-width: 44px;
-            min-height: 44px;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .nav-toggle span {
-            width: 30px;
-            height: 3px;
-            background: var(--text-primary);
-            transition: 0.4s var(--transition-smooth);
-            border-radius: 0;
-        }
+
     </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="gta.png" alt="IMS Logo">
-                <div class="logo-text-carousel">
-                    <div class="logo-text-track">
-                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
-                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
-                        <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
-                    </div>
-                </div>
-            </a>
-            <div class="nav-toggle" id="navToggle">
-                <span></span><span></span><span></span>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="services.html" class="nav-link active"><i class="fas fa-cogs"></i> Inventory Services</a></li>
-                <li><a href="exceltutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Excel Tutorials</a></li>
-                <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
-                <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
-                <!-- 🌙 DARK / LIGHT TOGGLE (minimalist & modern) -->
-                <li>
-                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero section -->
-    <div class="hero">
-        <div class="container">
-            <div class="hero-badge"><i class="fas fa-chart-line"></i> Small business · big efficiency</div>
-            <h1>Inventory control <br>+ <span class="hero-highlight">Excel intelligence</span></h1>
-            <p class="hero-desc">Empower your business with a minimalist Inventory Management System and pro Excel tricks. Seamless automation, real-time insights, and data mastery — all in one place.</p>
-            <div class="btn-group">
-                <a href="services.html" class="btn-primary"><i class="fas fa-arrow-right"></i> Explore IMS</a>
-                <a href="excel-videos.html" class="btn-secondary"><i class="fas fa-file-excel"></i> Excel Tutorials</a>
-            </div>
-        </div>
-    </div>
-
+<!-- ===== NAVIGATION (EXACT MATCH WITH SERVICES.HTML) ===== -->
+<nav class="navbar" id="navbar">
     <div class="container">
-        <div class="grid-2col" id="inventory">
-            <div class="feature-card reveal">
-                <div class="card-icon"><i class="fas fa-warehouse"></i></div>
-                <h3>Inventory Management System</h3>
-                <p>Built for wholesalers, retailers & food businesses. Real‑time stock tracking, low‑stock alerts, expiry monitoring, and insightful dashboards — reduce waste & scale.</p>
-                <div class="badge-list">
-                    <span class="badge-mini">Stock alerts</span>
-                    <span class="badge-mini">Barcode ready</span>
-                    <span class="badge-mini">Sales analytics</span>
+        <a href="index.html" class="logo">
+            <img src="gta.png" alt="IMS Logo">
+            <div class="logo-text-carousel">
+                <div class="logo-text-track">
+                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
+                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
+                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
                 </div>
             </div>
-            <div class="feature-card reveal" id="excel-tricks">
-                <div class="card-icon"><i class="fas fa-file-excel"></i></div>
-                <h3>Excel Tutorial Tricks</h3>
-                <p>From VLOOKUP to dynamic dashboards & VBA automation — step‑by‑step guides that turn you into an Excel power user.</p>
-                <div class="badge-list">
-                    <span class="badge-mini">VLOOKUP / XLOOKUP</span>
-                    <span class="badge-mini">Macros & VBA</span>
-                    <span class="badge-mini">Power Query</span>
-                </div>
-            </div>
+        </a>
+        <div class="nav-toggle" id="navToggle">
+            <span></span><span></span><span></span>
         </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Inventory Services</a></li>
+            <li><a href="exceltutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Excel Tutorials</a></li>
+            <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+            <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
+            <li><button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button></li>
+        </ul>
     </div>
+</nav>
 
-    <!-- Parallax search section -->
+<main>
     <div class="container">
-        <div class="parallax-search reveal">
-            <div class="parallax-overlay"></div>
-            <div class="search-content">
-                <h2>📘 <span style="background: linear-gradient(135deg, #fff, #00E5FF); background-clip:text; -webkit-background-clip:text; color:transparent;">Excel video library</span> — instant access</h2>
-                <p style="color: #CBD5E1; max-width: 580px; margin: 12px auto 0;">Search any topic: VLOOKUP, macros, FILTER, dashboards & more.</p>
-                <div class="search-form">
-                    <input type="text" id="excelSearchInput" class="search-input" placeholder="e.g., xlookup, pivot table, macros..." autocomplete="off">
-                    <button id="searchExcelBtn" class="search-btn"><i class="fab fa-youtube"></i> Explore videos →</button>
-                </div>
-                <div class="hint-tags">
-                    <span class="hint-tag" data-keyword="vlookup">VLOOKUP</span>
-                    <span class="hint-tag" data-keyword="xlookup">XLOOKUP</span>
-                    <span class="hint-tag" data-keyword="macros">Macros / VBA</span>
-                    <span class="hint-tag" data-keyword="filter function">FILTER function</span>
-                </div>
-            </div>
+        <div class="page-header fade-up">
+            <div class="badge"><i class="fab fa-facebook"></i> WELCOME TO MY WEBSITE</div>
+            <h1>Excel mastery <br>and Inventory Management</h1>
+            <p class="subhead">Let's Automate and Create.</p>
         </div>
     </div>
 
-    <!-- NEW: Battery Health Excel Download Section -->
-    <div class="container reveal">
-        <div class="download-section">
-            <i class="fas fa-battery-full" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 16px; display: inline-block;"></i>
-            <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem, 4vw, 2.4rem);">📊 Battery Health Tracker</h2>
-            <p style="max-width: 600px; margin: 16px auto; color: var(--text-muted);">
-                Monitor your laptop battery degradation over time. This Excel file contains design capacity, full charge capacity, health percentage, and recording dates.
-                <br>Click below to download <strong>Battery Health.xlsx</strong> (ready to use).
-            </p>
-            <button id="downloadExcelBtn" class="download-btn">
-                <i class="fas fa-download"></i> Download Battery Health.xlsx
-            </button>
-        </div>
+<!-- ========== HERO CAROUSEL (with upload support for custom images) ========== -->
+<div class="hero-carousel" id="heroCarousel">
+    <div class="carousel-slides" id="carouselSlides">
+        <!-- Slides injected via JS -->
     </div>
+    <button class="carousel-prev" id="carouselPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-next" id="carouselNext"><i class="fas fa-chevron-right"></i></button>
+    <div class="carousel-dots" id="carouselDots"></div>
+</div>
 
-    <!-- Feature highlights -->
-    <div class="container reveal">
-        <div style="text-align: center; margin: 50px 0 30px;">
-            <span class="hero-badge" style="background: rgba(185,54,255,0.1);"><i class="fas fa-magic"></i> why choose us</span>
-            <h2 class="section-title" style="font-family:'Outfit'; font-size:clamp(1.8rem,4vw,2.8rem);">Where inventory meets <span style="color:#00E5FF;">Excel mastery</span></h2>
+<!-- Existing content: Inventory + Excel cards, parallax search, etc. -->
+<div class="container">
+    <div class="grid-2col" id="inventory">
+        <div class="feature-card reveal">
+            <div class="card-icon"><i class="fas fa-warehouse"></i></div>
+            <h3>Inventory Management System</h3>
+            <p>Built for wholesalers, retailers & food businesses. Real‑time stock tracking, low‑stock alerts, expiry monitoring, and insightful dashboards — reduce waste & scale.</p>
+            <div class="badge-list">
+                <span class="badge-mini">Stock alerts</span>
+                <span class="badge-mini">Barcode ready</span>
+                <span class="badge-mini">Sales analytics</span>
+            </div>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 30px;">
-            <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
-                <i class="fas fa-chart-line" style="font-size: 2rem; color:#00E5FF;"></i>
-                <h3 style="margin: 16px 0 8px;">Real-time sync</h3>
-                <p style="color: var(--text-muted);">Inventory & sales data updated in real time.</p>
-            </div>
-            <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
-                <i class="fas fa-graduation-cap" style="font-size: 2rem; color:#B936FF;"></i>
-                <h3 style="margin: 16px 0 8px;">Excel automation</h3>
-                <p style="color: var(--text-muted);">Step‑by‑step video tutorials to automate reports.</p>
-            </div>
-            <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
-                <i class="fas fa-clock" style="font-size: 2rem; color:#00E5FF;"></i>
-                <h3 style="margin: 16px 0 8px;">Save 20+ hrs/week</h3>
-                <p style="color: var(--text-muted);">Smart alerts, expiry tracking, and pivot analytics.</p>
+        <div class="feature-card reveal" id="excel-tricks">
+            <div class="card-icon"><i class="fas fa-file-excel"></i></div>
+            <h3>Excel Tutorial Tricks</h3>
+            <p>From VLOOKUP to dynamic dashboards & VBA automation — step‑by‑step guides that turn you into an Excel power user.</p>
+            <div class="badge-list">
+                <span class="badge-mini">VLOOKUP / XLOOKUP</span>
+                <span class="badge-mini">Macros & VBA</span>
+                <span class="badge-mini">Power Query</span>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- CTA -->
-    <div class="container reveal" style="margin: 30px auto 20px;">
-        <div style="background: linear-gradient(125deg, #0F1222, #020617); border-radius: 48px; padding: 48px 32px; text-align: center; border: 1px solid rgba(0,229,255,0.2);">
-            <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem,5vw,2.5rem);">Start your <span style="color:#00E5FF;">smart inventory journey</span></h2>
-            <p style="color: #9CA3AF; max-width: 540px; margin: 18px auto;">Get a custom IMS solution or master Excel with our premium video tutorials.</p>
-            <div class="btn-group" style="justify-content: center; margin-top: 24px;">
-                <a href="#" class="btn-primary" id="contactBtn"><i class="fas fa-calendar-check"></i> Get free consultation</a>
-                <a href="excel-videos.html" class="btn-secondary"><i class="fas fa-play-circle"></i> Watch Excel series →</a>
+<!-- Parallax search section (kept with photo background) -->
+<div class="container">
+    <div class="parallax-search reveal">
+        <div class="parallax-overlay"></div>
+        <div class="search-content">
+            <h2>📘 <span style="background: linear-gradient(135deg, #fff, #00E5FF); background-clip:text; -webkit-background-clip:text; color:transparent;">Excel video library</span> — instant access</h2>
+            <p style="color: #CBD5E1; max-width: 580px; margin: 12px auto 0;">Search any topic: VLOOKUP, macros, FILTER, dashboards & more.</p>
+            <div class="search-form">
+                <input type="text" id="excelSearchInput" class="search-input" placeholder="e.g., xlookup, pivot table, macros..." autocomplete="off">
+                <button id="searchExcelBtn" class="search-btn"><i class="fab fa-youtube"></i> Explore videos →</button>
+            </div>
+            <div class="hint-tags">
+                <span class="hint-tag" data-keyword="vlookup">VLOOKUP</span>
+                <span class="hint-tag" data-keyword="xlookup">XLOOKUP</span>
+                <span class="hint-tag" data-keyword="macros">Macros / VBA</span>
+                <span class="hint-tag" data-keyword="filter function">FILTER function</span>
             </div>
         </div>
     </div>
-</main>
+</div>
 
-<!-- UNIFIED FOOTER -->
+<!-- Battery Health Excel Download Section -->
+<div class="container reveal">
+    <div class="download-section">
+        <i class="fas fa-battery-full" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 16px; display: inline-block;"></i>
+        <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem, 4vw, 2.4rem);">📊 Battery Health Tracker</h2>
+        <p style="max-width: 600px; margin: 16px auto; color: var(--text-muted);">
+            Monitor your laptop battery degradation over time. This Excel file contains design capacity, full charge capacity, health percentage, and recording dates.
+            <br>Click below to download <strong>Battery Health.xlsx</strong> (ready to use).
+        </p>
+        <button id="downloadExcelBtn" class="download-btn">
+            <i class="fas fa-download"></i> Download Battery Health.xlsx
+        </button>
+    </div>
+</div>
+
+<!-- Feature highlights -->
+<div class="container reveal">
+    <div style="text-align: center; margin: 50px 0 30px;">
+        <span class="hero-badge" style="background: rgba(185,54,255,0.1);"><i class="fas fa-magic"></i> why choose us</span>
+        <h2 class="section-title" style="font-family:'Outfit'; font-size:clamp(1.8rem,4vw,2.8rem);">Where inventory meets <span style="color:#00E5FF;">Excel mastery</span></h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 30px;">
+        <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
+            <i class="fas fa-chart-line" style="font-size: 2rem; color:#00E5FF;"></i>
+            <h3 style="margin: 16px 0 8px;">Real-time sync</h3>
+            <p style="color: var(--text-muted);">Inventory & sales data updated in real time.</p>
+        </div>
+        <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
+            <i class="fas fa-graduation-cap" style="font-size: 2rem; color:#B936FF;"></i>
+            <h3 style="margin: 16px 0 8px;">Excel automation</h3>
+            <p style="color: var(--text-muted);">Step‑by‑step video tutorials to automate reports.</p>
+        </div>
+        <div style="background: rgba(18,22,35,0.5); border-radius: 28px; padding: 28px;">
+            <i class="fas fa-clock" style="font-size: 2rem; color:#00E5FF;"></i>
+            <h3 style="margin: 16px 0 8px;">Save 20+ hrs/week</h3>
+            <p style="color: var(--text-muted);">Smart alerts, expiry tracking, and pivot analytics.</p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="container reveal" style="margin: 30px auto 20px;">
+    <div style="background: linear-gradient(125deg, #0F1222, #020617); border-radius: 48px; padding: 48px 32px; text-align: center; border: 1px solid rgba(0,229,255,0.2);">
+        <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem,5vw,2.5rem);">Start your <span style="color:#00E5FF;">smart inventory journey</span></h2>
+        <p style="color: #9CA3AF; max-width: 540px; margin: 18px auto;">Get a custom IMS solution or master Excel with our premium video tutorials.</p>
+        <div class="btn-group" style="justify-content: center; gap: 18px; margin-top: 24px; display: flex; flex-wrap: wrap;">
+            <a href="#" class="btn-primary" id="contactBtn" style="background: linear-gradient(100deg, #00E5FF, #0099CC); padding: 12px 30px; border-radius: 40px; font-weight: 600; color:#03050B; text-decoration: none;"><i class="fas fa-calendar-check"></i> Get free consultation</a>
+            <a href="excel-videos.html" class="btn-secondary" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); border: 1px solid rgba(0,229,255,0.4); padding: 12px 30px; border-radius: 40px; color: var(--text-light); text-decoration: none;"><i class="fas fa-play-circle"></i> Watch Excel series →</a>
+        </div>
+    </div>
+</div>
+
 <footer class="footer" id="contact">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-col">
-                <div class="logo" style="margin-bottom: 16px;"><span>⌘ NEXUS</span><span>IMS</span></div>
-                <p>Inventory & Excel solutions for ambitious small businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4 style="margin-bottom: 16px; font-weight: 600;">Solutions</h4>
-                <p><a href="services.html">Inventory Management</a></p>
-                <p><a href="#">Excel Automation</a></p>
-                <p><a href="#">Custom Dashboards</a></p>
-            </div>
-            <div class="footer-col">
-                <h4 style="margin-bottom: 16px; font-weight: 600;">Learn Excel</h4>
-                <p><a href="excel-videos.html">VLOOKUP · XLOOKUP</a></p>
-                <p><a href="excel-videos.html">Macros & VBA</a></p>
-                <p><a href="excel-videos.html">Pivot tables</a></p>
-            </div>
-            <div class="footer-col">
-                <h4 style="margin-bottom: 16px; font-weight: 600;">Contact</h4>
-                <p><i class="fas fa-envelope"></i> hello@nexus-ims.com</p>
-                <p><i class="fas fa-phone-alt"></i> +966 56 922 6173</p>
-            </div>
+            <div class="footer-col"><div class="logo" style="margin-bottom: 16px;"><span>⌘ NEXUS</span><span>IMS</span></div><p>Inventory & Excel solutions for ambitious small businesses.</p></div>
+            <div class="footer-col"><h4 style="margin-bottom: 16px;">Solutions</h4><p><a href="services.html">Inventory Management</a></p><p><a href="#">Excel Automation</a></p><p><a href="#">Custom Dashboards</a></p></div>
+            <div class="footer-col"><h4 style="margin-bottom: 16px;">Learn Excel</h4><p><a href="excel-videos.html">VLOOKUP · XLOOKUP</a></p><p><a href="excel-videos.html">Macros & VBA</a></p><p><a href="excel-videos.html">Pivot tables</a></p></div>
+            <div class="footer-col"><h4 style="margin-bottom: 16px;">Contact</h4><p><i class="fas fa-envelope"></i> hello@nexus-ims.com</p><p><i class="fas fa-phone-alt"></i> +966 56 922 6173</p></div>
         </div>
-        <div class="copyright">
-            © 2025 Nexus IMS — empowering small business with modern inventory & Excel mastery.
-        </div>
+        <div class="copyright">© 2025 Nexus IMS — empowering small business with modern inventory & Excel mastery.</div>
     </div>
 </footer>
 
 <script>
-    // ======================= BATTERY HEALTH EXCEL GENERATION =======================
+    // ========== CAROUSEL DATA (default images) ==========
+    const defaultImages = [
+        "vlookup.png",
+        "macro.png",
+        "filter.png",
+    ];
+
+    const slidesData = [
+        {
+            badge: "📊 Excel Intelligence",
+            title: "Advance Vlookup",
+            desc: "From VLOOKUP to Pivot Tables — unlock pro-level automation and data insights.",
+            ctaLink: "exceltutorials.html#vlookup",
+            ctaText: "Click here → Start learning"
+        },
+        {
+            badge: "📦 Inventory + Excel",
+            title: "Macro",
+            desc: "Build real-time stock dashboards with Excel, reduce waste, and boost margins.",
+            ctaLink: "exceltutorials.html#macros",
+            ctaText: "Click here → Excel for inventory"
+        },
+        {
+            badge: "⚡ VBA & Automation",
+            title: "Filter Function",
+            desc: "Step-by-step VBA macros & Power Query tutorials. Save 20+ hours weekly.",
+            ctaLink: "exceltutorials.html#filter",
+            ctaText: "Click here → Unlock automation"
+        }
+    ];
+
+    let currentIndex = 0;
+    let autoInterval;
+    const slidesContainer = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    let slideElements = [];
+
+    function buildCarousel(imagesArray) {
+        slidesContainer.innerHTML = '';
+        dotsContainer.innerHTML = '';
+        slideElements = [];
+        slidesData.forEach((slide, idx) => {
+            const slideDiv = document.createElement('div');
+            slideDiv.className = `carousel-slide ${idx === 0 ? 'active' : ''}`;
+            slideDiv.style.backgroundImage = `url(${imagesArray[idx]})`;
+            slideDiv.innerHTML = `
+                <div class="carousel-overlay"></div>
+                <div class="container carousel-content">
+                    <div class="hero-badge"><i class="fas fa-chalkboard-user"></i> ${slide.badge}</div>
+                    <h1>${slide.title}</h1>
+                    <p>${slide.desc}</p>
+                    <a href="${slide.ctaLink}" class="click-here-btn">
+                        <i class="fas fa-arrow-right"></i> ${slide.ctaText}
+                    </a>
+                </div>
+            `;
+            slidesContainer.appendChild(slideDiv);
+            slideElements.push(slideDiv);
+
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (idx === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(idx));
+            dotsContainer.appendChild(dot);
+        });
+        updateActiveSlide();
+    }
+
+    function updateActiveSlide() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+        slides.forEach((slide, idx) => {
+            if (idx === currentIndex) slide.classList.add('active');
+            else slide.classList.remove('active');
+        });
+        dots.forEach((dot, idx) => {
+            if (idx === currentIndex) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+    }
+
+    function goToSlide(index) {
+        if (index < 0) index = slidesData.length - 1;
+        if (index >= slidesData.length) index = 0;
+        currentIndex = index;
+        updateActiveSlide();
+        resetAutoSlide();
+    }
+
+    function nextSlide() { goToSlide(currentIndex + 1); }
+    function prevSlide() { goToSlide(currentIndex - 1); }
+
+    function startAutoSlide() {
+        autoInterval = setInterval(() => { nextSlide(); }, 5500);
+    }
+    function resetAutoSlide() {
+        if (autoInterval) clearInterval(autoInterval);
+        startAutoSlide();
+    }
+    function pauseAutoSlide() { if (autoInterval) clearInterval(autoInterval); }
+
+    const carouselRoot = document.getElementById('heroCarousel');
+    carouselRoot.addEventListener('mouseenter', pauseAutoSlide);
+    carouselRoot.addEventListener('mouseleave', startAutoSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    let currentImages = [...defaultImages];
+    function updateSlideBackgrounds(images) {
+        for (let i = 0; i < slideElements.length; i++) {
+            if (slideElements[i] && images[i]) {
+                slideElements[i].style.backgroundImage = `url(${images[i]})`;
+            }
+        }
+    }
+    function handleImageUpload(idx, fileInput) {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImages[idx] = e.target.result;
+                updateSlideBackgrounds(currentImages);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    function resetToDefault() {
+        currentImages = [...defaultImages];
+        updateSlideBackgrounds(currentImages);
+        for (let i = 0; i < 3; i++) {
+            const inp = document.getElementById(`uploadSlide${i}`);
+            if (inp) inp.value = '';
+        }
+    }
+    for (let i = 0; i < 3; i++) {
+        const inputEl = document.getElementById(`uploadSlide${i}`);
+        if (inputEl) {
+            inputEl.addEventListener('change', (function(idx) {
+                return function() { handleImageUpload(idx, this); };
+            })(i));
+        }
+    }
+    document.getElementById('resetDefaultImages')?.addEventListener('click', resetToDefault);
+    const toggleBtn = document.getElementById('toggleUploadBtn');
+    const uploadPanel = document.getElementById('uploadControls');
+    toggleBtn?.addEventListener('click', () => {
+        uploadPanel.classList.toggle('show');
+    });
+
+    buildCarousel(defaultImages);
+    startAutoSlide();
+
+    // ========== EXISTING FUNCTIONALITY (Search, Excel Download, Reveal, etc.) ==========
     function downloadBatteryHealthExcel() {
-        // Data from the provided table (exactly as shown)
         const designCapacity = 52552;
         const fullCharges = [51409, 50831, 51559, 51108, 51755, 51027, 50739, 51674, 49499, 48717, 49387];
-        // Generate dates (using realistic timestamps, one per row)
-        const baseDate = new Date(2025, 0, 15); // Jan 15, 2025
+        const baseDate = new Date(2025, 0, 15);
         const dates = fullCharges.map((_, idx) => {
             let d = new Date(baseDate);
-            d.setDate(baseDate.getDate() + idx * 7); // weekly intervals
-            return d.toLocaleDateString('en-CA'); // YYYY-MM-DD format
+            d.setDate(baseDate.getDate() + idx * 7);
+            return d.toLocaleDateString('en-CA');
         });
-
-        // Build worksheet rows
         const rows = [["Design Capacity", "Full Charge Capacity", "Battery Health %", "Date"]];
         for (let i = 0; i < fullCharges.length; i++) {
             const health = (fullCharges[i] / designCapacity) * 100;
             rows.push([designCapacity, fullCharges[i], health.toFixed(2), dates[i]]);
         }
-
-        // Create workbook
         const ws = XLSX.utils.aoa_to_sheet(rows);
-        // Adjust column widths (optional)
         ws['!cols'] = [{wch:18}, {wch:22}, {wch:16}, {wch:14}];
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Battery Health");
-
-        // Trigger download
         XLSX.writeFile(wb, "Battery Health.xlsx");
     }
+    document.getElementById('downloadExcelBtn')?.addEventListener('click', downloadBatteryHealthExcel);
 
-    // Attach event to download button
-    const downloadBtn = document.getElementById('downloadExcelBtn');
-    if (downloadBtn) {
-        downloadBtn.addEventListener('click', downloadBatteryHealthExcel);
-    }
-
-    // ======================= EXISTING SCRIPTS =======================
-    // Theme Toggle
-    const toggle = document.getElementById('themeToggle');
-    const body = document.body;
-    const icon = toggle?.querySelector('i');
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        body.classList.add('light-mode');
-        if (icon) icon.className = 'fas fa-sun';
-    } else {
-        if (icon) icon.className = 'fas fa-moon';
-    }
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
-            const isLight = body.classList.contains('light-mode');
-            icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        });
-    }
-
-    // Search redirect to excel-videos.html
-    const searchInput = document.getElementById('excelSearchInput');
-    const searchBtn = document.getElementById('searchExcelBtn');
-    const hintTags = document.querySelectorAll('.hint-tag');
     function navigateToExcelVideos(query) {
         if (!query.trim()) query = "excel tutorial";
         window.location.href = `excel-videos.html?search=${encodeURIComponent(query.trim())}`;
     }
+    const searchInput = document.getElementById('excelSearchInput');
+    const searchBtn = document.getElementById('searchExcelBtn');
+    const hintTags = document.querySelectorAll('.hint-tag');
     if (searchBtn) searchBtn.addEventListener('click', () => navigateToExcelVideos(searchInput.value.trim() || "excel tips"));
     if (searchInput) searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') navigateToExcelVideos(searchInput.value.trim()); });
     hintTags.forEach(tag => tag.addEventListener('click', () => navigateToExcelVideos(tag.getAttribute('data-keyword') || tag.innerText)));
 
-    // Reveal animations
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     reveals.forEach(r => observer.observe(r));
 
-    // Demo/contact alerts
-    document.getElementById('demoBtn')?.addEventListener('click', (e) => { e.preventDefault(); alert("📦 Request a demo: contact our team at hello@nexus-ims.com"); });
     document.getElementById('contactBtn')?.addEventListener('click', (e) => { e.preventDefault(); alert("📞 Talk to an expert – we’ll help you with inventory setup or Excel training."); });
+
+    // ===== NAVBAR FUNCTIONALITY (from services.html) =====
+    function initNavigation() {
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navbar = document.getElementById('navbar');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                }
+            });
+            
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                });
+            });
+        }
+        
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+    }
+
+    // ===== THEME TOGGLE (from services.html) =====
+    function initThemeToggle() {
+        const toggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = toggle.querySelector('i');
+        const themeColorMeta = document.getElementById('themeColorMeta');
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            icon.className = 'fas fa-sun';
+            if (themeColorMeta) themeColorMeta.setAttribute('content', '#f8fafc');
+        } else {
+            icon.className = 'fas fa-moon';
+            if (themeColorMeta) themeColorMeta.setAttribute('content', '#0a0a0a');
+        }
+
+        toggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            if (themeColorMeta) {
+                themeColorMeta.setAttribute('content', isLight ? '#f8fafc' : '#0a0a0a');
+            }
+            if (navigator.vibrate) navigator.vibrate(20);
+        });
+    }
+
+    function setNavHeight() {
+        const nav = document.getElementById('navbar');
+        if (nav) {
+            document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
+        }
+    }
+
+    // Initialize navbar and theme
+    initNavigation();
+    initThemeToggle();
+    setNavHeight();
+    window.addEventListener('resize', setNavHeight);
 </script>
 </body>
 </html>

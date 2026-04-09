@@ -6,7 +6,7 @@
     <!-- Dynamic theme-color based on mode (will be updated by JS) -->
     <meta name="theme-color" content="#0a0a0a" id="themeColorMeta">
     <meta name="description" content="Smart Inventory Management System for small businesses + Excel mastery tutorials. Streamline operations and boost productivity.">
-    <title>Nexus Inventory · Excel Mastery</title>
+    <title>Kurt Creates | Inventory Management System</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -114,14 +114,15 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .logo img {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 0;
             object-fit: cover;
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -130,7 +131,7 @@
 
         .logo-text-carousel {
             overflow: hidden;
-            width: 160px;
+            width: 140px;
             position: relative;
             height: 50px;
         }
@@ -181,8 +182,9 @@
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 5px;
+            gap: 10px;
             align-items: center;
+            margin-left: auto; /* PUSHES MENU TO RIGHT */
         }
         
         .nav-link {
@@ -311,7 +313,7 @@
             background-position: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
             display: flex;
             align-items: center;
         }
@@ -753,7 +755,6 @@
                 min-height: 520px;
             }
         }
-        /* page header */
         .page-header {
             text-align: center;
             padding: 120px 0 40px;
@@ -790,21 +791,20 @@
             margin: 20px auto 0;
             font-size: 1.1rem;
         }
-
     </style>
 </head>
 <body>
 
-<!-- ===== NAVIGATION (EXACT MATCH WITH SERVICES.HTML) ===== -->
+<!-- ===== NAVIGATION ===== -->
 <nav class="navbar" id="navbar">
     <div class="container">
         <a href="index.html" class="logo">
-            <img src="gta.png" alt="IMS Logo">
+            <img src="gta.png" alt="Kurt Creates Logo">
             <div class="logo-text-carousel">
                 <div class="logo-text-track">
-                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
-                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
-                    <div class="logo-text-item"><span class="logo-part-1">IMS</span><span class="logo-part-2">Services</span></div>
+                    <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
+                    <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
+                    <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
                 </div>
             </div>
         </a>
@@ -831,17 +831,14 @@
         </div>
     </div>
 
-<!-- ========== HERO CAROUSEL (with upload support for custom images) ========== -->
+<!-- ========== HERO CAROUSEL ========== -->
 <div class="hero-carousel" id="heroCarousel">
-    <div class="carousel-slides" id="carouselSlides">
-        <!-- Slides injected via JS -->
-    </div>
+    <div class="carousel-slides" id="carouselSlides"></div>
     <button class="carousel-prev" id="carouselPrev"><i class="fas fa-chevron-left"></i></button>
     <button class="carousel-next" id="carouselNext"><i class="fas fa-chevron-right"></i></button>
     <div class="carousel-dots" id="carouselDots"></div>
 </div>
 
-<!-- Existing content: Inventory + Excel cards, parallax search, etc. -->
 <div class="container">
     <div class="grid-2col" id="inventory">
         <div class="feature-card reveal">
@@ -850,24 +847,32 @@
             <p>Built for wholesalers, retailers & food businesses. Real‑time stock tracking, low‑stock alerts, expiry monitoring, and insightful dashboards — reduce waste & scale.</p>
             <div class="badge-list">
                 <span class="badge-mini">Stock alerts</span>
-                <span class="badge-mini">Barcode ready</span>
-                <span class="badge-mini">Sales analytics</span>
+                <span class="badge-mini">Expiry Notifications</span>
+                <span class="badge-mini">Automated userforms interface</span>
+                <span class="badge-mini">Auto Block Duplicate Entries</span>
+                <span class="badge-mini">Zero Stock Auto Block</span>
+                <span class="badge-mini">User Login</span>
+                <span class="badge-mini">Dynamic Dashboards</span>
             </div>
         </div>
         <div class="feature-card reveal" id="excel-tricks">
             <div class="card-icon"><i class="fas fa-file-excel"></i></div>
             <h3>Excel Tutorial Tricks</h3>
-            <p>From VLOOKUP to dynamic dashboards & VBA automation — step‑by‑step guides that turn you into an Excel power user.</p>
+            <p>From Basic Tricks into Advanced Techniques</p>
             <div class="badge-list">
-                <span class="badge-mini">VLOOKUP / XLOOKUP</span>
+                <span class="badge-mini">VLOOKUP / XLOOKUP / HLOOKUP / DGET / INDEX MATCH</span>
                 <span class="badge-mini">Macros & VBA</span>
                 <span class="badge-mini">Power Query</span>
+                <span class="badge-mini">Power Pivot</span>
+                <span class="badge-mini">FILTER function</span>
+                <span class="badge-mini">If function</span>
+                <span class="badge-mini">Table Formatting</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Parallax search section (kept with photo background) -->
+<!-- Parallax search section -->
 <div class="container">
     <div class="parallax-search reveal">
         <div class="parallax-overlay"></div>
@@ -888,17 +893,17 @@
     </div>
 </div>
 
-<!-- Battery Health Excel Download Section -->
+<!-- INVENTORY MANAGEMENT SYSTEM DOWNLOAD SECTION (Replaced Battery Health) -->
 <div class="container reveal">
     <div class="download-section">
-        <i class="fas fa-battery-full" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 16px; display: inline-block;"></i>
-        <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem, 4vw, 2.4rem);">📊 Battery Health Tracker</h2>
-        <p style="max-width: 600px; margin: 16px auto; color: var(--text-muted);">
-            Monitor your laptop battery degradation over time. This Excel file contains design capacity, full charge capacity, health percentage, and recording dates.
-            <br>Click below to download <strong>Battery Health.xlsx</strong> (ready to use).
+        <i class="fas fa-boxes" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 16px; display: inline-block;"></i>
+        <h2 style="font-family: 'Outfit'; font-size: clamp(1.8rem, 4vw, 2.4rem);">📦 Inventory Management System – Ready-to-Use Excel</h2>
+        <p style="max-width: 650px; margin: 16px auto; color: var(--text-muted);">
+            Take full control of your stock with our professional IMS template. Track products, quantities, reorder levels, suppliers, and auto-calculated alerts. 
+            <br><strong>Smart, automated & fully customizable.</strong> Click to download <strong>InventoryManagementApplication.xlsm</strong>
         </p>
         <button id="downloadExcelBtn" class="download-btn">
-            <i class="fas fa-download"></i> Download Battery Health.xlsx
+            <i class="fas fa-download"></i> Download Inventory Management System
         </button>
     </div>
 </div>
@@ -943,45 +948,21 @@
 <footer class="footer" id="contact">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-col"><div class="logo" style="margin-bottom: 16px;"><span>⌘ NEXUS</span><span>IMS</span></div><p>Inventory & Excel solutions for ambitious small businesses.</p></div>
-            <div class="footer-col"><h4 style="margin-bottom: 16px;">Solutions</h4><p><a href="services.html">Inventory Management</a></p><p><a href="#">Excel Automation</a></p><p><a href="#">Custom Dashboards</a></p></div>
+            <div class="footer-col"><div class="logo" style="margin-bottom: 16px;"><span></span><span>IMS</span></div><p>Inventory & Excel solutions for ambitious small businesses.</p></div>
             <div class="footer-col"><h4 style="margin-bottom: 16px;">Learn Excel</h4><p><a href="excel-videos.html">VLOOKUP · XLOOKUP</a></p><p><a href="excel-videos.html">Macros & VBA</a></p><p><a href="excel-videos.html">Pivot tables</a></p></div>
-            <div class="footer-col"><h4 style="margin-bottom: 16px;">Contact</h4><p><i class="fas fa-envelope"></i> hello@nexus-ims.com</p><p><i class="fas fa-phone-alt"></i> +966 56 922 6173</p></div>
+            <div class="footer-col"><h4 style="margin-bottom: 16px;">Contact</h4><p><i class="fas fa-envelope"></i> madronerokurt04@gmail.com</p><p><i class="fas fa-phone-alt"></i> +966 56 922 6173</p></div>
         </div>
-        <div class="copyright">© 2025 Nexus IMS — empowering small business with modern inventory & Excel mastery.</div>
+        <div class="copyright">© 2025 Kurt Creates — Let's Automate and Create.</div>
     </div>
 </footer>
 
 <script>
-    // ========== CAROUSEL DATA (default images) ==========
-    const defaultImages = [
-        "vlookup.png",
-        "macro.png",
-        "filter.png",
-    ];
-
+    // ========== CAROUSEL DATA ==========
+    const defaultImages = ["vlookup.png", "macro.png", "filter.png"];
     const slidesData = [
-        {
-            badge: "📊 Excel Intelligence",
-            title: "Advance Vlookup",
-            desc: "From VLOOKUP to Pivot Tables — unlock pro-level automation and data insights.",
-            ctaLink: "exceltutorials.html#vlookup",
-            ctaText: "Click here → Start learning"
-        },
-        {
-            badge: "📦 Inventory + Excel",
-            title: "Macro",
-            desc: "Build real-time stock dashboards with Excel, reduce waste, and boost margins.",
-            ctaLink: "exceltutorials.html#macros",
-            ctaText: "Click here → Excel for inventory"
-        },
-        {
-            badge: "⚡ VBA & Automation",
-            title: "Filter Function",
-            desc: "Step-by-step VBA macros & Power Query tutorials. Save 20+ hours weekly.",
-            ctaLink: "exceltutorials.html#filter",
-            ctaText: "Click here → Unlock automation"
-        }
+        { badge: "📊 Excel Intelligence", title: "Advance Vlookup", desc: "Learn Advanced Lookup Techniques", ctaLink: "exceltutorials.html#vlookup", ctaText: "Click here → Start learning" },
+        { badge: "📦 Inventory + Excel", title: "Macro", desc: "Create custom macros to automate repetitive tasks in Excel.", ctaLink: "exceltutorials.html#macros", ctaText: "Click here → Excel for inventory" },
+        { badge: "⚡ VBA & Automation", title: "Filter Function", desc: "Master the art of filtering data in Excel for efficient analysis.", ctaLink: "exceltutorials.html#filter", ctaText: "Click here → Unlock automation" }
     ];
 
     let currentIndex = 0;
@@ -1000,20 +981,9 @@
             const slideDiv = document.createElement('div');
             slideDiv.className = `carousel-slide ${idx === 0 ? 'active' : ''}`;
             slideDiv.style.backgroundImage = `url(${imagesArray[idx]})`;
-            slideDiv.innerHTML = `
-                <div class="carousel-overlay"></div>
-                <div class="container carousel-content">
-                    <div class="hero-badge"><i class="fas fa-chalkboard-user"></i> ${slide.badge}</div>
-                    <h1>${slide.title}</h1>
-                    <p>${slide.desc}</p>
-                    <a href="${slide.ctaLink}" class="click-here-btn">
-                        <i class="fas fa-arrow-right"></i> ${slide.ctaText}
-                    </a>
-                </div>
-            `;
+            slideDiv.innerHTML = `<div class="carousel-overlay"></div><div class="container carousel-content"><div class="hero-badge"><i class="fas fa-chalkboard-user"></i> ${slide.badge}</div><h1>${slide.title}</h1><p>${slide.desc}</p><a href="${slide.ctaLink}" class="click-here-btn"><i class="fas fa-arrow-right"></i> ${slide.ctaText}</a></div>`;
             slidesContainer.appendChild(slideDiv);
             slideElements.push(slideDiv);
-
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (idx === 0) dot.classList.add('active');
@@ -1024,116 +994,66 @@
     }
 
     function updateActiveSlide() {
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.dot');
-        slides.forEach((slide, idx) => {
-            if (idx === currentIndex) slide.classList.add('active');
-            else slide.classList.remove('active');
-        });
-        dots.forEach((dot, idx) => {
-            if (idx === currentIndex) dot.classList.add('active');
-            else dot.classList.remove('active');
-        });
+        document.querySelectorAll('.carousel-slide').forEach((slide, idx) => idx === currentIndex ? slide.classList.add('active') : slide.classList.remove('active'));
+        document.querySelectorAll('.dot').forEach((dot, idx) => idx === currentIndex ? dot.classList.add('active') : dot.classList.remove('active'));
     }
-
-    function goToSlide(index) {
-        if (index < 0) index = slidesData.length - 1;
-        if (index >= slidesData.length) index = 0;
-        currentIndex = index;
-        updateActiveSlide();
-        resetAutoSlide();
-    }
-
+    function goToSlide(index) { if (index < 0) index = slidesData.length - 1; if (index >= slidesData.length) index = 0; currentIndex = index; updateActiveSlide(); resetAutoSlide(); }
     function nextSlide() { goToSlide(currentIndex + 1); }
     function prevSlide() { goToSlide(currentIndex - 1); }
-
-    function startAutoSlide() {
-        autoInterval = setInterval(() => { nextSlide(); }, 5500);
-    }
-    function resetAutoSlide() {
-        if (autoInterval) clearInterval(autoInterval);
-        startAutoSlide();
-    }
+    function startAutoSlide() { autoInterval = setInterval(() => nextSlide(), 5500); }
+    function resetAutoSlide() { if (autoInterval) clearInterval(autoInterval); startAutoSlide(); }
     function pauseAutoSlide() { if (autoInterval) clearInterval(autoInterval); }
-
     const carouselRoot = document.getElementById('heroCarousel');
     carouselRoot.addEventListener('mouseenter', pauseAutoSlide);
     carouselRoot.addEventListener('mouseleave', startAutoSlide);
     prevBtn.addEventListener('click', prevSlide);
     nextBtn.addEventListener('click', nextSlide);
-
-    let currentImages = [...defaultImages];
-    function updateSlideBackgrounds(images) {
-        for (let i = 0; i < slideElements.length; i++) {
-            if (slideElements[i] && images[i]) {
-                slideElements[i].style.backgroundImage = `url(${images[i]})`;
-            }
-        }
-    }
-    function handleImageUpload(idx, fileInput) {
-        const file = fileInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                currentImages[idx] = e.target.result;
-                updateSlideBackgrounds(currentImages);
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-    function resetToDefault() {
-        currentImages = [...defaultImages];
-        updateSlideBackgrounds(currentImages);
-        for (let i = 0; i < 3; i++) {
-            const inp = document.getElementById(`uploadSlide${i}`);
-            if (inp) inp.value = '';
-        }
-    }
-    for (let i = 0; i < 3; i++) {
-        const inputEl = document.getElementById(`uploadSlide${i}`);
-        if (inputEl) {
-            inputEl.addEventListener('change', (function(idx) {
-                return function() { handleImageUpload(idx, this); };
-            })(i));
-        }
-    }
-    document.getElementById('resetDefaultImages')?.addEventListener('click', resetToDefault);
-    const toggleBtn = document.getElementById('toggleUploadBtn');
-    const uploadPanel = document.getElementById('uploadControls');
-    toggleBtn?.addEventListener('click', () => {
-        uploadPanel.classList.toggle('show');
-    });
-
     buildCarousel(defaultImages);
     startAutoSlide();
 
-    // ========== EXISTING FUNCTIONALITY (Search, Excel Download, Reveal, etc.) ==========
-    function downloadBatteryHealthExcel() {
-        const designCapacity = 52552;
-        const fullCharges = [51409, 50831, 51559, 51108, 51755, 51027, 50739, 51674, 49499, 48717, 49387];
-        const baseDate = new Date(2025, 0, 15);
-        const dates = fullCharges.map((_, idx) => {
-            let d = new Date(baseDate);
-            d.setDate(baseDate.getDate() + idx * 7);
-            return d.toLocaleDateString('en-CA');
-        });
-        const rows = [["Design Capacity", "Full Charge Capacity", "Battery Health %", "Date"]];
-        for (let i = 0; i < fullCharges.length; i++) {
-            const health = (fullCharges[i] / designCapacity) * 100;
-            rows.push([designCapacity, fullCharges[i], health.toFixed(2), dates[i]]);
-        }
-        const ws = XLSX.utils.aoa_to_sheet(rows);
-        ws['!cols'] = [{wch:18}, {wch:22}, {wch:16}, {wch:14}];
+    // ========== INVENTORY MANAGEMENT EXCEL GENERATOR (Replaces Battery Health) ==========
+    function generateInventoryManagementExcel() {
+        // Define comprehensive inventory dataset
+        const inventoryData = [
+            ["Product ID", "Product Name", "Category", "Quantity in Stock", "Reorder Level", "Unit Price (USD)", "Supplier", "Last Updated"],
+            ["PRD-1001", "Wireless Mouse", "Electronics", 145, 20, 25.99, "TechSupply Co.", "2025-04-01"],
+            ["PRD-1002", "Mechanical Keyboard", "Electronics", 78, 15, 79.50, "KeyMaster Ltd.", "2025-04-05"],
+            ["PRD-1003", "27\" Monitor", "Electronics", 42, 10, 189.99, "DisplayPro", "2025-03-28"],
+            ["PRD-1004", "Office Desk", "Furniture", 12, 5, 299.00, "ErgoHome", "2025-04-02"],
+            ["PRD-1005", "Ergonomic Chair", "Furniture", 8, 4, 449.95, "ComfortSeating", "2025-03-30"],
+            ["PRD-1006", "USB-C Hub", "Accessories", 210, 30, 34.49, "GadgetFlow", "2025-04-07"],
+            ["PRD-1007", "Laptop Stand", "Accessories", 67, 15, 42.00, "ErgoHome", "2025-04-03"],
+            ["PRD-1008", "Noise Cancelling Headphones", "Audio", 31, 8, 129.99, "SoundSphere", "2025-03-25"]
+        ];
+        const ws = XLSX.utils.aoa_to_sheet(inventoryData);
+        ws['!cols'] = [{wch:14},{wch:22},{wch:14},{wch:18},{wch:14},{wch:16},{wch:20},{wch:14}];
+        // Add conditional formatting hint (simple comment note)
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Battery Health");
-        XLSX.writeFile(wb, "Battery Health.xlsx");
+        XLSX.utils.book_append_sheet(wb, ws, "Inventory Master");
+        // Optional: Second sheet for low stock alert summary
+        const alertData = [["Product", "Current Stock", "Reorder Level", "Status"]];
+        for (let i = 1; i < inventoryData.length; i++) {
+            const qty = inventoryData[i][3];
+            const reorder = inventoryData[i][4];
+            const productName = inventoryData[i][1];
+            const status = (typeof qty === 'number' && qty <= reorder) ? "⚠️ LOW STOCK" : "✅ Healthy";
+            if (typeof qty === 'number' && qty <= reorder) alertData.push([productName, qty, reorder, status]);
+        }
+        if (alertData.length === 1) alertData.push(["No low stock items", "-", "-", "All good"]);
+        const wsAlerts = XLSX.utils.aoa_to_sheet(alertData);
+        wsAlerts['!cols'] = [{wch:24},{wch:16},{wch:16},{wch:18}];
+        XLSX.utils.book_append_sheet(wb, wsAlerts, "Low Stock Alerts");
+        XLSX.writeFile(wb, "InventoryManagementApplication.xlsx");
     }
-    document.getElementById('downloadExcelBtn')?.addEventListener('click', downloadBatteryHealthExcel);
+    document.getElementById('downloadExcelBtn')?.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.href = "InventoryManagementApplication.xlsm";
+    link.download = "InventoryManagementApplication.xlsm";
+    link.click();
+});
 
-    function navigateToExcelVideos(query) {
-        if (!query.trim()) query = "excel tutorial";
-        window.location.href = `excel-videos.html?search=${encodeURIComponent(query.trim())}`;
-    }
+    // ========== OTHER UTILITIES (Search, Reveal, Theme, Nav) ==========
+    function navigateToExcelVideos(query) { if (!query.trim()) query = "excel tutorial"; window.location.href = `excel-videos.html?search=${encodeURIComponent(query.trim())}`; }
     const searchInput = document.getElementById('excelSearchInput');
     const searchBtn = document.getElementById('searchExcelBtn');
     const hintTags = document.querySelectorAll('.hint-tag');
@@ -1142,88 +1062,39 @@
     hintTags.forEach(tag => tag.addEventListener('click', () => navigateToExcelVideos(tag.getAttribute('data-keyword') || tag.innerText)));
 
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
     reveals.forEach(r => observer.observe(r));
-
     document.getElementById('contactBtn')?.addEventListener('click', (e) => { e.preventDefault(); alert("📞 Talk to an expert – we’ll help you with inventory setup or Excel training."); });
 
-    // ===== NAVBAR FUNCTIONALITY (from services.html) =====
     function initNavigation() {
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
         const navbar = document.getElementById('navbar');
-        
         if (navToggle && navMenu) {
-            navToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-                navToggle.classList.toggle('active');
-            });
-            
-            document.addEventListener('click', (e) => {
-                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                    navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
-                }
-            });
-            
-            navMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
-                });
-            });
+            navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); navToggle.classList.toggle('active'); });
+            document.addEventListener('click', (e) => { if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) { navMenu.classList.remove('active'); navToggle.classList.remove('active'); } });
+            navMenu.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { navMenu.classList.remove('active'); navToggle.classList.remove('active'); }); });
         }
-        
-        if (navbar) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        }
+        if (navbar) window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 100); });
     }
-
-    // ===== THEME TOGGLE (from services.html) =====
     function initThemeToggle() {
         const toggle = document.getElementById('themeToggle');
         const body = document.body;
         const icon = toggle.querySelector('i');
         const themeColorMeta = document.getElementById('themeColorMeta');
-
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            body.classList.add('light-mode');
-            icon.className = 'fas fa-sun';
-            if (themeColorMeta) themeColorMeta.setAttribute('content', '#f8fafc');
-        } else {
-            icon.className = 'fas fa-moon';
-            if (themeColorMeta) themeColorMeta.setAttribute('content', '#0a0a0a');
-        }
-
+        if (savedTheme === 'light') { body.classList.add('light-mode'); icon.className = 'fas fa-sun'; if (themeColorMeta) themeColorMeta.setAttribute('content', '#f8fafc'); }
+        else { icon.className = 'fas fa-moon'; if (themeColorMeta) themeColorMeta.setAttribute('content', '#0a0a0a'); }
         toggle.addEventListener('click', () => {
             body.classList.toggle('light-mode');
             const isLight = body.classList.contains('light-mode');
             icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            if (themeColorMeta) {
-                themeColorMeta.setAttribute('content', isLight ? '#f8fafc' : '#0a0a0a');
-            }
+            if (themeColorMeta) themeColorMeta.setAttribute('content', isLight ? '#f8fafc' : '#0a0a0a');
             if (navigator.vibrate) navigator.vibrate(20);
         });
     }
-
-    function setNavHeight() {
-        const nav = document.getElementById('navbar');
-        if (nav) {
-            document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
-        }
-    }
-
-    // Initialize navbar and theme
+    function setNavHeight() { const nav = document.getElementById('navbar'); if (nav) document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px'); }
     initNavigation();
     initThemeToggle();
     setNavHeight();

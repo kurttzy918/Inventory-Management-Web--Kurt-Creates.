@@ -467,7 +467,7 @@
             border-radius: 0;
         }
 
-        /* ===== VIDEO HERO ===== */
+        /* ===== VIDEO HERO (converted to static image hero) ===== */
         .video-hero {
             position: relative;
             width: 100%;
@@ -510,11 +510,13 @@
             background: black;
         }
 
-        #bgVideo {
+        /* Static image background replacement */
+        .bg-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             object-position: center;
+            display: block;
         }
         
         .video-overlay {
@@ -646,7 +648,7 @@
         }
         
         .stat-label {
-            color: var(--text-primary); /* was white, now uses theme variable */
+            color: var(--text-primary);
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -710,7 +712,7 @@
         
         .btn-secondary:hover {
             background: var(--primary);
-            color: var(--text-primary); /* was var(--dark-bg), now uses text-primary for better contrast */
+            color: var(--text-primary);
             transform: scaleY(1.1) scaleX(1.05);
             box-shadow: 0 15px 40px var(--accent-glow);
             border-color: transparent;
@@ -870,7 +872,6 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             line-height: 0.9;
-            /* color inherits from body (var(--text-primary)) */
         }
         
         .service-description {
@@ -900,7 +901,7 @@
         }
         
         .service-features li i {
-            color: #00ff88; /* accent green, stays for both modes */
+            color: #00ff88;
             font-size: 1.2rem;
         }
         
@@ -970,7 +971,7 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             line-height: 0.9;
-            color: var(--text-primary); /* ensure theme variable */
+            color: var(--text-primary);
         }
 
         .current-video-description {
@@ -1092,7 +1093,7 @@
             line-height: 1.3;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--text-primary); /* was white, now uses theme variable */
+            color: var(--text-primary);
         }
 
         .gallery-title {
@@ -1215,7 +1216,7 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             line-height: 0.9;
-            color: var(--text-primary); /* was white, now uses theme variable */
+            color: var(--text-primary);
         }
         
         .carousel-item p {
@@ -1333,7 +1334,7 @@
         .footer-title {
             font-size: clamp(1.5rem, 5vw, 1.8rem);
             margin-bottom: 30px;
-            color: var(--text-primary); /* was white, now uses theme variable */
+            color: var(--text-primary);
             font-family: 'Oswald', sans-serif;
             font-weight: 600;
             letter-spacing: 0.15em;
@@ -1691,7 +1692,6 @@
             }
         }
 
-        /* Remove rounded corners for tall aesthetic */
         .parallax-card, .stat, .video-thumbnail, .btn-primary, .btn-secondary, .btn-nav, .section-tag, .service-badge, .project-tech span {
             border-radius: 0 !important;
         }
@@ -1701,7 +1701,6 @@
             color: white;
         }
 
-        /* ===== MINIMAL SCROLL REVEAL ===== */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -1713,118 +1712,35 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .video-hero{
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-}
-
-.video-container{
-    position: absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:-2;
-}
-
-.bg-video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-/* overlay */
-.video-overlay{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.55);
-    z-index:-1;
-}
-
-/* keep content above video */
-.video-content{
-    position:relative;
-    z-index:2;
-    color:white;
-}
-
-/* responsive text */
-@media (max-width:768px){
-
-.video-title{
-    font-size:32px;
-}
-
-.video-subtitle{
-    font-size:16px;
-}
-
-.hero-buttons{
-    flex-direction:column;
-    gap:10px;
-}
-
-}
-/* ===== DROPDOWN MENU ===== */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--dark-card);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
-    min-width: 200px;
-    display: none;
-    flex-direction: column;
-    z-index: 999;
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu a {
-    padding: 12px 20px;
-    display: block;
-    color: var(--text-primary);
-    text-decoration: none;
-    font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 0.08em;
-    transition: 0.3s;
-}
-
-.dropdown-menu a:hover {
-    background: var(--primary);
-    color: white;
-}
-
-/* SHOW DROPDOWN */
-.dropdown:hover .dropdown-menu {
-    display: flex;
-}
-
-/* MOBILE DROPDOWN */
-@media (max-width: 768px) {
-    .dropdown-menu {
-        position: static;
-        border: none;
-        display: none;
-        width: 100%;
-    }
-
-    .dropdown.active .dropdown-menu {
-        display: flex;
-    }
-}
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--dark-card);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+        .dropdown-menu li { list-style: none; }
+        .dropdown-menu a {
+            padding: 12px 20px;
+            display: block;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 0.08em;
+            transition: 0.3s;
+        }
+        .dropdown-menu a:hover { background: var(--primary); color: white; }
+        .dropdown:hover .dropdown-menu { display: flex; }
+        @media (max-width: 768px) {
+            .dropdown-menu { position: static; border: none; display: none; width: 100%; }
+            .dropdown.active .dropdown-menu { display: flex; }
+        }
     </style>
 </head>
 <body>
@@ -1881,7 +1797,6 @@
                 <li><a href="exceltutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Excel Tutorials</a></li>
                 <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
                 <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
-                <!-- 🌙 DARK / LIGHT TOGGLE (minimalist & modern) -->
                 <li>
                     <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
                         <i class="fas fa-moon"></i>
@@ -1891,54 +1806,44 @@
         </div>
     </nav>
 
-    <!-- Video Hero -->
-<section class="video-hero">
-    <div class="animated-grid"></div>
+    <!-- Video Hero REPLACED WITH STATIC IMAGE (mobile-friendly) -->
+    <section class="video-hero">
+        <div class="animated-grid"></div>
 
-    <div class="video-container">
-        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
-            <source src="final.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-    </div>
+        <div class="video-container">
+            <!-- REPLACED video tag with static image. Change 'uploaded-photo.jpg' to your own image path -->
+            <img class="bg-image" src="banner.png" alt="Hero Background - Inventory Management" loading="eager">
+            <div class="video-overlay"></div>
+        </div>
 
-    <div class="container">
-        <div class="video-content">
-            <h1 class="video-title">
-                <div>Inventory Management</div>
-                <div class="highlight">System</div>
-            </h1>
-
-            <p class="video-subtitle">
-                Take full control of your wholesale, retail, or food business with our all-in-one 
-                Inventory Management Solution—automating operations, simplifying processes, 
-                and boosting efficiency.
-            </p>
-
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">99%</span>
-                    <span class="stat-label">Accuracy</span>
+        <div class="container">
+            <div class="video-content">
+                <h1 class="video-title">
+                    <div>Inventory Management</div>
+                    <div class="highlight">System</div>
+                </h1>
+                <p class="video-subtitle">
+                    Take full control of your wholesale, retail, or food business with our all-in-one 
+                    Inventory Management Solution—automating operations, simplifying processes, 
+                    and boosting efficiency.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">99%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
                 </div>
-
-                <div class="stat">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Support</span>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn-primary"><i class="fas fa-play-circle"></i> Explore Services</a>
+                    <a href="#contact" class="btn-secondary"><i class="fas fa-calendar-check"></i> Schedule Demo</a>
                 </div>
-            </div>
-
-            <div class="hero-buttons">
-                <a href="#services" class="btn-primary">
-                    <i class="fas fa-play-circle"></i> Explore Services
-                </a>
-
-                <a href="#contact" class="btn-secondary">
-                    <i class="fas fa-calendar-check"></i> Schedule Demo
-                </a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Services Section -->
     <section class="parallax-services reveal" id="services">
@@ -1955,46 +1860,33 @@
                 </div>
             </div>
             <div class="parallax-grid">
-                <!-- Service Card 1 -->
                 <div class="parallax-card">
                     <div class="parallax-img-container">
                         <img src="sc1.png" alt="Data insights" class="parallax-img">
-                        <div class="service-icon">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-chart-pie"></i></div>
                     </div>
                     <div class="parallax-content">
                         <span class="service-badge">Advanced Analytics</span>
                         <h3 class="service-title">Business Insights</h3>
-                        <p class="service-description">
-                            Transform your Inventory with Impressive Dynamic Bar graphs, Pie charts, Slicers and Pivot Tables for actionable Data Insights.
-                        </p>
+                        <p class="service-description">Transform your Inventory with Impressive Dynamic Bar graphs, Pie charts, Slicers and Pivot Tables for actionable Data Insights.</p>
                         <ul class="service-features">
                             <li><i class="fas fa-check-circle"></i> Descriptive Statistics</li>
                             <li><i class="fas fa-check-circle"></i> Interactive Dashboards</li>
                             <li><i class="fas fa-check-circle"></i> Real-time Charts & Graphs</li>
                             <li><i class="fas fa-check-circle"></i> Dynamic Pivot Tables</li>
                         </ul>
-                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560">
-                            Learn More <i class="fas fa-play"></i>
-                        </a>
+                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560">Learn More <i class="fas fa-play"></i></a>
                     </div>
                 </div>
-
-                <!-- Service Card 2 -->
                 <div class="parallax-card">
                     <div class="parallax-img-container">
                         <img src="sc3.png" alt="Inventory Management" class="parallax-img">
-                        <div class="service-icon">
-                            <i class="fas fa-warehouse"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-warehouse"></i></div>
                     </div>
                     <div class="parallax-content">
                         <span class="service-badge">Summary</span>
                         <h3 class="service-title">Inventory Summary</h3>
-                        <p class="service-description">
-                            Get a comprehensive overview of your summary data from your Inventory such as Sales, Stocks Level and Notifications.
-                        </p>
+                        <p class="service-description">Get a comprehensive overview of your summary data from your Inventory such as Sales, Stocks Level and Notifications.</p>
                         <ul class="service-features">
                             <li><i class="fas fa-check-circle"></i> Stocks Notifications</li>
                             <li><i class="fas fa-check-circle"></i> Expiry Tracking</li>
@@ -2002,26 +1894,18 @@
                             <li><i class="fas fa-check-circle"></i> Item Lookup</li>
                             <li><i class="fas fa-check-circle"></i> Exportable reports to PDF and Excel Format</li>
                         </ul>
-                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1404533634745413%2F&show_text=false&width=560&t=0">
-                            Learn More <i class="fas fa-play"></i>
-                        </a>
+                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1404533634745413%2F&show_text=false&width=560&t=0">Learn More <i class="fas fa-play"></i></a>
                     </div>
                 </div>
-                
-                <!-- Service Card 3 -->
                 <div class="parallax-card">
                     <div class="parallax-img-container">
                         <img src="sc2.png" alt="Data Analytics" class="parallax-img">
-                        <div class="service-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-robot"></i></div>
                     </div>
                     <div class="parallax-content">
                         <span class="service-badge">Automated Forms</span>
                         <h3 class="service-title">Automated Forms Interface</h3>
-                        <p class="service-description">
-                            Automate your business processes with our automated userforms interface with dynamic command buttons.
-                        </p>
+                        <p class="service-description">Automate your business processes with our automated userforms interface with dynamic command buttons.</p>
                         <ul class="service-features">
                             <li><i class="fas fa-check-circle"></i> Smart Automated Forms</li>
                             <li><i class="fas fa-check-circle"></i> Real-time Sales Tracking</li>
@@ -2029,16 +1913,14 @@
                             <li><i class="fas fa-check-circle"></i> Dynamic Balance Monitoring</li>
                             <li><i class="fas fa-check-circle"></i> Duplicate & Zero stocks items Auto block Notifications</li>
                         </ul>
-                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F782402081122354%2F&show_text=false&width=560&t=0">
-                            Learn More <i class="fas fa-play"></i>
-                        </a>
+                        <a href="#" class="service-link open-video" data-video="https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F782402081122354%2F&show_text=false&width=560&t=0">Learn More <i class="fas fa-play"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Service Video Modal (Single) -->
+    <!-- Service Video Modal -->
     <div class="service-video-modal" id="serviceVideoModal">
         <div class="video-modal-content">
             <span class="close-video">&times;</span>
@@ -2060,17 +1942,10 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Main Video Player -->
             <div class="main-video-container">
                 <div class="video-demo-container" id="mainVideoContainer">
                     <div class="video-demo-wrapper">
-                        <iframe 
-                            id="mainVideo"
-                            src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2078866006251188%2F&show_text=false&width=560" 
-                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
-                            allowfullscreen>
-                        </iframe>
+                        <iframe id="mainVideo" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2078866006251188%2F&show_text=false&width=560" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
                     <div class="video-info">
                         <h3 class="current-video-title" id="currentVideoTitle">Inventory System Overview</h3>
@@ -2078,24 +1953,13 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Video Gallery -->
             <div class="video-gallery-container">
-                <div class="gallery-header">
-                    <h3 class="gallery-title">More Tutorials & Demos</h3>
-                </div>
-                <div class="video-gallery-wrapper">
-                    <div class="video-gallery" id="videoGallery"></div>
-                </div>
+                <div class="gallery-header"><h3 class="gallery-title">More Tutorials & Demos</h3></div>
+                <div class="video-gallery-wrapper"><div class="video-gallery" id="videoGallery"></div></div>
             </div>
-            
             <div class="video-cta" style="text-align:center;margin-top:60px;">
-                <p style="color:var(--text-secondary);margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto;">
-                    Explore all our tutorial videos and demos to see how our Inventory Management System can transform your business
-                </p>
-                <a href="about.html" class="btn-primary">
-                    <i class="fas fa-play-circle"></i> View All Videos
-                </a>
+                <p style="color:var(--text-secondary);margin-bottom:40px;max-width:700px;margin-left:auto;margin-right:auto;">Explore all our tutorial videos and demos to see how our Inventory Management System can transform your business</p>
+                <a href="about.html" class="btn-primary"><i class="fas fa-play-circle"></i> View All Videos</a>
             </div>
         </div>
     </section>
@@ -2106,17 +1970,10 @@
             <div class="section-header">
                 <div class="section-tag">FEATURES</div>
                 <h2 class="section-title">Inventory<span class="highlight">Application</span></h2>
-                <div class="section-subtitle-carousel">
-                    <div class="subtitle-fade">
-                        <span>Discover our powerful features</span>
-                        <span>Using our Automated Inventory Application</span>
-                    </div>
-                </div>
+                <div class="section-subtitle-carousel"><div class="subtitle-fade"><span>Discover our powerful features</span><span>Using our Automated Inventory Application</span></div></div>
             </div>
             <div class="carousel-wrapper">
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack"></div>
-                </div>
+                <div class="carousel-container"><div class="carousel-track" id="carouselTrack"></div></div>
             </div>
         </div>
     </section>
@@ -2126,12 +1983,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <a href="index.html" class="footer-logo">
-                        <span class="logo-part-1">I</span><span class="logo-part-2">MS</span>     
-                    </a>
-                    <p class="footer-description">
-                        Helps your Business especially for Small and Medium Enterprises to automate your Inventory, Sales Tracking and Data Insights with a Budget and User-Friendly Application.
-                    </p>
+                    <a href="index.html" class="footer-logo"><span class="logo-part-1">I</span><span class="logo-part-2">MS</span></a>
+                    <p class="footer-description">Helps your Business especially for Small and Medium Enterprises to automate your Inventory, Sales Tracking and Data Insights with a Budget and User-Friendly Application.</p>
                     <div class="footer-social">
                         <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
@@ -2140,7 +1993,6 @@
                         <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-col">
                     <h3 class="footer-title">Quick Links</h3>
                     <ul class="footer-links">
@@ -2150,7 +2002,6 @@
                         <li><a href="get-quote.html"><i class="fas fa-chevron-right"></i> Get Quote</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h3 class="footer-title">Our Services</h3>
                     <ul class="footer-links">
@@ -2159,7 +2010,6 @@
                         <li><a href="services.html"><i class="fas fa-chevron-right"></i> Automation Process</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-col">
                     <h3 class="footer-title">Contact Info</h3>
                     <div class="contact-info">
@@ -2170,10 +2020,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">&copy; 2025 IMS Services. All rights reserved. | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: var(--primary); text-decoration: none;">Terms of Service</a></p>
-            </div>
+            <div class="footer-bottom"><p class="copyright">&copy; 2025 IMS Services. All rights reserved. | <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: var(--primary); text-decoration: none;">Terms of Service</a></p></div>
         </div>
     </footer>
 
@@ -2194,17 +2041,14 @@
             initArrowNavigation();
             initMobileOptimizations();
             initServiceModals();
-            initThemeToggle(); // activate theme toggle
+            initThemeToggle();
         });
 
-        // ----- ORIGINAL FUNCTIONS (preserved) -----
         function initLoadingScreen() {
             const loadingScreen = document.getElementById('loadingScreen');
             setTimeout(() => {
                 loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 800);
+                setTimeout(() => { loadingScreen.style.display = 'none'; }, 800);
             }, 2000);
         }
 
@@ -2212,204 +2056,71 @@
             const navToggle = document.getElementById('navToggle');
             const navMenu = document.getElementById('navMenu');
             const navbar = document.getElementById('navbar');
-            
             if (navToggle && navMenu) {
-                navToggle.addEventListener('click', () => {
-                    navMenu.classList.toggle('active');
-                    navToggle.classList.toggle('active');
-                });
-                
-                document.addEventListener('click', (e) => {
-                    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                        navMenu.classList.remove('active');
-                        navToggle.classList.remove('active');
-                    }
-                });
-                
-                navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navMenu.classList.remove('active');
-                        navToggle.classList.remove('active');
-                    });
-                });
+                navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); navToggle.classList.toggle('active'); });
+                document.addEventListener('click', (e) => { if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) { navMenu.classList.remove('active'); navToggle.classList.remove('active'); } });
+                navMenu.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { navMenu.classList.remove('active'); navToggle.classList.remove('active'); }); });
             }
-            
             if (navbar) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 100) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                });
+                window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 100); });
             }
         }
 
         function initVideoGallery() {
             const videos = [
-                {
-                    id: 1,
-                    title: "PRODUCT MASTER INVENTORY SYSTEM GUIDE CLIP",
-                    description: "Learn how to use our product master interface to manage all your product details.",
-                    videoUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560",
-                    thumbnail: "NEW-THUMB/THUMB1.png",
-                    duration: "4:30",
-                    views: "716"
-                },
-                {
-                    id: 2,
-                    title: "STOCK-IN INVENTORY SYSTEM GUIDE CLIP",
-                    description: "Learn how to use stock-in interface to add new products to the inventory.",
-                    videoUrl: "https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F782402081122354%2F&show_text=false&width=560&t=0",
-                    thumbnail: "NEW-THUMB/THUMB2.png",
-                    duration: "3:45",
-                    views: "1.5k"
-                },
-                {
-                    id: 3,
-                    title: "STOCK-OUT INVENTORY SYSTEM GUIDE CLIP",
-                    description: "Learn how to use our Stock-out interface to manage the products that come out from the Inventory.",
-                    videoUrl: "https://www.facebook.com/plugins/video.php?height=420&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1578736413242670%2F&show_text=false&width=560&t=0",
-                    thumbnail: "NEW-THUMB/THUMB3.png",
-                    duration: "5:20",
-                    views: "154"
-                },
-                {
-                    id: 4,
-                    title: "INVENTORY SUMMARY INTERFACE GUIDE CLIP",
-                    description: "Learn how to use our inventory summary interface for all Product Inventory details",
-                    videoUrl: "https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1404533634745413%2F&show_text=false&width=560&t=0",
-                    thumbnail: "NEW-THUMB/THUMB4.png",
-                    duration: "2:55",
-                    views: "144"
-                },
-                {
-                    id: 5,
-                    title: "Excel VBA Tutorials",
-                    description: "VBA Tutorials",
-                    videoUrl: "https://www.facebook.com/plugins/video.php?height=326&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1000748194587694%2F&show_text=false&width=560",
-                    thumbnail: "NEW-THUMB/THUMB5.png",
-                    duration: "2:55",
-                    views: "144"
-                },
+                { id:1, title:"PRODUCT MASTER INVENTORY SYSTEM GUIDE CLIP", description:"Learn how to use our product master interface to manage all your product details.", videoUrl:"https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F898033769829776%2F&show_text=false&width=560", thumbnail:"NEW-THUMB/THUMB1.png", duration:"4:30", views:"716" },
+                { id:2, title:"STOCK-IN INVENTORY SYSTEM GUIDE CLIP", description:"Learn how to use stock-in interface to add new products to the inventory.", videoUrl:"https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F782402081122354%2F&show_text=false&width=560&t=0", thumbnail:"NEW-THUMB/THUMB2.png", duration:"3:45", views:"1.5k" },
+                { id:3, title:"STOCK-OUT INVENTORY SYSTEM GUIDE CLIP", description:"Learn how to use our Stock-out interface to manage the products that come out from the Inventory.", videoUrl:"https://www.facebook.com/plugins/video.php?height=420&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1578736413242670%2F&show_text=false&width=560&t=0", thumbnail:"NEW-THUMB/THUMB3.png", duration:"5:20", views:"154" },
+                { id:4, title:"INVENTORY SUMMARY INTERFACE GUIDE CLIP", description:"Learn how to use our inventory summary interface for all Product Inventory details", videoUrl:"https://www.facebook.com/plugins/video.php?height=280&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1404533634745413%2F&show_text=false&width=560&t=0", thumbnail:"NEW-THUMB/THUMB4.png", duration:"2:55", views:"144" },
+                { id:5, title:"Excel VBA Tutorials", description:"VBA Tutorials", videoUrl:"https://www.facebook.com/plugins/video.php?height=326&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1000748194587694%2F&show_text=false&width=560", thumbnail:"NEW-THUMB/THUMB5.png", duration:"2:55", views:"144" }
             ];
-
             const videoGallery = document.getElementById('videoGallery');
             const mainVideo = document.getElementById('mainVideo');
             const videoTitle = document.getElementById('currentVideoTitle');
             const videoDescription = document.getElementById('currentVideoDescription');
-            
             if (!videoGallery) return;
-
             videos.forEach(video => {
                 const thumbnail = document.createElement('div');
                 thumbnail.className = 'video-thumbnail';
-                thumbnail.innerHTML = `
-                    <div class="thumbnail-image">
-                        <img src="${video.thumbnail}" alt="${video.title}">
-                    </div>
-                    <div class="thumbnail-content">
-                        <h4 class="thumbnail-title">${video.title}</h4>
-                        <div style="display:flex;justify-content:space-between;color:var(--text-secondary);font-size:0.9rem;">
-                            <span><i class="fas fa-eye"></i> ${video.views}</span>
-                            <span><i class="fas fa-clock"></i> ${video.duration}</span>
-                        </div>
-                    </div>
-                `;
-                
+                thumbnail.innerHTML = `<div class="thumbnail-image"><img src="${video.thumbnail}" alt="${video.title}"></div><div class="thumbnail-content"><h4 class="thumbnail-title">${video.title}</h4><div style="display:flex;justify-content:space-between;color:var(--text-secondary);font-size:0.9rem;"><span><i class="fas fa-eye"></i> ${video.views}</span><span><i class="fas fa-clock"></i> ${video.duration}</span></div></div>`;
                 thumbnail.addEventListener('click', () => {
                     mainVideo.src = video.videoUrl;
                     videoTitle.textContent = video.title;
                     videoDescription.textContent = video.description;
-                    
                     document.querySelectorAll('.video-thumbnail').forEach(v => v.classList.remove('active'));
                     thumbnail.classList.add('active');
                 });
-                
                 videoGallery.appendChild(thumbnail);
             });
         }
 
         function initCarousel() {
             const carouselItems = [
-                {
-                    icon: 'fas fa-balance-scale',
-                    title: 'Balance In & Out',
-                    description: 'Accurate item movement In & Out with real-time tracking and analytics.',
-                    tags: ['Balance Stock Control', 'Inventory Monitoring']
-                },
-                {
-                    icon: 'fas fa-calendar-times',
-                    title: 'Expiry Notifications',
-                    description: 'Automated expiry date tracking and notifications for perishable inventory.',
-                    tags: ['Product Expiry Notifications', 'Tracking']
-                },
-                {
-                    icon: 'fas fa-box-open',
-                    title: 'Re-Order Notifications',
-                    description: 'Automated re-order alerts when stock levels fall below minimum thresholds.',
-                    tags: ['Automated Re-Order', 'Stocks Level Monitoring']
-                },
-                {
-                    icon: 'fas fa-cogs',
-                    title: 'Automated Product Entry Forms',
-                    description: 'Automated Product data entry for Item Master, Stock-in & Stock-out.',
-                    tags: ['Product Entry Forms', 'Automated Command Buttons']
-                },
-                {
-                    icon: 'fas fa-coins',
-                    title: 'Sales Monitoring',
-                    description: 'Real-time sales tracking, Budget & Profit Margin Monitoring.',
-                    tags: ['Revenue Monitoring', 'Budgeting', 'Profit Margin']
-                },
-                {
-                    icon: 'fas fa-chart-bar',
-                    title: 'Dashboard Overview',
-                    description: 'Interactive dashboard for sales data visualization with predictive analytics and forecasting.',
-                    tags: ['Data Insights', 'Analytics', 'Pivot Summary']
-                }
+                { icon:'fas fa-balance-scale', title:'Balance In & Out', description:'Accurate item movement In & Out with real-time tracking and analytics.', tags:['Balance Stock Control','Inventory Monitoring'] },
+                { icon:'fas fa-calendar-times', title:'Expiry Notifications', description:'Automated expiry date tracking and notifications for perishable inventory.', tags:['Product Expiry Notifications','Tracking'] },
+                { icon:'fas fa-box-open', title:'Re-Order Notifications', description:'Automated re-order alerts when stock levels fall below minimum thresholds.', tags:['Automated Re-Order','Stocks Level Monitoring'] },
+                { icon:'fas fa-cogs', title:'Automated Product Entry Forms', description:'Automated Product data entry for Item Master, Stock-in & Stock-out.', tags:['Product Entry Forms','Automated Command Buttons'] },
+                { icon:'fas fa-coins', title:'Sales Monitoring', description:'Real-time sales tracking, Budget & Profit Margin Monitoring.', tags:['Revenue Monitoring','Budgeting','Profit Margin'] },
+                { icon:'fas fa-chart-bar', title:'Dashboard Overview', description:'Interactive dashboard for sales data visualization with predictive analytics and forecasting.', tags:['Data Insights','Analytics','Pivot Summary'] }
             ];
-            
             const carouselTrack = document.getElementById('carouselTrack');
             if (carouselTrack) {
                 carouselTrack.innerHTML = '';
-                const itemsToShow = [...carouselItems, ...carouselItems];
-                
-                itemsToShow.forEach(item => {
+                [...carouselItems, ...carouselItems].forEach(item => {
                     const carouselItem = document.createElement('div');
                     carouselItem.className = 'carousel-item';
-                    carouselItem.innerHTML = `
-                        <i class="${item.icon}"></i>
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                        <div class="project-tech">
-                            ${item.tags.map(tag => `<span>${tag}</span>`).join('')}
-                        </div>
-                    `;
+                    carouselItem.innerHTML = `<i class="${item.icon}"></i><h3>${item.title}</h3><p>${item.description}</p><div class="project-tech">${item.tags.map(tag => `<span>${tag}</span>`).join('')}</div>`;
                     carouselTrack.appendChild(carouselItem);
                 });
-                
-                carouselTrack.addEventListener('mouseenter', () => {
-                    carouselTrack.style.animationPlayState = 'paused';
-                });
-                
-                carouselTrack.addEventListener('mouseleave', () => {
-                    carouselTrack.style.animationPlayState = 'running';
-                });
+                carouselTrack.addEventListener('mouseenter', () => carouselTrack.style.animationPlayState = 'paused');
+                carouselTrack.addEventListener('mouseleave', () => carouselTrack.style.animationPlayState = 'running');
             }
         }
 
         function initAnimations() {
             const revealElements = document.querySelectorAll('.reveal');
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
-            
-            revealElements.forEach(element => revealObserver.observe(element));
+            const observer = new IntersectionObserver(entries => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold:0.1, rootMargin:'0px 0px -100px 0px' });
+            revealElements.forEach(el => observer.observe(el));
         }
 
         function initScrollEffects() {
@@ -2419,9 +2130,7 @@
                     const targetId = this.getAttribute('href');
                     if (targetId === '#') return;
                     const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({ top: targetElement.offsetTop - 100, behavior: 'smooth' });
-                    }
+                    if (targetElement) window.scrollTo({ top: targetElement.offsetTop - 100, behavior: 'smooth' });
                 });
             });
         }
@@ -2430,58 +2139,30 @@
             const arrowNav = document.getElementById('arrowNav');
             const arrowUp = document.getElementById('arrowUp');
             const arrowDown = document.getElementById('arrowDown');
-            
-            window.addEventListener('scroll', () => {
-                arrowNav.classList.toggle('visible', window.scrollY > 300);
-            });
-            
-            arrowUp.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            
+            window.addEventListener('scroll', () => arrowNav.classList.toggle('visible', window.scrollY > 300));
+            arrowUp.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             arrowDown.addEventListener('click', () => {
                 const sections = document.querySelectorAll('section[id]');
                 const currentScroll = window.scrollY;
                 let nextSection = null;
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    if (sectionTop > currentScroll + 100) {
-                        if (!nextSection || sectionTop < nextSection.offsetTop) {
-                            nextSection = section;
-                        }
-                    }
+                    if (sectionTop > currentScroll + 100 && (!nextSection || sectionTop < nextSection.offsetTop)) nextSection = section;
                 });
-                if (nextSection) {
-                    window.scrollTo({ top: nextSection.offsetTop - 100, behavior: 'smooth' });
-                }
+                if (nextSection) window.scrollTo({ top: nextSection.offsetTop - 100, behavior: 'smooth' });
             });
         }
 
         function initMobileOptimizations() {
-            function setVH() {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${vh}px`);
-            }
-            setVH();
-            window.addEventListener('resize', setVH);
-            window.addEventListener('orientationchange', setVH);
-            
+            function setVH() { document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`); }
+            setVH(); window.addEventListener('resize', setVH); window.addEventListener('orientationchange', setVH);
             const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .nav-link, .service-link, .social-icon, .video-thumbnail');
             buttons.forEach(btn => {
-                btn.addEventListener('touchstart', () => {
-                    btn.style.transform = 'scale(0.95)';
-                }, { passive: true });
-                btn.addEventListener('touchend', () => {
-                    setTimeout(() => btn.style.transform = '', 150);
-                });
-                btn.addEventListener('touchcancel', () => {
-                    btn.style.transform = '';
-                });
+                btn.addEventListener('touchstart', () => btn.style.transform = 'scale(0.95)', { passive: true });
+                btn.addEventListener('touchend', () => setTimeout(() => btn.style.transform = '', 150));
+                btn.addEventListener('touchcancel', () => btn.style.transform = '');
             });
-            
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                document.querySelectorAll('.floating-element').forEach(el => el.style.display = 'none');
-            }
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) document.querySelectorAll('.floating-element').forEach(el => el.style.display = 'none');
         }
 
         function initServiceModals() {
@@ -2489,97 +2170,43 @@
             const iframe = document.getElementById('modalIframe');
             const closeBtn = document.querySelector('.close-video');
             const openLinks = document.querySelectorAll('.open-video');
-
             openLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const videoUrl = link.getAttribute('data-video');
-                    if (videoUrl) {
-                        iframe.src = videoUrl;
-                        modal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
+                    if (videoUrl) { iframe.src = videoUrl; modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
                 });
             });
-
-            function closeModal() {
-                modal.classList.remove('active');
-                iframe.src = '';
-                document.body.style.overflow = '';
-            }
-
+            function closeModal() { modal.classList.remove('active'); iframe.src = ''; document.body.style.overflow = ''; }
             closeBtn.addEventListener('click', closeModal);
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
         }
 
-        // ===== THEME TOGGLE (modern minimalist) =====
         function initThemeToggle() {
             const toggle = document.getElementById('themeToggle');
             const body = document.body;
             const icon = toggle.querySelector('i');
             const themeColorMeta = document.getElementById('themeColorMeta');
-
-            // Load saved theme
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                body.classList.add('light-mode');
-                icon.className = 'fas fa-sun';
-                if (themeColorMeta) themeColorMeta.setAttribute('content', '#f8fafc');
-            } else {
-                icon.className = 'fas fa-moon';
-                if (themeColorMeta) themeColorMeta.setAttribute('content', '#0a0a0a');
-            }
-
+            if (savedTheme === 'light') { body.classList.add('light-mode'); icon.className = 'fas fa-sun'; if(themeColorMeta) themeColorMeta.setAttribute('content','#f8fafc'); }
+            else { icon.className = 'fas fa-moon'; if(themeColorMeta) themeColorMeta.setAttribute('content','#0a0a0a'); }
             toggle.addEventListener('click', () => {
                 body.classList.toggle('light-mode');
                 const isLight = body.classList.contains('light-mode');
                 icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
                 localStorage.setItem('theme', isLight ? 'light' : 'dark');
-                if (themeColorMeta) {
-                    themeColorMeta.setAttribute('content', isLight ? '#f8fafc' : '#0a0a0a');
-                }
-                if (navigator.vibrate) navigator.vibrate(20);
+                if(themeColorMeta) themeColorMeta.setAttribute('content', isLight ? '#f8fafc' : '#0a0a0a');
+                if(navigator.vibrate) navigator.vibrate(20);
             });
         }
 
-        // Offline detection
         const offlineOverlay = document.getElementById('offlineOverlay');
-        function updateOnlineStatus() {
-            offlineOverlay.classList.toggle('active', !navigator.onLine);
-        }
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        updateOnlineStatus();
-
-        function setNavHeight() {
-            const nav = document.getElementById('navbar');
-            if (nav) {
-                document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
-            }
-        }
-        window.addEventListener('load', setNavHeight);
-        window.addEventListener('resize', setNavHeight);
-    
-    document.querySelectorAll('.dropdown > a').forEach(menu => {
-    menu.addEventListener('click', function(e) {
-        if(window.innerWidth <= 768){
-            e.preventDefault();
-            this.parentElement.classList.toggle('active');
-        }
-    });
-});
-    
+        function updateOnlineStatus() { offlineOverlay.classList.toggle('active', !navigator.onLine); }
+        window.addEventListener('online', updateOnlineStatus); window.addEventListener('offline', updateOnlineStatus); updateOnlineStatus();
+        function setNavHeight() { const nav = document.getElementById('navbar'); if(nav) document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px'); }
+        window.addEventListener('load', setNavHeight); window.addEventListener('resize', setNavHeight);
+        document.querySelectorAll('.dropdown > a').forEach(menu => { menu.addEventListener('click', function(e) { if(window.innerWidth <= 768){ e.preventDefault(); this.parentElement.classList.toggle('active'); } }); });
     </script>
 </body>
 </html>

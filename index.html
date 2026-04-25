@@ -4,232 +4,278 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Kurt Creates | Excel Mastery</title>
-  <!-- Google Fonts + modern CSS reset -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Fonts & Icons (Enhanced for navbar compatibility) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
+    /* ---------- RESET & GLOBAL (keep original, but navbar uses same variables) ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Root variables (updated to match navbar + light/dark dynamic) */
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-card: #111111;
+      --surface: #1a1a1a;
+      --text-main: #ffffff;
+      --text-muted: #b0b0b0;
+      --text-dim: #888888;
+      --accent-cyan: #00d9ff;
+      --accent-pink: #ff0080;
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(0, 217, 255, 0.15);
+      --gradient-cyan: linear-gradient(135deg, #00d9ff, #0066ff);
+      --shadow-glow: 0 10px 30px rgba(0, 217, 255, 0.15);
+      --transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --text-primary: #ffffff;
+      --primary: #00d9ff;
+      --secondary: #ff0080;
+      --gradient-primary: linear-gradient(135deg, #00d9ff, #0066ff);
+      --accent-glow: rgba(0, 217, 255, 0.6);
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
+      background: #ffffff;
       color: #1a1e2b;
       scroll-behavior: smooth;
       line-height: 1.5;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.2s;
     }
 
-    /* minimalist sleek container */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 32px;
     }
 
-    /* ========== NAVBAR ========== */
+    /* ===== UNIFIED NAVBAR (from exceltutorials.html, polished) ===== */
     .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 18px 0;
+      background: rgba(3, 5, 11, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s var(--transition-smooth);
+    }
+
+    .navbar.scrolled {
+      padding: 12px 0;
+      background: rgba(3, 5, 11, 0.9);
+    }
+
+    .navbar .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
-      flex-wrap: wrap;
-      gap: 20px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
     }
 
-    .logo-area {
+    .logo {
+      text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 15px;
     }
 
-    .logo-img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+    .logo img {
+      width: 60px;
+      height: 60px;
       object-fit: cover;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-      border: 2px solid white;
-      background: #f0f3fa;
-      transition: transform 0.2s ease;
+      transition: all 0.4s;
+      border-radius: 12px;
     }
 
-    .logo-img:hover {
-      transform: scale(1.02);
+    .logo-text-carousel {
+      overflow: hidden;
+      width: 200px;
+      position: relative;
+      height: 48px;
     }
-.logo-text-track {
-    display: flex;
-    width: max-content;
-    animation: scrollLoop 18s linear infinite;
-}
 
-@keyframes scrollLoop {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-    .brand-text {
+    .logo-text-track {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: max-content;
+      animation: logoTextScroll 12s linear infinite;
+    }
+
+    @keyframes logoTextScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .logo-text-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding-right: 40px;
+    }
+
+    .logo-part-1 {
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 1.6rem;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #1e2a3e, #2c3e50);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 28px;
+      background: linear-gradient(135deg, #00E5FF, #B936FF);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    /* desktop navigation */
-    .nav-links {
+    .logo-part-2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-size: 28px;
+      color: var(--text-main);
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 40px;
+      transition: all 0.3s;
       display: flex;
       align-items: center;
-      gap: 32px;
-      list-style: none;
+      gap: 10px;
+      font-size: 0.9rem;
     }
 
-    .nav-links li a {
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent-cyan);
+      background: rgba(0, 217, 255, 0.08);
+    }
+
+    .btn-nav {
+      background: linear-gradient(100deg, #00E5FF, #0099CC);
+      color: #03050B;
+      padding: 12px 24px;
+      border-radius: 40px;
       text-decoration: none;
-      font-weight: 500;
-      color: #2c3e50;
-      transition: color 0.2s;
-      font-size: 1rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .nav-links li a:hover {
-      color: #0077b6;
-    }
-
-    /* modern dropdown styling */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-
-    .dropbtn {
-      background: none;
-      border: none;
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #2c3e50;
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,229,255,0.4);
+      background: rgba(255,255,255,0.05);
+      color: var(--text-main);
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+      margin-left: 5px;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-cyan);
+      color: #03050B;
+      transform: rotate(15deg);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
       gap: 6px;
-      transition: color 0.2s;
+      cursor: pointer;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 12px;
     }
 
-    .dropbtn i {
-      font-size: 0.8rem;
-      transition: transform 0.2s;
+    .nav-toggle span {
+      width: 28px;
+      height: 3px;
+      background: var(--text-main);
+      transition: 0.3s;
     }
 
-    .dropdown:hover .dropbtn i {
-      transform: rotate(180deg);
-    }
-
-    .dropdown-content {
-      position: absolute;
-      top: 40px;
-      left: -20px;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(8px);
-      min-width: 200px;
-      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
-      padding: 12px 0;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.25s ease;
-      z-index: 100;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .dropdown:hover .dropdown-content {
-      opacity: 1;
-      visibility: visible;
-      top: 48px;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 10px 24px;
-      color: #1e2a3e;
-      text-decoration: none;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-
-    .dropdown-content a:hover {
-      background: #f0f4fc;
-      color: #0077b6;
-    }
-
-    /* mobile nav adjustments */
     @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-      
+      .navbar .container {
+        padding: 0 20px;
       }
-      .dropdown-content {
+      .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 80px);
+        background: var(--bg-primary);
+        backdrop-filter: blur(24px);
+        flex-direction: column;
+        padding: 30px;
+        transition: 0.3s;
+        border-right: 1px solid var(--accent-cyan);
+        gap: 20px;
+      }
+      .nav-menu.active {
         left: 0;
       }
-      .container {
-        padding: 0 24px;
+      .nav-toggle {
+        display: flex;
+      }
+      .logo-text-carousel {
+        width: 150px;
+      }
+      .logo-part-1, .logo-part-2 {
+        font-size: 22px;
       }
     }
 
-    /* ========== INFINITE BRAND CAROUSEL (marquee style) ========== */
-    .infinite-brand {
-      background: #f8fafd;
-      padding: 14px 0;
-      border-bottom: 1px solid #eef2f8;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .brand-track {
-      display: inline-flex;
-      animation: scrollBrand 28s linear infinite;
-      gap: 48px;
-    }
-
-    .brand-track span {
-      font-size: 1rem;
-      font-weight: 500;
-      color: #2c3e50;
-      letter-spacing: -0.2px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-track span i {
-      color: #0077b6;
-      font-size: 1rem;
-    }
-
-    @keyframes scrollBrand {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ========== HERO SECTION ========== */
+    /* ===== ORIGINAL INDEX.HTML CUSTOM STYLES (hero, parallax, footer, etc) ===== */
     .hero {
       margin: 48px 0 64px;
       position: relative;
+      margin-top: 100px;
     }
 
-    /* carousel container relative for centering the floating photo and side-bottom photo */
     .carousel-container {
       position: relative;
       border-radius: 36px;
       overflow: hidden;
       box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
       background: #fefefe;
+      opacity: 1;
     }
 
     .carousel-slides {
@@ -252,7 +298,6 @@
       backdrop-filter: brightness(0.96);
     }
 
-    /* overlay for better text readability */
     .slide::before {
       content: "";
       position: absolute;
@@ -301,34 +346,11 @@
       gap: 8px;
     }
 
-    .cta-btn i {
-      font-size: 0.9rem;
-    }
-
     .cta-btn:hover {
       background: #0077b6;
       transform: scale(1.02);
-      box-shadow: 0 10px 20px -5px rgba(0,119,182,0.3);
     }
 
-    /* Central photo (middle of carousel container) */
-    .center-photo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 15;
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid white;
-      box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.25);
-      background: #ffffff;
-      pointer-events: none;
-    }
-
-    /* NEW: Side bottom photo inside hero container (bottom right corner) */
     .side-bottom-photo {
       position: absolute;
       bottom: 20px;
@@ -346,18 +368,12 @@
       animation: floatSoft 3s ease-in-out infinite;
     }
 
-    .side-bottom-photo:hover {
-      transform: scale(1.05);
-      box-shadow: 0 18px 30px rgba(0,0,0,0.25);
-    }
-
     @keyframes floatSoft {
       0% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
       100% { transform: translateY(0px); }
     }
 
-    /* carousel controls */
     .carousel-controls {
       position: absolute;
       bottom: 20px;
@@ -378,14 +394,7 @@
       border-radius: 60px;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.1);
       color: #1e2a3e;
-    }
-
-    .carousel-btn:hover {
-      background: white;
-      transform: scale(1.05);
     }
 
     .dots {
@@ -401,7 +410,7 @@
     .dot {
       width: 8px;
       height: 8px;
-      background: rgba(255,255,255,0.6);
+      background: rgba(0,0,0,0.4);
       border-radius: 50%;
       transition: all 0.2s;
       cursor: pointer;
@@ -409,11 +418,10 @@
 
     .dot.active {
       width: 28px;
-      background: white;
+      background: #0077b6;
       border-radius: 20px;
     }
 
-    /* ========== PARALLAX SECTION ========== */
     .parallax-section {
       position: relative;
       background-image: url('https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
@@ -453,7 +461,6 @@
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 20px;
-      letter-spacing: -0.02em;
     }
 
     .parallax-text p {
@@ -483,7 +490,6 @@
       transform: translateY(-3px);
     }
 
-    /* user photo in parallax section */
     .parallax-photo {
       flex: 0 0 220px;
       text-align: center;
@@ -495,38 +501,8 @@
       border-radius: 20px;
       object-fit: cover;
       box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
-      border: 0px solid rgba(255, 255, 255, 0.9);
-      transition: transform 0.4s;
     }
 
-    .parallax-photo img:hover {
-      transform: scale(1.02) rotate(1deg);
-    }
-
-    @media (max-width: 768px) {
-      .parallax-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      .parallax-text h2 {
-        font-size: 1.8rem;
-      }
-      .parallax-overlay {
-        padding: 50px 24px;
-      }
-      .side-bottom-photo {
-        width: 60px;
-        height: 60px;
-        bottom: 12px;
-        right: 12px;
-      }
-      .center-photo {
-        width: 80px;
-        height: 80px;
-      }
-    }
-
-    /* tutorial page section (hidden by default) */
     .tutorial-page {
       background: #f9fbfe;
       border-radius: 40px;
@@ -567,11 +543,6 @@
       color: #0077b6;
     }
 
-    .tutorial-header h2 {
-      font-size: 2rem;
-      font-weight: 700;
-    }
-
     .code-block {
       background: #1e2a3a;
       padding: 20px;
@@ -594,7 +565,6 @@
       gap: 8px;
     }
 
-    /* ========== MODERN FOOTER ========== */
     .modern-footer {
       background: #0f1722;
       color: #e2e8f0;
@@ -619,13 +589,6 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      margin-bottom: 12px;
-    }
-
-    .footer-brand p {
-      font-size: 0.9rem;
-      opacity: 0.7;
-      max-width: 260px;
     }
 
     .footer-links {
@@ -658,7 +621,6 @@
       color: #0077b6;
     }
 
-    /* Social icons with animation */
     .social-icons {
       display: flex;
       gap: 20px;
@@ -682,8 +644,7 @@
     .social-icon:hover {
       background: #0077b6;
       color: white;
-      transform: translateY(-6px) scale(1.05);
-      box-shadow: 0 12px 20px -8px rgba(0,119,182,0.4);
+      transform: translateY(-6px);
     }
 
     .footer-bottom {
@@ -691,529 +652,180 @@
       padding-top: 40px;
       margin-top: 40px;
       border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.8rem;
-      opacity: 0.6;
     }
 
-    @media (max-width: 780px) {
-      .footer-container {
+    @media (max-width: 768px) {
+      .parallax-content {
         flex-direction: column;
+        text-align: center;
       }
-      .footer-links {
-        flex-direction: column;
-        gap: 28px;
+      .side-bottom-photo {
+        width: 60px;
+        height: 60px;
+      }
+      .container {
+        padding: 0 24px;
       }
     }
-    /* ===== INFINITE LOOP BRAND CAROUSEL (Modern & Elegant) ===== */
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            text-decoration: none;
-            flex-shrink: 0;
-            z-index: 10;
-        }
-
-        .logo img {
-            width: 52px;
-            height: 52px;
-            object-fit: cover;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            box-shadow: 0 0 0 1px rgba(0,229,255,0.3);
-        }
-        .infinite-brand {
-            overflow: hidden;
-            width: 220px;
-            position: relative;
-            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-            -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-        }
-
-        .brand-track {
-            display: flex;
-            gap: 2rem;
-            width: max-content;
-            animation: brandScroll 12s linear infinite;
-            will-change: transform;
-        }
-
-        .brand-track:hover {
-            animation-play-state: paused;
-        }
-        .brand-item {
-            font-family: 'Plus Jakarta Sans', 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 1.7rem;
-            letter-spacing: 0.08em;
-            white-space: nowrap;
-            background: linear-gradient(125deg, #FFFFFF 20%, #00E5FF 50%, #B936FF 80%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 5px rgba(0,229,255,0.2);
-            transition: transform 0.2s;
-        }
-@keyframes brandScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        /* ===== MODERN NAV IMPROVEMENT ===== */
-
-/* Better font feel */
-.nav-link {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    font-size: 0.85rem;
+    /* ===== INVENTORY PARALLAX CUSTOM ===== */
+.inventory-parallax {
+  background-image: url('https://images.unsplash.com/photo-1556745757-8d76bdb6984b');
 }
 
-/* Hamburger animation */
-.nav-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-.nav-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-.nav-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
-
-/* Mobile menu (clean modern slide panel) */
-@media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        top: 80px;
-        right: -100%;
-        width: 260px;
-        height: calc(100vh - 80px);
-        background: rgba(15, 17, 26, 0.95);
-        backdrop-filter: blur(20px);
-        flex-direction: column;
-        padding: 30px;
-        border-left: 1px solid rgba(0,229,255,0.3);
-        transition: right 0.4s ease;
-    }
-
-    .nav-menu.active {
-        right: 0;
-    }
-
-    .nav-link {
-        width: 100%;
-        padding: 14px 10px;
-        font-size: 0.95rem;
-    }
-}
-#navOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.3s;
-    z-index: 999;
-}
-
-#navOverlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-/* ===== DROPDOWN MENU ===== */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--bg-surface);
-    border: 1px solid rgba(0,229,255,0.2);
-    border-radius: 12px;
-    min-width: 220px;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 999;
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu a {
-    display: block;
-    padding: 12px 16px;
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: 0.3s;
-}
-
-.dropdown-menu a:hover {
-    background: rgba(0,229,255,0.1);
-}
-
-/* Show on hover (desktop) */
-.dropdown:hover .dropdown-menu {
-    display: flex;
-}
-@media (max-width: 768px) {
-    .dropdown-menu {
-        position: static;
-        border: none;
-        background: transparent;
-        display: none;
-    }
-
-    .dropdown.active .dropdown-menu {
-        display: flex;
-    }
-
-    .dropdown-menu a {
-        padding-left: 20px;
-        font-size: 0.85rem;
-    }
-}
-/* ===== DROPDOWN ANIMATION ===== */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 120%;
-    right: 0;
-    background: rgba(15,17,26,0.95);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(226, 232, 233, 0.2);
-    border-radius: 16px;
-    min-width: 240px;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px) scale(0.95);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
-
-/* Show animation */
-.dropdown:hover .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
-
-/* Menu items */
-.dropdown-menu a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    color: var(--text-light);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.25s ease;
-}
-
-/* ICON STYLE */
-.dropdown-menu i {
-    width: 20px;
-    text-align: center;
-    color: var(--accent-primary);
-}
-
-/* Hover animation */
-.dropdown-menu a:hover {
-    background: rgba(232, 241, 241, 0.08);
-    transform: translateX(5px);
-}
-/* NAV MENU SPACING FIX */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  list-style: none;
-}
-
-/* EACH LINK */
-.nav-links li a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: 0.3s;
-}
-
-/* HOVER */
-.nav-links li a:hover {
-  background: rgba(0,0,0,0.05);
-  color: #0077b6;
-}
-
-/* ICON STYLE */
-.nav-links i {
-  font-size: 0.9rem;
-  width: 18px;
-  text-align: center;
-}
-
-/* ===== HAMBURGER ===== */
-.nav-toggle {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.nav-toggle span {
-  width: 26px;
-  height: 3px;
-  background: #1a1e2b;
-  transition: 0.3s;
-}
-
-/* ANIMATION */
-.nav-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-.nav-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-.nav-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-@media (max-width: 768px) {
-
-  .nav-toggle {
-    display: flex;
-  }
-
-  .nav-links {
-    position: fixed;
-    top: 80px;
-    right: -100%;
-    width: 260px;
-    height: calc(100vh - 80px);
-    background: #fff;
-    flex-direction: column;
-    padding: 30px;
-    gap: 18px;
-    transition: 0.4s ease;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-  }
-
-  .nav-links.active {
-    right: 0;
-  }
-
-  /* DROPDOWN MOBILE */
-  .dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    display: none;
-    background: transparent;
-    border: none;
-  }
-
-  .dropdown.active .dropdown-menu {
-    display: block;
-  }
-}
-#navOverlay {
-  pointer-events: none;
-}
-
-#navOverlay.active {
-  pointer-events: all;
-}
-/* NAVBAR LAYER (above hero) */
-.navbar {
+/* BUTTON HOVER EFFECT (MORE PREMIUM) */
+.inventory-btn {
   position: relative;
-  z-index: 2000;
+  overflow: hidden;
 }
 
-/* PUSH ITEMS PROPERLY */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.inventory-btn::before {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #f4f4f4;
+  transition: width 0.4s ease;
+  z-index: 0;
 }
 
-/* HAMBURGER RIGHT SIDE */
-.nav-toggle {
-  margin-left: auto;
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  z-index: 2100;
+.inventory-btn:hover::before {
+  width: 100%;
 }
 
-/* SHOW ONLY ON MOBILE */
+.inventory-btn span,
+.inventory-btn i {
+  position: relative;
+  z-index: 2;
+}
+
+/* Glow hover */
+.inventory-btn:hover {
+  color: #fff;
+  box-shadow: 0 12px 25px rgba(0,119,182,0.4);
+  transform: translateY(-4px) scale(1.03);
+}
+
+/* MOBILE OPTIMIZATION */
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: flex;
+  .inventory-parallax {
+    background-attachment: scroll; /* fixes mobile lag */
   }
 
-  /* HIDE DESKTOP MENU */
-  .nav-links {
-    position: fixed;
-    top: 80px;
-    right: -100%;
-    width: 260px;
-    height: calc(100vh - 80px);
-    background: #fff;
-    flex-direction: column;
-    padding: 30px;
-    transition: 0.4s ease;
-    z-index: 2050;
-  }
-
-  .nav-links.active {
-    right: 0;
+  .inventory-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
   </style>
 </head>
 <body>
 
-  <nav class="navbar" id="navbar">
-  <div class="logo-area">
-    <img class="logo-img" src="akoo.png" alt="logo">
-    <div class="infinite-brand">
-      <div class="brand-track">
-        <span class="brand-item">Kurt Creates</span>
-        <span class="brand-item">Kurt Creates</span>
+<!-- ===== UNIFIED NAVBAR (from exceltutorials, active home, adapted logo/branding) ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="logo">
+      <img src="gta.png" alt="Kurt Logo">
+      <div class="logo-text-carousel">
+        <div class="logo-text-track">
+          <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
+          <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
+          <div class="logo-text-item"><span class="logo-part-1">Kurt</span><span class="logo-part-2">Creates</span></div>
+        </div>
       </div>
+    </a>
+    <div class="nav-toggle" id="navToggle">
+      <span></span><span></span><span></span>
     </div>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="services.html" class="nav-link"><i class="fas fa-cogs"></i> Inventory Services</a></li>
+      <li><a href="exceltutorials.html" class="nav-link"><i class="fas fa-graduation-cap"></i> Excel Tutorials</a></li>
+      <li><a href="about.html" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+      <li><a href="get-quote.html" class="btn-nav"><i class="fas fa-chart-line"></i> Get Quote</a></li>
+      <li><button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button></li>
+    </ul>
   </div>
-
-  <!-- HAMBURGER -->
-  <div class="nav-toggle" id="navToggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- MENU -->
-  <ul class="nav-links" id="navMenu">
-
-    <li>
-      <a href="index.html">
-        <i class="fas fa-home"></i> Home
-      </a>
-    </li>
-
-    <li>
-      <a href="about.html">
-        <i class="fas fa-user"></i> About
-      </a>
-    </li>
-
-    <!-- DROPDOWN -->
-    <li class="dropdown">
-      <a href="#">
-        <i class="fas fa-graduation-cap"></i> Excel Tutorials
-        <i class="fas fa-chevron-down"></i>
-      </a>
-
-      <ul class="dropdown-menu">
-        <li>
-          <a href="excel/vlookup.html">
-            <i class="fas fa-table"></i> VLOOKUP
-          </a>
-        </li>
-        <li>
-          <a href="excel/macros.html">
-            <i class="fas fa-bolt"></i> Macros
-          </a>
-        </li>
-        <li>
-          <a href="excel/filter.html">
-            <i class="fas fa-filter"></i> Filter
-          </a>
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <a href="contact.html">
-        <i class="fas fa-envelope"></i> Contact
-      </a>
-    </li>
-
-  </ul>
 </nav>
-  
-  <!-- HERO section with slide carousel + central photo + side bottom photo -->
-  <div class="hero">
-    <div class="carousel-container">
-      <div class="carousel-slides" id="carouselSlides">
-        <!-- Slide 1: XLOOKUP theme -->
-        <div class="slide" style="background-image: url('xlookup.png');">
-          <div class="slide-content">
-            <h3>📸 Master XLOOKUP</h3>
-            <p>Modern lookup function – faster & smarter</p>
-            <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
-          </div>
-        </div>
-        <!-- Slide 2: Pivot tables -->
-        <div class="slide" style="background-image: url('auto.png');">
-          <div class="slide-content">
-            <h3>📊 Pivot Tables</h3>
-            <p>Analyze data like a pro</p>
-            <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
-          </div>
-        </div>
-        <!-- Slide 3: Macros -->
-        <div class="slide" style="background-image: url('https://picsum.photos/id/26/1400/600');">
-          <div class="slide-content">
-            <h3>🤖 Macros & Automation</h3>
-            <p>Supercharge Excel with VBA</p>
-            <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- NEW: side bottom photo inside hero container (bottom right corner) -->
-      <img class="side-bottom-photo" src="akoo.png" alt="Kurt signature" id="sideBottomPhoto">
 
-      <!-- carousel controls -->
-      <div class="carousel-controls">
-        <button class="carousel-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
-        <button class="carousel-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+<!-- HERO section with slide carousel + side bottom photo (original) -->
+<div class="hero">
+  <div class="carousel-container">
+    <div class="carousel-slides" id="carouselSlides">
+      <div class="slide" style="background-image: url('xlookup.png');">
+        <div class="slide-content">
+          <h3>📸 Master XLOOKUP</h3>
+          <p>Modern lookup function – faster & smarter</p>
+          <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
+        </div>
       </div>
-      <div class="dots" id="dotsContainer"></div>
+      <div class="slide" style="background-image: url('auto.png');">
+        <div class="slide-content">
+          <h3>📊 Pivot Tables</h3>
+          <p>Analyze data like a pro</p>
+          <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://picsum.photos/id/26/1400/600');">
+        <div class="slide-content">
+          <h3>🤖 Macros & Automation</h3>
+          <p>Supercharge Excel with VBA</p>
+          <button class="cta-btn go-to-xlookup">Click here <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
     </div>
+    <img class="side-bottom-photo" src="akoo.png" alt="Kurt signature" id="sideBottomPhoto">
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
   </div>
 </div>
 
-<!-- PARALLAX SECTION after hero -->
+<!-- PARALLAX SECTION -->
 <section class="parallax-section">
   <div class="parallax-overlay">
     <div class="parallax-content">
       <div class="parallax-text">
-        <h2>Excel Excellence <br>Meet Modern Data</h2>
-        <p>Unlock advanced analytics, automation, and business intelligence. Kurt Creates delivers premium Excel training that transforms raw data into insights.</p>
+        <h2>Excel Tutorials<br>and Tricks</h2>
+        <p>Master the art of Excel with our comprehensive tutorials and practical tips.</p>
         <button class="parallax-btn" id="parallaxExploreBtn">Explore Tutorials <i class="fas fa-rocket"></i></button>
       </div>
       <div class="parallax-photo">
-        <!-- User's own photo placement in parallax section -->
         <img src="me2.png" alt="Kurt photography" id="parallaxUserPhoto">
       </div>
     </div>
   </div>
 </section>
 
+<!-- INVENTORY PARALLAX SECTION -->
+<section class="parallax-section inventory-parallax">
+  <div class="parallax-overlay">
+    <div class="parallax-content">
+
+      <div class="parallax-text">
+        <h2>📦 Smart Inventory for Small Business</h2>
+        <p>
+          Manage stock, track sales, and automate your inventory using powerful Excel systems.
+          Perfect for small business owners who want control and simplicity.
+        </p>
+
+        <a href="services.html" class="parallax-btn inventory-btn">
+          Go to Inventory System <i class="fas fa-box"></i>
+        </a>
+      </div>
+
+      <div class="parallax-photo">
+        <img src="inventory.png" alt="Inventory System">
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <div class="container">
-  <!-- XLOOKUP / Tutorial dynamic "Page" -->
   <div id="xlookupPage" class="tutorial-page">
     <div class="tutorial-header">
       <i class="fas fa-bolt"></i>
@@ -1226,7 +838,6 @@
     <p style="margin-top: 20px;">✨ Example: <code>=XLOOKUP("Kurt", A2:A100, B2:B100)</code> returns the matching value instantly.</p>
     <button class="close-page" id="closeXlookupPage"><i class="fas fa-times-circle"></i> Close tutorial</button>
   </div>
-
   <div id="genericTutorial" class="tutorial-page">
     <div class="tutorial-header">
       <i class="fas fa-file-excel"></i>
@@ -1237,18 +848,17 @@
   </div>
 </div>
 
-<!-- MODERN FOOTER with social icons and animation -->
 <footer class="modern-footer">
   <div class="footer-container">
     <div class="footer-brand">
       <h3>Kurt Creates</h3>
       <p>Empowering professionals with next-gen Excel & data skills.</p>
       <div class="social-icons">
-        <a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
       </div>
     </div>
     <div class="footer-links">
@@ -1285,176 +895,167 @@
 </footer>
 
 <script>
-  // 1) CAROUSEL infinite slide functionality
-  const slidesContainer = document.getElementById('carouselSlides');
-  const slides = document.querySelectorAll('.slide');
-  const prevBtn = document.getElementById('prevSlide');
-  const nextBtn = document.getElementById('nextSlide');
-  const dotsContainer = document.getElementById('dotsContainer');
-  let currentIndex = 0;
-  let totalSlides = slides.length;
-  let autoInterval;
+  (function() {
+    // ========== ORIGINAL INDEX CAROUSEL & TUTORIAL LOGIC ==========
+    const slidesContainer = document.getElementById('carouselSlides');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    const dotsContainer = document.getElementById('dotsContainer');
+    let currentIndex = 0;
+    let totalSlides = slides.length;
+    let autoInterval;
 
-  function updateCarousel() {
-    const offset = -currentIndex * 100;
-    slidesContainer.style.transform = `translateX(${offset}%)`;
-    updateDots();
-  }
+    function updateCarousel() {
+      const offset = -currentIndex * 100;
+      slidesContainer.style.transform = `translateX(${offset}%)`;
+      updateDots();
+    }
 
-  function updateDots() {
-    const dotElements = document.querySelectorAll('.dot');
-    dotElements.forEach((dot, idx) => {
-      if(idx === currentIndex) dot.classList.add('active');
-      else dot.classList.remove('active');
-    });
-  }
-
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    for(let i = 0; i < totalSlides; i++) {
-      const dot = document.createElement('div');
-      dot.classList.add('dot');
-      if(i === currentIndex) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        currentIndex = i;
-        updateCarousel();
-        resetAutoSlide();
+    function updateDots() {
+      const dotElements = document.querySelectorAll('.dots .dot');
+      dotElements.forEach((dot, idx) => {
+        if(idx === currentIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
       });
-      dotsContainer.appendChild(dot);
     }
-  }
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateCarousel();
-    resetAutoSlide();
-  }
-
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateCarousel();
-    resetAutoSlide();
-  }
-
-  function resetAutoSlide() {
-    if(autoInterval) clearInterval(autoInterval);
-    autoInterval = setInterval(() => {
-      nextSlide();
-    }, 5500);
-  }
-
-  prevBtn.addEventListener('click', prevSlide);
-  nextBtn.addEventListener('click', nextSlide);
-  createDots();
-  updateCarousel();
-  resetAutoSlide();
-
-  // Pages logic
-  function showXlookupPage() {
-    document.getElementById('xlookupPage').classList.add('active-page');
-    document.getElementById('genericTutorial').classList.remove('active-page');
-    document.getElementById('xlookupPage').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function closeXlookupPage() {
-    document.getElementById('xlookupPage').classList.remove('active-page');
-  }
-
-  function showGenericTutorial(title, description) {
-    const genericDiv = document.getElementById('genericTutorial');
-    document.getElementById('genericTitle').innerText = title;
-    document.getElementById('genericDesc').innerHTML = description;
-    document.getElementById('xlookupPage').classList.remove('active-page');
-    genericDiv.classList.add('active-page');
-    genericDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  document.getElementById('closeXlookupPage').addEventListener('click', closeXlookupPage);
-  document.querySelector('.closeGeneric')?.addEventListener('click', () => {
-    document.getElementById('genericTutorial').classList.remove('active-page');
-  });
-
-  // Hero CTA buttons
-  document.querySelectorAll('.cta-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      showXlookupPage();
-    });
-  });
-
-  // Dropdown tutorials
-  document.querySelectorAll('.dropdown-content a').forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      const tutorialType = item.getAttribute('data-tutorial');
-      if(tutorialType === 'xlookup') showXlookupPage();
-      else if(tutorialType === 'vlookup') showGenericTutorial('📌 VLOOKUP Mastery', 'VLOOKUP searches for a value in the first column of a table.<br><div class="code-block" style="margin-top:12px;">=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])</div><p><strong>Pro tip:</strong> Use FALSE for exact matches.</p>');
-      else if(tutorialType === 'pivot') showGenericTutorial('📊 Pivot Tables Wizard', 'PivotTables summarize large datasets dynamically.<br><div class="code-block" style="margin-top:12px;">✨ Create from Insert → PivotTable & explore row/column aggregations.</div><p>Perfect for dashboards and reports.</p>');
-      else if(tutorialType === 'macro') showGenericTutorial('🤖 Macros & VBA Automation', 'Automate repetitive tasks using VBA.<br><div class="code-block" style="margin-top:12px;">Sub AutoFormat()<br>  Range("A1:D1").Font.Bold = True<br>End Sub</div><p>Record or write custom macros.</p>');
-    });
-  });
-
-  // parallax button interaction
-  document.getElementById('parallaxExploreBtn')?.addEventListener('click', () => {
-    const dropdownTutorial = document.querySelector('.dropdown-content a[data-tutorial="xlookup"]');
-    if(dropdownTutorial) dropdownTutorial.click();
-  });
-  function initMobileNav() {
-        const navToggle = document.getElementById('navToggle');
-        const navMenu = document.getElementById('navMenu');
-        if(navToggle && navMenu) {
-            navToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navMenu.classList.toggle('active');
-            });
-            document.addEventListener('click', (e) => {
-                if(!navToggle.contains(e.target) && !navMenu.contains(e.target)) navMenu.classList.remove('active');
-            });
-            navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navMenu.classList.remove('active')));
-        }
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 80);
+    function createDots() {
+      if(!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      for(let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if(i === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateCarousel();
+          resetAutoSlide();
         });
+        dotsContainer.appendChild(dot);
+      }
     }
-    // Contact button alert
-    document.getElementById('contactBtn')?.addEventListener('click', (e) => { e.preventDefault(); alert("📞 Let's automate — reach out for custom inventory or Excel training!"); });
-    // Ensure all hover compatibility
-    // Intersection Observer
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    reveals.forEach(r => observer.observe(r));
 
-  const navToggle = document.getElementById("navToggle");
-const navMenu = document.querySelector(".nav-links");
-const overlay = document.getElementById("navOverlay");
-
-// TOGGLE MENU
-navToggle.addEventListener("click", () => {
-  navToggle.classList.toggle("active");
-  navMenu.classList.toggle("active");
-  overlay.classList.toggle("active");
-});
-
-// CLOSE WHEN CLICK OUTSIDE
-overlay.addEventListener("click", () => {
-  navToggle.classList.remove("active");
-  navMenu.classList.remove("active");
-  overlay.classList.remove("active");
-});
-
-// MOBILE DROPDOWN CLICK
-document.querySelectorAll(".dropdown > a").forEach(link => {
-  link.addEventListener("click", function(e) {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      this.parentElement.classList.toggle("active");
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+      resetAutoSlide();
     }
-  });
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+      resetAutoSlide();
+    }
+
+    function resetAutoSlide() {
+      if(autoInterval) clearInterval(autoInterval);
+      autoInterval = setInterval(() => { nextSlide(); }, 5500);
+    }
+
+    if(prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+    }
+    createDots();
+    updateCarousel();
+    resetAutoSlide();
+
+    // Tutorial pages
+    function showXlookupPage() {
+      const xpage = document.getElementById('xlookupPage');
+      const genericDiv = document.getElementById('genericTutorial');
+      if(xpage) xpage.classList.add('active-page');
+      if(genericDiv) genericDiv.classList.remove('active-page');
+      if(xpage) xpage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeXlookupPage() {
+      const page = document.getElementById('xlookupPage');
+      if(page) page.classList.remove('active-page');
+    }
+
+    window.showGenericTutorial = function(title, description) {
+      const genericDiv = document.getElementById('genericTutorial');
+      const titleEl = document.getElementById('genericTitle');
+      const descEl = document.getElementById('genericDesc');
+      const xpage = document.getElementById('xlookupPage');
+      if(titleEl) titleEl.innerText = title;
+      if(descEl) descEl.innerHTML = description;
+      if(xpage) xpage.classList.remove('active-page');
+      if(genericDiv) genericDiv.classList.add('active-page');
+      if(genericDiv) genericDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    document.querySelectorAll('.cta-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.preventDefault(); showXlookupPage(); });
+    });
+    const closeXbtn = document.getElementById('closeXlookupPage');
+    if(closeXbtn) closeXbtn.addEventListener('click', closeXlookupPage);
+    const closeGeneric = document.querySelector('.closeGeneric');
+    if(closeGeneric) closeGeneric.addEventListener('click', () => {
+      const gen = document.getElementById('genericTutorial');
+      if(gen) gen.classList.remove('active-page');
+    });
+    document.getElementById('parallaxExploreBtn')?.addEventListener('click', () => showXlookupPage());
+
+    // ========== UNIFIED NAVBAR FUNCTIONALITY (theme, mobile, scroll) ==========
+    const toggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+    const icon = toggleBtn?.querySelector('i');
+    const savedTheme = localStorage.getItem('theme');
+    function setLightTheme() {
+      body.style.background = '#f8fafc';
+      body.style.color = '#0f172a';
+      document.documentElement.style.setProperty('--bg-primary', '#f8fafc');
+      document.documentElement.style.setProperty('--bg-card', '#ffffff');
+      document.documentElement.style.setProperty('--text-main', '#0f172a');
+      document.documentElement.style.setProperty('--text-muted', '#334155');
+      document.documentElement.style.setProperty('--text-dim', '#64748b');
+      document.documentElement.style.setProperty('--border-glass', 'rgba(0,0,0,0.08)');
+      document.documentElement.style.setProperty('--glass-bg', 'rgba(255,255,255,0.8)');
+      if(icon) icon.className = 'fas fa-sun';
+      localStorage.setItem('theme', 'light');
+    }
+    function setDarkTheme() {
+      body.style.background = '';
+      body.style.color = '';
+      document.documentElement.style.setProperty('--bg-primary', '#0a0a0a');
+      document.documentElement.style.setProperty('--bg-card', '#111111');
+      document.documentElement.style.setProperty('--text-main', '#ffffff');
+      document.documentElement.style.setProperty('--text-muted', '#b0b0b0');
+      document.documentElement.style.setProperty('--text-dim', '#888888');
+      document.documentElement.style.setProperty('--border-glass', 'rgba(255, 255, 255, 0.08)');
+      document.documentElement.style.setProperty('--glass-bg', 'rgba(255, 255, 255, 0.03)');
+      if(icon) icon.className = 'fas fa-moon';
+      localStorage.setItem('theme', 'dark');
+    }
+    if(savedTheme === 'light') setLightTheme();
+    else setDarkTheme();
+    if(toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const isLight = document.body.style.background === 'rgb(248, 250, 252)';
+        if(isLight) setDarkTheme();
+        else setLightTheme();
+      });
+    }
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if(navToggle && navMenu) {
+      navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+      document.addEventListener('click', (e) => {
+        if(!navToggle.contains(e.target) && !navMenu.contains(e.target)) navMenu.classList.remove('active');
+      });
+    }
+    const navbarElem = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) navbarElem.classList.add('scrolled');
+      else navbarElem.classList.remove('scrolled');
+    });
+  })();
+  document.querySelector('.inventory-btn')?.addEventListener('click', () => {
+  window.location.href = "inventory.html";
 });
-  // For demonstration, all user photos use same source, which can be replaced with actual upload.
-  // side-bottom-photo animation already performing.
 </script>
 </body>
 </html>

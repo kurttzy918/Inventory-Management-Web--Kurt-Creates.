@@ -156,14 +156,16 @@
 
     /* Parallax Section */
     .parallax {
-      background-image: url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-
+  background-image: url('...');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.parallax img {
+  transform: translateY(0);
+  transition: transform 0.2s ease-out;
+}
     .parallax-overlay {
       background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
     }
@@ -245,6 +247,98 @@
     .rounded-2xl {
       border-radius: 1rem;
     }
+    /* Floating image beside heading */
+.floating-img {
+  position: absolute;
+  right: 5%;
+  top: -30px;
+  width: 140px;
+  max-width: 20vw;
+  animation: floatY 4s ease-in-out infinite;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Smooth floating animation */
+@keyframes floatY {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .floating-img {
+    right: 2%;
+    width: 110px;
+  }
+}
+@media (max-width: 768px) {
+  .floating-img {
+    display: block;
+    position: relative;
+    margin: 0 auto 15px;
+    top: 0;
+    right: 0;
+    width: 90px;
+  }
+}
+.brand-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* space between text & image */
+}
+
+.brand-item img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+/* Hero title base */
+.hero-title {
+  position: relative;
+  display: inline-block;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+/* Glow + lift */
+.hero-title:hover {
+  transform: translateY(-5px) scale(1.02);
+  text-shadow:
+    0 0 10px rgba(198,164,63,0.6),
+    0 0 20px rgba(198,164,63,0.4),
+    0 0 30px rgba(198,164,63,0.3);
+}
+
+/* Shine sweep effect */
+.hero-title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+/* Animate shine on hover */
+.hero-title:hover::after {
+  animation: shine 0.8s forwards;
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
   </style>
 </head>
 <body>
@@ -284,7 +378,9 @@
       <div class="swiper-slide relative">
         <img src="images/hero1.jpg" alt="Excel Tutorial" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'">
         <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center px-4">
-          <h1 class="text-5xl md:text-7xl font-bold text-white mb-4" data-aos="fade-up">Master Excel Like a Pro</h1>
+          <h1 class="hero-title text-5xl md:text-7xl font-bold text-white mb-4" data-aos="fade-up">
+          Master Excel Like a Pro
+          </h1>
           <p class="text-xl text-white mb-8 max-w-2xl" data-aos="fade-up" data-aos-delay="100">Learn essential formulas & tricks</p>
           <a href="exceltutorials.html" class="btn-primary" data-aos="fade-up" data-aos-delay="200">Explore Tutorials →</a>
         </div>
@@ -298,36 +394,77 @@
   <!-- Infinite Brand Carousel -->
   <div class="bg-navy py-6 overflow-hidden border-y border-gold/20" style="background-color: var(--navy);">
     <div class="infinite-carousel-track">
-      <span class="text-1xl font-heading text-gold mx-6">Automate & Create.</span>
-      <span class="text-1xl font-heading text-gold mx-6">Automate & Create.</span>
-      <span class="text-1xl font-heading text-gold mx-6">Automate & Create.</span>
-      <span class="text-1xl font-heading text-gold mx-6">Automate & Create.</span>
+
+  <span class="brand-item">
+  Automate & Create.
+  <img src="me.png" alt="logo">
+  </span>
+  <span class="brand-item">
+  Automate & Create.
+  <img src="me.png" alt="logo">
+  </span>
+  <span class="brand-item">
+  Automate & Create.
+  <img src="me.png" alt="logo">
+  </span>
+  <span class="brand-item">
+  Automate & Create.
+  <img src="me.png" alt="logo">
+  </span>
     </div>
   </div>
 
   <!-- Parallax Section -->
-  <div class="parallax w-full py-28 relative">
-    <div class="parallax-overlay absolute inset-0"></div>
-    <div class="container mx-auto px-6 relative z-10 text-center">
-      <h2 class="text-4xl md:text-5xl text-white mb-6" data-aos="fade-right">Transform Your Data Skills</h2>
-      <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto" data-aos="fade-left">From Beginner to Advanced Inventory Management</p>
-      <a href="exceltutorials.html" class="btn-primary inline-block" data-aos="zoom-in">Get Started Today →</a>
-    </div>
+  <div class="parallax w-full py-28 relative overflow-hidden">
+
+  <!-- Background Image -->
+  <img src="akoto.png" 
+       alt="Background" 
+       class="absolute inset-0 w-full h-full object-cover">
+
+  <!-- Overlay -->
+  <div class="parallax-overlay absolute inset-0"></div>
+
+  <!-- Content -->
+  <div class="container mx-auto px-6 relative z-10 text-center">
+    <h2 class="text-4xl md:text-5xl text-white mb-6" data-aos="fade-right">
+      Automate Your Business Using My Inventory Management Application
+    </h2>
+    <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto" data-aos="fade-left">
+     Good For Retail and Wholesale Business.
+    </p>
+    <a href="services.html" class="btn-primary inline-block" data-aos="zoom-in">
+      Click Here →
+    </a>
   </div>
+
+</div>
 
   <!-- About Section -->
   <section id="about" class="py-20" style="background-color: var(--card-bg);">
     <div class="container mx-auto px-6">
-      <div class="text-center mb-16" data-aos="fade-up">
-        <h2 class="text-4xl md:text-5xl mb-4" style="color: var(--text-light);">What I Offer</h2>
-        <div class="w-24 h-1 bg-gold mx-auto"></div>
-      </div>
+      <div class="relative mb-20" data-aos="fade-up">
+
+  <!-- Floating Image -->
+  <img src="gtaversion.png" 
+       alt="Floating Visual"
+       class="floating-img"
+
+  <!-- Title -->
+  <div class="text-center">
+    <h2 class="text-4xl md:text-5xl mb-4" style="color: var(--text-light);">
+      What I Offer
+    </h2>
+    <div class="w-24 h-1 bg-gold mx-auto"></div>
+  </div>
+
+</div>
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div data-aos="fade-right">
           <img src="images/about-img.jpg" alt="Excel Tips" class="rounded-2xl shadow-2xl w-full" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'">
         </div>
         <div data-aos="fade-left">
-          <h3 class="text-3xl mb-4" style="color: var(--text-light);">Empower Your Workflow</h3>
+          <h3 class="text-3xl mb-4" style="color: var(--text-light);">Empower Your Workflow and Business</h3>
           <p class="mb-6 leading-relaxed" style="color: var(--text-light); opacity: 0.85;">
             I provide practical knowledge and insider tricks to help you master <strong>Excel basics, advanced formulas, and powerful inventory management techniques</strong>. Whether you're a beginner or looking to level up, my tutorials simplify complex topics into easy-to-follow steps.
           </p>

@@ -339,6 +339,109 @@
     left: 125%;
   }
 }
+@media (min-width: 1280px) {
+  .infinite-carousel-track {
+    gap: 3rem;
+    animation-duration: 30s; /* slower = premium feel */
+  }
+
+  .brand-item {
+    font-size: 1.1rem;
+  }
+
+  .brand-item img {
+    width: 32px;
+    height: 32px;
+  }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .infinite-carousel-track {
+    gap: 1.8rem;
+    animation-duration: 22s;
+  }
+
+  .brand-item img {
+    width: 26px;
+    height: 26px;
+  }
+}
+@media (max-width: 640px) {
+  .infinite-carousel-track {
+    gap: 1.2rem;
+    animation-duration: 18s; /* faster = smoother feel */
+  }
+
+  .brand-item {
+    font-size: 0.85rem;
+  }
+
+  .brand-item img {
+    width: 22px;
+    height: 22px;
+  }
+}
+.brand-item {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.brand-item:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+/* Reusable hover effect (like hero but lighter) */
+.hover-animate {
+  position: relative;
+  display: inline-block;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+/* Lift + glow */
+.hover-animate:hover {
+  transform: translateY(-4px) scale(1.02);
+  text-shadow:
+    0 0 8px rgba(198,164,63,0.5),
+    0 0 16px rgba(198,164,63,0.3);
+}
+
+/* Shine effect */
+.hover-animate::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+}
+
+/* Animate shine */
+.hover-animate:hover::after {
+  animation: shineLite 0.7s forwards;
+}
+
+@keyframes shineLite {
+  100% {
+    left: 120%;
+  }
+}
+@media (hover: none) {
+  .hover-animate:hover {
+    transform: none;
+    text-shadow: none;
+  }
+
+  .hover-animate::after {
+    display: none;
+  }
+}
   </style>
 </head>
 <body>
@@ -427,8 +530,8 @@
 
   <!-- Content -->
   <div class="container mx-auto px-6 relative z-10 text-center">
-    <h2 class="text-4xl md:text-5xl text-white mb-6" data-aos="fade-right">
-      Automate Your Business Using My Inventory Management Application
+    <h2 class="hover-animate text-4xl md:text-5xl mb-4">
+    Automate your Business using our Inventory Management Application
     </h2>
     <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto" data-aos="fade-left">
      Good For Retail and Wholesale Business.

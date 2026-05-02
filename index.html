@@ -5,32 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Kurt Creates | Excel & Inventory Management Tutorials</title>
 
-  <!-- Google Fonts (for body text) -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Fontshare: Bespoke Stencil for headers -->
   <link href="https://api.fontshare.com/v2/css?f[]=bespoke-stencil@400&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
-  <!-- Swiper JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  
-  <!-- AOS Scroll Animation -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Montserrat', sans-serif;
@@ -38,17 +21,16 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Headers now use Bespoke Stencil */
     h1, h2, h3, h4, .font-serif, .font-heading {
       font-family: 'Bespoke Stencil', 'Playfair Display', serif;
       font-weight: 400;
       letter-spacing: 0.02em;
     }
 
-    /* Light mode colors (default) */
     :root {
       --gold: #C6A43F;
       --gold-light: #D4B96A;
+      --gold-glow: rgba(198,164,63,0.35);
       --navy: #1A2A3A;
       --navy-light: #2C3E50;
       --cream: #FEFCF8;
@@ -59,13 +41,12 @@
       --footer-bg: #1A2A3A;
       --footer-text: #ffffff;
       --navbar-bg: rgba(26, 42, 58, 0.95);
-      --overlay: rgba(0,0,0,0.4);
     }
 
-    /* Dark mode colors */
     body.dark {
       --gold: #D4B96A;
       --gold-light: #C6A43F;
+      --gold-glow: rgba(212,185,106,0.3);
       --navy: #121212;
       --navy-light: #1e2a3a;
       --cream: #1a1a2e;
@@ -76,43 +57,20 @@
       --footer-bg: #0a0a0a;
       --footer-text: #e0e0e0;
       --navbar-bg: rgba(18, 18, 18, 0.95);
-      --overlay: rgba(0,0,0,0.7);
     }
 
-    body {
-      background-color: var(--bg-light);
-      color: var(--text-light);
-    }
-
+    body { background-color: var(--bg-light); color: var(--text-light); }
     .text-gold { color: var(--gold); }
     .bg-gold { background-color: var(--gold); }
-    .bg-gold-light { background-color: var(--gold-light); }
     .border-gold { border-color: var(--gold); }
-    .hover-bg-gold:hover { background-color: var(--gold); }
 
-    /* Override Tailwind text colors for dark mode */
-    .text-navy, .text-gray-700, .text-gray-600, .text-gray-500 {
-      color: var(--text-light) !important;
-    }
-    
-    .text-muted {
-      color: var(--text-muted) !important;
-    }
-
-    .bg-cream {
-      background-color: var(--card-bg) !important;
-    }
-
-    /* Navbar */
+    /* ─── NAVBAR ─── */
     .navbar {
       transition: all 0.4s ease;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       background-color: var(--navbar-bg);
     }
-
-    .navbar-scrolled {
-      background-color: rgba(0, 0, 0, 0.9);
-    }
+    .navbar-scrolled { background-color: rgba(0,0,0,0.92); box-shadow: 0 2px 30px rgba(0,0,0,0.4); }
 
     .nav-link {
       position: relative;
@@ -120,57 +78,89 @@
       transition: color 0.3s ease;
       color: white;
     }
-
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 0;
-      height: 2px;
+      bottom: -5px; left: 0;
+      width: 0; height: 2px;
       background: var(--gold);
       transition: width 0.3s ease;
     }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
+    /* ─── KURT CREATES LOGO TEXT ─── */
+    .brand-name {
+      position: relative;
+      display: inline-block;
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: 'Bespoke Stencil', serif;
+      color: white;
+      letter-spacing: 0.05em;
+      cursor: default;
+      overflow: hidden;
     }
 
-    /* Infinite Brand Carousel */
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    /* animated gradient shimmer */
+    .brand-name .brand-text {
+      background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        var(--gold-light) 30%,
+        #fff8e0 50%,
+        var(--gold) 70%,
+        #ffffff 100%
+      );
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: brandShimmer 4s linear infinite;
     }
 
-    .infinite-carousel-track {
-      animation: slide 25s linear infinite;
-      display: flex;
-      gap: 3rem;
-      width: max-content;
+    @keyframes brandShimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 250% center; }
     }
 
-    .infinite-carousel-track:hover {
-      animation-play-state: paused;
+    /* spark dots that float up */
+    .brand-name .spark {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      pointer-events: none;
+      animation: sparkFloat 2.5s ease-in-out infinite;
+      opacity: 0;
+    }
+    .brand-name .spark:nth-child(2) { left: 10%; animation-delay: 0s; }
+    .brand-name .spark:nth-child(3) { left: 30%; animation-delay: 0.5s; }
+    .brand-name .spark:nth-child(4) { left: 55%; animation-delay: 1s; }
+    .brand-name .spark:nth-child(5) { left: 75%; animation-delay: 1.5s; }
+    .brand-name .spark:nth-child(6) { left: 90%; animation-delay: 0.8s; }
+
+    @keyframes sparkFloat {
+      0%   { bottom: -4px; opacity: 0; transform: scale(0.5); }
+      20%  { opacity: 1; }
+      80%  { opacity: 0.6; }
+      100% { bottom: 110%; opacity: 0; transform: scale(1.5); }
     }
 
-    /* Parallax Section */
-    .parallax {
-  background-image: url('...');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.parallax img {
-  transform: translateY(0);
-  transition: transform 0.2s ease-out;
-}
-    .parallax-overlay {
-      background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
+    /* gold underline pulse */
+    .brand-name::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: underlinePulse 3s ease-in-out infinite;
+    }
+    @keyframes underlinePulse {
+      0%, 100% { opacity: 0.3; transform: scaleX(0.6); }
+      50%       { opacity: 1;   transform: scaleX(1); }
     }
 
-    /* Button Styles */
+    /* ─── BUTTONS ─── */
     .btn-primary {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: white;
@@ -179,313 +169,473 @@
       font-weight: 600;
       transition: all 0.3s ease;
       display: inline-block;
-      box-shadow: 0 4px 15px rgba(198, 164, 63, 0.3);
+      box-shadow: 0 4px 15px var(--gold-glow);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform 0.4s ease;
+    }
+    .btn-primary:hover::after { transform: translateX(100%) skewX(-15deg); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--gold-glow); }
+
+    /* ─── THEME TOGGLE ─── */
+    .theme-toggle {
+      background: rgba(255,255,255,0.15);
+      border: none; border-radius: 50%;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease;
+      color: white;
+    }
+    .theme-toggle:hover { background: var(--gold); transform: rotate(20deg); }
+
+    /* ─── BRAND CAROUSEL ─── */
+    @keyframes slide {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .infinite-carousel-track {
+      animation: slide 25s linear infinite;
+      display: flex; gap: 3rem; width: max-content;
+    }
+    .infinite-carousel-track:hover { animation-play-state: paused; }
+    .brand-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      opacity: 0.8; transition: all 0.3s ease;
+      font-family: 'Bespoke Stencil', serif; font-size: 1rem;
+      color: var(--gold-light);
+    }
+    .brand-item:hover { opacity: 1; transform: scale(1.05); }
+    .brand-item img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+
+    /* ─── PARALLAX ─── */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .parallax-overlay {
+      background: linear-gradient(135deg, rgba(0,0,0,0.72), rgba(0,0,0,0.6));
     }
 
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(198, 164, 63, 0.4);
-    }
-
-    /* Hero Swiper */
+    /* ─── HERO ─── */
     .hero-swiper .swiper-button-next,
     .hero-swiper .swiper-button-prev {
       color: var(--gold);
-      background: rgba(255,255,255,0.2);
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      width: 45px; height: 45px; border-radius: 50%;
       backdrop-filter: blur(4px);
     }
+    .hero-swiper .swiper-pagination-bullet-active { background: var(--gold); }
 
-    .hero-swiper .swiper-pagination-bullet-active {
-      background: var(--gold);
+    .hero-title {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      cursor: default;
     }
+    .hero-title:hover {
+      text-shadow: 0 0 12px var(--gold-glow), 0 0 30px var(--gold-glow);
+      transform: translateY(-4px) scale(1.01);
+      transition: all 0.4s ease;
+    }
+    .hero-title::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+      transform: skewX(-20deg);
+    }
+    .hero-title:hover::after { animation: shine 0.8s forwards; }
+    @keyframes shine { 100% { left: 125%; } }
 
-    /* Social Icons */
+    /* ─── HOVER ANIMATE (parallax heading) ─── */
+    .hover-animate {
+      position: relative; display: inline-block;
+      transition: all 0.4s ease; cursor: default;
+      overflow: hidden;
+    }
+    .hover-animate:hover {
+      transform: translateY(-4px) scale(1.02);
+      text-shadow: 0 0 8px rgba(198,164,63,0.5), 0 0 16px rgba(198,164,63,0.3);
+    }
+    .hover-animate::after {
+      content: '';
+      position: absolute; top: 0; left: -70%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+      transform: skewX(-20deg);
+    }
+    .hover-animate:hover::after { animation: shineLite 0.7s forwards; }
+    @keyframes shineLite { 100% { left: 120%; } }
+
+    /* ─── SOCIAL ICONS ─── */
     .social-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px;
       background: rgba(255,255,255,0.1);
       border-radius: 50%;
-      transition: all 0.3s ease;
-      color: white;
+      transition: all 0.3s ease; color: white;
     }
-    .social-icon:hover {
-      background: var(--gold);
-      transform: translateY(-3px);
+    .social-icon:hover { background: var(--gold); transform: translateY(-3px); }
+
+    /* ─── MOBILE MENU ─── */
+    #mobile-menu { background-color: var(--navbar-bg); }
+
+    /* ═══════════════════════════════
+       SCROLL REVEAL SYSTEM
+    ═══════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.reveal-left  { transform: translateX(-50px); }
+    .reveal.reveal-right { transform: translateX(50px); }
+    .reveal.reveal-scale { transform: scale(0.88); }
+    .reveal.reveal-rotate { transform: rotate(-4deg) scale(0.9); }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.35s; }
+    .reveal-delay-4 { transition-delay: 0.5s; }
+
+    /* ─── SECTION ENTER LINES ─── */
+    .section-line {
+      width: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+      transition: width 1s cubic-bezier(0.22,1,0.36,1);
+      border-radius: 3px;
+    }
+    .section-line.visible { width: 6rem; }
+
+    /* ─── CAROUSEL SECTION STYLING ─── */
+    .carousel-section {
+      background-color: var(--navy);
+      overflow: hidden;
     }
 
-    /* Dark mode toggle button */
-    .theme-toggle {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: flex;
+    /* ─── PARALLAX SECTION COUNTER ─── */
+    .stat-counter {
+      font-family: 'Bespoke Stencil', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      display: block;
+    }
+
+    /* ═══════════════════════════════
+       ABOUT SECTION — MODERN/ELEGANT
+    ═══════════════════════════════ */
+    #about {
+      background-color: var(--card-bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* large faint watermark letter */
+    #about::before {
+      content: 'KC';
+      position: absolute;
+      right: -2rem; top: -2rem;
+      font-family: 'Bespoke Stencil', serif;
+      font-size: 20rem;
+      color: var(--gold);
+      opacity: 0.04;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
       align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
+    }
+    @media(max-width:768px){ .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .about-img-wrapper {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+    .about-img-wrapper img {
+      width: 100%; border-radius: 1.5rem;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .about-img-wrapper:hover img { transform: scale(1.04); }
+    .about-img-wrapper::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 1.5rem;
+      border: 2px solid var(--gold);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .about-img-wrapper:hover::after { opacity: 0.5; }
+
+    /* gold corner accent */
+    .about-img-wrapper::before {
+      content: '';
+      position: absolute;
+      bottom: -8px; right: -8px;
+      width: 60%; height: 60%;
+      border: 3px solid var(--gold);
+      border-radius: 1.5rem;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .about-content-box {
+      position: relative;
+    }
+
+    .about-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.2rem;
     }
-    .theme-toggle:hover {
+
+    .about-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text-light);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-divider {
+      width: 3rem; height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      border-radius: 3px;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text {
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 1.8rem;
+      font-size: 0.95rem;
+    }
+
+    /* skill pills */
+    .skill-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .skill-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.75rem 1.2rem;
+      background: var(--bg-light);
+      border: 1px solid rgba(198,164,63,0.15);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .skill-item:hover {
+      border-color: var(--gold);
+      background: rgba(198,164,63,0.06);
+      transform: translateX(6px);
+      box-shadow: 0 4px 20px var(--gold-glow);
+    }
+    .skill-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .skill-label { color: var(--text-light); font-weight: 600; font-size: 0.9rem; }
+    .skill-sub   { color: var(--text-muted); font-size: 0.78rem; }
+
+    /* ─── "WHAT I OFFER" HEADER with round photo in corner ─── */
+    .what-i-offer-header {
+      position: relative;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .what-i-offer-header .section-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .what-i-offer-header h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--text-light);
+      position: relative;
+      display: inline-block;
+    }
+
+    /* gold underline */
+    .what-i-offer-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 3px;
+    }
+
+    /* round photo — positioned top-right corner of the header block */
+    .offer-avatar {
+      position: absolute;
+      top: -10px;
+      right: 0;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 6px rgba(198,164,63,0.15), 0 8px 30px rgba(0,0,0,0.2);
+      animation: avatarFloat 4s ease-in-out infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .offer-avatar:hover {
+      transform: scale(1.1) translateY(-4px);
+      box-shadow: 0 0 0 8px rgba(198,164,63,0.25), 0 12px 40px var(--gold-glow);
+    }
+    @keyframes avatarFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    @media(max-width:640px){
+      .offer-avatar { width: 56px; height: 56px; top: -5px; right: 0; }
+    }
+
+    /* ─── PARALLAX SECTION TEXT ─── */
+    .parallax-heading {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: white;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    /* ─── FOOTER ─── */
+    footer { position: relative; overflow: hidden; }
+    footer::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* ─── MOBILE RESPONSIVE ─── */
+    @media(max-width:640px){
+      .infinite-carousel-track { gap: 1.2rem; animation-duration: 18s; }
+      .brand-item { font-size: 0.85rem; }
+      .brand-item img { width: 22px; height: 22px; }
+    }
+    @media(min-width:641px) and (max-width:1024px){
+      .infinite-carousel-track { gap: 1.8rem; animation-duration: 22s; }
+    }
+    @media(min-width:1280px){
+      .infinite-carousel-track { gap: 3rem; animation-duration: 30s; }
+      .brand-item { font-size: 1.1rem; }
+    }
+
+    /* floating particles bg for about */
+    .particle {
+      position: absolute;
+      width: 5px; height: 5px;
+      border-radius: 50%;
       background: var(--gold);
-      transform: rotate(15deg);
+      opacity: 0;
+      pointer-events: none;
+      animation: particleDrift linear infinite;
     }
-
-    /* Mobile menu background */
-    #mobile-menu {
-      background-color: var(--navbar-bg);
+    @keyframes particleDrift {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.4; }
+      90%  { opacity: 0.15; }
+      100% { transform: translateY(-300px) rotate(360deg); opacity: 0; }
     }
-
-    /* About section image border radius */
-    .rounded-2xl {
-      border-radius: 1rem;
-    }
-    /* Floating image beside heading */
-.floating-img {
-  position: absolute;
-  right: 5%;
-  top: -30px;
-  width: 140px;
-  max-width: 20vw;
-  animation: floatY 4s ease-in-out infinite;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* Smooth floating animation */
-@keyframes floatY {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .floating-img {
-    right: 2%;
-    width: 110px;
-  }
-}
-@media (max-width: 768px) {
-  .floating-img {
-    display: block;
-    position: relative;
-    margin: 0 auto 15px;
-    top: 0;
-    right: 0;
-    width: 90px;
-  }
-}
-.brand-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px; /* space between text & image */
-}
-
-.brand-item img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-/* Hero title base */
-.hero-title {
-  position: relative;
-  display: inline-block;
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-
-/* Glow + lift */
-.hero-title:hover {
-  transform: translateY(-5px) scale(1.02);
-  text-shadow:
-    0 0 10px rgba(198,164,63,0.6),
-    0 0 20px rgba(198,164,63,0.4),
-    0 0 30px rgba(198,164,63,0.3);
-}
-
-/* Shine sweep effect */
-.hero-title::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.6),
-    transparent
-  );
-  transform: skewX(-20deg);
-}
-
-/* Animate shine on hover */
-.hero-title:hover::after {
-  animation: shine 0.8s forwards;
-}
-
-@keyframes shine {
-  100% {
-    left: 125%;
-  }
-}
-@media (min-width: 1280px) {
-  .infinite-carousel-track {
-    gap: 3rem;
-    animation-duration: 30s; /* slower = premium feel */
-  }
-
-  .brand-item {
-    font-size: 1.1rem;
-  }
-
-  .brand-item img {
-    width: 32px;
-    height: 32px;
-  }
-}
-@media (min-width: 641px) and (max-width: 1024px) {
-  .infinite-carousel-track {
-    gap: 1.8rem;
-    animation-duration: 22s;
-  }
-
-  .brand-item img {
-    width: 26px;
-    height: 26px;
-  }
-}
-@media (max-width: 640px) {
-  .infinite-carousel-track {
-    gap: 1.2rem;
-    animation-duration: 18s; /* faster = smoother feel */
-  }
-
-  .brand-item {
-    font-size: 0.85rem;
-  }
-
-  .brand-item img {
-    width: 22px;
-    height: 22px;
-  }
-}
-.brand-item {
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.brand-item:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-/* Reusable hover effect (like hero but lighter) */
-.hover-animate {
-  position: relative;
-  display: inline-block;
-  transition: all 0.4s ease;
-  cursor: pointer;
-}
-
-/* Lift + glow */
-.hover-animate:hover {
-  transform: translateY(-4px) scale(1.02);
-  text-shadow:
-    0 0 8px rgba(198,164,63,0.5),
-    0 0 16px rgba(198,164,63,0.3);
-}
-
-/* Shine effect */
-.hover-animate::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -70%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.5),
-    transparent
-  );
-  transform: skewX(-20deg);
-}
-
-/* Animate shine */
-.hover-animate:hover::after {
-  animation: shineLite 0.7s forwards;
-}
-
-@keyframes shineLite {
-  100% {
-    left: 120%;
-  }
-}
-@media (hover: none) {
-  .hover-animate:hover {
-    transform: none;
-    text-shadow: none;
-  }
-
-  .hover-animate::after {
-    display: none;
-  }
-}
   </style>
 </head>
 <body>
 
-  <!-- Navigation same as before ... -->
+  <!-- ═══ NAVIGATION ═══ -->
   <nav class="navbar fixed w-full z-50 transition-all duration-300">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-3">
-        <img src="gta.png" alt="Kurt Creates Logo" class="h-12 w-auto" onerror="this.src='https://placehold.co/60x60/f1c40f/1a2a3a?text=KC'">
-        <span class="text-2xl font-bold text-white font-heading">Kurt Creates.</span>
+        <img src="gta.png" alt="Kurt Creates Logo" class="h-12 w-auto"
+             onerror="this.src='https://placehold.co/60x60/C6A43F/1a2a3a?text=KC'">
+
+        <!-- Animated brand name -->
+        <div class="brand-name">
+          <span class="spark"></span>
+          <span class="spark"></span>
+          <span class="spark"></span>
+          <span class="spark"></span>
+          <span class="spark"></span>
+          <span class="brand-text">Kurt Creates.</span>
+        </div>
       </div>
+
       <div class="hidden md:flex items-center space-x-8">
-        <a href="index.html" class="nav-link text-white">Home</a>
-        <a href="exceltutorials.html" class="nav-link text-white hover:text-gold transition">Excel Tutorials</a>
-        <a href="#about" class="nav-link text-white hover:text-gold transition">About</a>
-        <a href="#contact" class="nav-link text-white hover:text-gold transition">Contact</a>
+        <a href="index.html"         class="nav-link">Home</a>
+        <a href="exceltutorials.html" class="nav-link">Excel Tutorials</a>
+        <a href="#about"             class="nav-link">About</a>
+        <a href="#contact"           class="nav-link">Contact</a>
         <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
       </div>
+
       <div class="flex items-center space-x-3 md:hidden">
         <button id="theme-toggle-mobile" class="theme-toggle"><i class="fas fa-moon"></i></button>
         <button id="menu-btn" class="text-white text-2xl"><i class="fas fa-bars"></i></button>
       </div>
     </div>
+
     <div id="mobile-menu" class="hidden md:hidden w-full py-4 shadow-lg">
       <div class="flex flex-col items-center space-y-4">
-        <a href="index.html" class="text-white hover:text-gold transition">Home</a>
+        <a href="index.html"          class="text-white hover:text-gold transition">Home</a>
         <a href="exceltutorials.html" class="text-white hover:text-gold transition">Excel Tutorials</a>
-        <a href="#about" class="text-white hover:text-gold transition">About</a>
-        <a href="#contact" class="text-white hover:text-gold transition">Contact</a>
+        <a href="#about"              class="text-white hover:text-gold transition">About</a>
+        <a href="#contact"            class="text-white hover:text-gold transition">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- ═══ HERO SECTION ═══ -->
   <section class="hero-swiper w-full h-screen relative overflow-hidden">
     <div class="swiper-wrapper">
       <div class="swiper-slide relative">
-        <img src="images/hero1.jpg" alt="Excel Tutorial" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'">
-        <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center px-4">
-          <h1 class="hero-title text-5xl md:text-7xl font-bold text-white mb-4" data-aos="fade-up">
-          Master Excel Like a Pro
+        <img src="images/hero1.jpg" alt="Excel Tutorial" class="w-full h-full object-cover"
+             onerror="this.src='https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=2070&q=80'">
+        <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center px-4">
+          <div class="reveal reveal-scale" style="transition-delay:0s">
+            <span style="display:inline-block;background:var(--gold);color:white;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1.2rem;border-radius:999px;margin-bottom:1rem;">
+              Excel & Inventory Tutorials
+            </span>
+          </div>
+          <h1 class="hero-title text-5xl md:text-7xl font-bold text-white mb-4 reveal" style="transition-delay:0.15s">
+            Master Excel Like a Pro
           </h1>
-          <p class="text-xl text-white mb-8 max-w-2xl" data-aos="fade-up" data-aos-delay="100">Learn essential formulas & tricks</p>
-          <a href="exceltutorials.html" class="btn-primary" data-aos="fade-up" data-aos-delay="200">Explore Tutorials →</a>
+          <p class="text-xl text-white/80 mb-8 max-w-2xl reveal" style="transition-delay:0.3s">
+            Learn essential formulas &amp; tricks to transform your workflow
+          </p>
+          <a href="exceltutorials.html" class="btn-primary reveal" style="transition-delay:0.45s">
+            Explore Tutorials →
+          </a>
         </div>
       </div>
     </div>
@@ -494,111 +644,146 @@
     <div class="swiper-pagination"></div>
   </section>
 
-  <!-- Infinite Brand Carousel -->
-  <div class="bg-navy py-6 overflow-hidden border-y border-gold/20" style="background-color: var(--navy);">
+  <!-- ═══ BRAND CAROUSEL ═══ -->
+  <div class="carousel-section py-6 overflow-hidden border-y border-gold/20">
     <div class="infinite-carousel-track">
-
-  <span class="brand-item">
-  Automate & Create.
-  <img src="me.png" alt="logo">
-  </span>
-  <span class="brand-item">
-  Automate & Create.
-  <img src="me.png" alt="logo">
-  </span>
-  <span class="brand-item">
-  Automate & Create.
-  <img src="me.png" alt="logo">
-  </span>
-  <span class="brand-item">
-  Automate & Create.
-  <img src="me.png" alt="logo">
-  </span>
+      <span class="brand-item">Automate &amp; Create. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Excel Mastery. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Inventory Systems. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Automate &amp; Create. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Excel Mastery. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Inventory Systems. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Automate &amp; Create. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
+      <span class="brand-item">Excel Mastery. <img src="me.png" alt="logo" onerror="this.src='https://placehold.co/28x28/C6A43F/fff?text=K'"></span>
     </div>
   </div>
 
-  <!-- Parallax Section -->
-  <div class="parallax w-full py-28 relative overflow-hidden">
+  <!-- ═══ PARALLAX / CTA SECTION ═══ -->
+  <div class="parallax w-full py-32 relative overflow-hidden">
+    <img src="akoto.png" alt="Background"
+         class="absolute inset-0 w-full h-full object-cover"
+         onerror="this.style.display='none'">
+    <div class="parallax-overlay absolute inset-0"></div>
 
-  <!-- Background Image -->
-  <img src="akoto.png" 
-       alt="Background" 
-       class="absolute inset-0 w-full h-full object-cover">
+    <div class="container mx-auto px-6 relative z-10 text-center">
+      <div class="reveal reveal-scale">
+        <span style="display:inline-block;background:rgba(198,164,63,0.25);border:1px solid rgba(198,164,63,0.5);color:var(--gold-light);font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;padding:0.3rem 1.2rem;border-radius:999px;margin-bottom:1.2rem;">
+          Automation Toolkit
+        </span>
+      </div>
+      <h2 class="hover-animate parallax-heading mb-4 reveal">
+        Automate your Business with<br>Inventory Management
+      </h2>
+      <p class="text-xl text-white/80 mb-10 max-w-2xl mx-auto reveal reveal-delay-2">
+        Perfect for Retail and Wholesale Business owners who want to save time and gain clarity.
+      </p>
 
-  <!-- Overlay -->
-  <div class="parallax-overlay absolute inset-0"></div>
-
-  <!-- Content -->
-  <div class="container mx-auto px-6 relative z-10 text-center">
-    <h2 class="hover-animate text-4xl md:text-5xl mb-4">
-    Automate your Business using our Inventory Management Application
-    </h2>
-    <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto" data-aos="fade-left">
-     Good For Retail and Wholesale Business.
-    </p>
-    <a href="services.html" class="btn-primary inline-block" data-aos="zoom-in">
-      Click Here →
-    </a>
-  </div>
-
-</div>
-
-  <!-- About Section -->
-  <section id="about" class="py-20" style="background-color: var(--card-bg);">
-    <div class="container mx-auto px-6">
-      <div class="relative mb-20" data-aos="fade-up">
-
-  <!-- Floating Image -->
-  <img src="gtaversion.png" 
-       alt="Floating Visual"
-       class="floating-img"
-
-  <!-- Title -->
-  <div class="text-center">
-    <h2 class="text-4xl md:text-5xl mb-4" style="color: var(--text-light);">
-      What I Offer
-    </h2>
-    <div class="w-24 h-1 bg-gold mx-auto"></div>
-  </div>
-
-</div>
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div data-aos="fade-right">
-          <img src="images/about-img.jpg" alt="Excel Tips" class="rounded-2xl shadow-2xl w-full" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80'">
+      <!-- mini stats row -->
+      <div class="flex justify-center gap-12 mb-10 flex-wrap">
+        <div class="reveal reveal-delay-2" style="text-align:center">
+          <span class="stat-counter" id="stat1">0</span>
+          <span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Tutorials</span>
         </div>
-        <div data-aos="fade-left">
-          <h3 class="text-3xl mb-4" style="color: var(--text-light);">Empower Your Workflow and Business</h3>
-          <p class="mb-6 leading-relaxed" style="color: var(--text-light); opacity: 0.85;">
-            I provide practical knowledge and insider tricks to help you master <strong>Excel basics, advanced formulas, and powerful inventory management techniques</strong>. Whether you're a beginner or looking to level up, my tutorials simplify complex topics into easy-to-follow steps.
+        <div class="reveal reveal-delay-3" style="text-align:center">
+          <span class="stat-counter" id="stat2">0</span>
+          <span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Students</span>
+        </div>
+        <div class="reveal reveal-delay-4" style="text-align:center">
+          <span class="stat-counter" id="stat3">0</span>
+          <span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Hours Saved</span>
+        </div>
+      </div>
+
+      <a href="services.html" class="btn-primary reveal reveal-delay-3 inline-block">Click Here →</a>
+    </div>
+  </div>
+
+  <!-- ═══ ABOUT / WHAT I OFFER SECTION ═══ -->
+  <section id="about" class="py-24 relative overflow-hidden" style="background-color: var(--card-bg);">
+
+    <!-- decorative particles (JS will place them) -->
+    <div id="particles-container"></div>
+
+    <div class="container mx-auto px-6">
+
+      <!-- Section header with round photo -->
+      <div class="what-i-offer-header reveal reveal-scale">
+        <span class="section-label">My Expertise</span>
+        <h2>What I Offer</h2>
+        <!-- Round photo in the right corner of this block -->
+        <img src="gtaversion.png" alt="Kurt" class="offer-avatar"
+             onerror="this.src='https://placehold.co/80x80/C6A43F/fff?text=K'">
+        <div style="margin-top:1.2rem" class="section-line mx-auto" id="offer-line"></div>
+      </div>
+
+      <!-- Two-column grid -->
+      <div class="about-grid">
+
+        <!-- Left: image -->
+        <div class="about-img-wrapper reveal reveal-left">
+          <img src="images/about-img.jpg" alt="Excel Tips"
+               onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80'">
+        </div>
+
+        <!-- Right: content -->
+        <div class="about-content-box">
+          <div class="about-badge reveal reveal-delay-1">
+            <i class="fas fa-star" style="font-size:0.7rem"></i>
+            Excel &amp; Inventory Expert
+          </div>
+
+          <h3 class="about-title reveal reveal-delay-2">
+            Empower Your Workflow<br>and Business
+          </h3>
+
+          <div class="about-divider reveal reveal-delay-2"></div>
+
+          <p class="about-text reveal reveal-delay-2">
+            I provide practical knowledge and insider tricks to help you master
+            <strong style="color:var(--gold)">Excel basics, advanced formulas, and powerful inventory management techniques</strong>.
+            Whether you're a beginner or looking to level up, my tutorials simplify complex topics into easy-to-follow steps.
           </p>
-          <div class="space-y-3">
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-check-circle text-gold text-xl"></i>
-              <span style="color: var(--text-light);">VLOOKUP, XLOOKUP, FILTER Functions</span>
+
+          <div class="skill-list">
+            <div class="skill-item reveal reveal-delay-2">
+              <div class="skill-icon"><i class="fas fa-table"></i></div>
+              <div>
+                <div class="skill-label">VLOOKUP, XLOOKUP &amp; FILTER</div>
+                <div class="skill-sub">Master the most powerful Excel lookup functions</div>
+              </div>
             </div>
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-check-circle text-gold text-xl"></i>
-              <span style="color: var(--text-light);">Inventory Tracking & Management</span>
+            <div class="skill-item reveal reveal-delay-3">
+              <div class="skill-icon"><i class="fas fa-boxes"></i></div>
+              <div>
+                <div class="skill-label">Inventory Tracking &amp; Management</div>
+                <div class="skill-sub">Automated systems for retail &amp; wholesale</div>
+              </div>
             </div>
-            <div class="flex items-center space-x-3">
-              <i class="fas fa-check-circle text-gold text-xl"></i>
-              <span style="color: var(--text-light);">Data Visualization & Dashboards</span>
+            <div class="skill-item reveal reveal-delay-4">
+              <div class="skill-icon"><i class="fas fa-chart-bar"></i></div>
+              <div>
+                <div class="skill-label">Data Visualization &amp; Dashboards</div>
+                <div class="skill-sub">Turn raw data into stunning insights</div>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer id="contact" class="py-12" style="background-color: var(--footer-bg); color: var(--footer-text);">
+  <!-- ═══ FOOTER ═══ -->
+  <footer id="contact" class="py-14" style="background-color: var(--footer-bg); color: var(--footer-text);">
     <div class="container mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-6 md:mb-0 text-center md:text-left">
-          <h3 class="text-2xl text-gold font-heading">Kurt Creates</h3>
-          <p class="text-sm mt-2" style="color: var(--footer-text); opacity: 0.7;">© 2025 All Rights Reserved</p>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-center md:text-left reveal reveal-left">
+          <h3 class="text-2xl font-heading" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            Kurt Creates
+          </h3>
+          <p class="text-sm mt-1" style="opacity:0.6">© 2025 All Rights Reserved</p>
         </div>
-        <div class="flex space-x-5">
+        <div class="flex space-x-4 reveal reveal-right">
           <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
           <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -609,45 +794,109 @@
   </footer>
 
   <script>
-    AOS.init({ duration: 1000, once: false, mirror: true });
+    // ─── SWIPER ───
     const swiper = new Swiper('.hero-swiper', {
-      loop: true, autoplay: { delay: 5000, disableOnInteraction: false },
+      loop: true,
+      autoplay: { delay: 5500, disableOnInteraction: false },
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
       pagination: { el: '.swiper-pagination', clickable: true },
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
     });
+
+    // ─── NAVBAR SCROLL ───
     window.addEventListener('scroll', () => {
       const navbar = document.querySelector('.navbar');
-      if (window.scrollY > 50) navbar.classList.add('navbar-scrolled');
-      else navbar.classList.remove('navbar-scrolled');
+      navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
     });
-    const menuBtn = document.getElementById('menu-btn');
+
+    // ─── MOBILE MENU ───
+    const menuBtn    = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     if (menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
+    // ─── DARK MODE ───
     function initDarkMode() {
-      const toggleBtns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
-      const storedTheme = localStorage.getItem('theme');
-      if (storedTheme === 'dark') {
-        document.body.classList.add('dark');
-        updateToggleIcons(true);
-      } else {
-        document.body.classList.remove('dark');
-        updateToggleIcons(false);
+      const btns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
+      const stored = localStorage.getItem('theme');
+      if (stored === 'dark') { document.body.classList.add('dark'); setIcons(true); }
+      function setIcons(dark) {
+        btns.forEach(b => b.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>');
       }
-      function updateToggleIcons(isDark) {
-        const iconSun = '<i class="fas fa-sun"></i>';
-        const iconMoon = '<i class="fas fa-moon"></i>';
-        toggleBtns.forEach(btn => { btn.innerHTML = isDark ? iconSun : iconMoon; });
-      }
-      toggleBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const isDark = document.body.classList.toggle('dark');
-          localStorage.setItem('theme', isDark ? 'dark' : 'light');
-          updateToggleIcons(isDark);
-        });
-      });
+      btns.forEach(b => b.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        setIcons(dark);
+      }));
     }
     initDarkMode();
+
+    // ─── INTERSECTION OBSERVER — scroll reveal ───
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer  = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // animate section line if inside what-i-offer-header
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // section line observer
+    const lineObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.section-line').forEach(l => lineObs.observe(l));
+
+    // trigger hero reveals immediately
+    document.querySelectorAll('.hero-swiper .reveal').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 300);
+    });
+
+    // ─── COUNTER ANIMATION ───
+    function animateCounter(el, target, suffix = '') {
+      let current = 0;
+      const step = Math.ceil(target / 60);
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current.toLocaleString() + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 30);
+    }
+
+    const statsObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(document.getElementById('stat1'), 120, '+');
+          animateCounter(document.getElementById('stat2'), 5000, '+');
+          animateCounter(document.getElementById('stat3'), 10000, '+');
+          statsObs.disconnect();
+        }
+      });
+    }, { threshold: 0.5 });
+    const parallaxSection = document.querySelector('.parallax');
+    if (parallaxSection) statsObs.observe(parallaxSection);
+
+    // ─── FLOATING PARTICLES in about section ───
+    const container = document.getElementById('particles-container');
+    if (container) {
+      for (let i = 0; i < 12; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `
+          left: ${Math.random() * 100}%;
+          bottom: -10px;
+          width: ${2 + Math.random() * 5}px;
+          height: ${2 + Math.random() * 5}px;
+          animation-duration: ${5 + Math.random() * 8}s;
+          animation-delay: ${Math.random() * 6}s;
+          opacity: 0;
+        `;
+        container.appendChild(p);
+      }
+    }
   </script>
 </body>
 </html>

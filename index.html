@@ -569,6 +569,20 @@
       90%  { opacity: 0.15; }
       100% { transform: translateY(-300px) rotate(360deg); opacity: 0; }
     }
+    /* floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+      pointer-events: none; animation: orbFloat 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 400px; height: 400px; top: -100px; right: -80px; animation-delay: 0s; }
+    .orb-2 { width: 280px; height: 280px; bottom: -60px; left: 5%; animation-delay: 3s; }
+    .orb-3 { width: 180px; height: 180px; top: 40%; left: 45%; animation-delay: 5s; opacity: 0.5; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
   </style>
 </head>
 <body>
@@ -594,6 +608,7 @@
       <div class="hidden md:flex items-center space-x-8">
         <a href="index.html"         class="nav-link">Home</a>
         <a href="exceltutorials.html" class="nav-link">Excel Tutorials</a>
+        <a href="InventoryQuote.html" class="nav-link">Shop</a>
         <a href="#about"             class="nav-link">About</a>
         <a href="#contact"           class="nav-link">Contact</a>
         <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
@@ -609,8 +624,9 @@
       <div class="flex flex-col items-center space-y-4">
         <a href="index.html"          class="text-white hover:text-gold transition">Home</a>
         <a href="exceltutorials.html" class="text-white hover:text-gold transition">Excel Tutorials</a>
-        <a href="#about"              class="text-white hover:text-gold transition">About</a>
-        <a href="#contact"            class="text-white hover:text-gold transition">Contact</a>
+        <a href="InventoryQuote.html" class="text-white hover:text-gold transition">Shop</a>
+        <a href="about.html"class="text-white hover:text-gold transition">About</a>
+        <a href="contact.html"class="text-white hover:text-gold transition">Contact</a>
       </div>
     </div>
   </nav>

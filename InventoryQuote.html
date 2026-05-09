@@ -768,7 +768,7 @@
       border: none; cursor: pointer; color: white;
       display: flex; align-items: center; justify-content: center;
       transition: all 0.3s ease; font-size: 0.9rem;
-      z-index: 1;
+      z-index: 100;
     }
     .modal-close:hover { background: rgba(198,164,63,0.4); }
 
@@ -1404,13 +1404,38 @@
 
     <div class="modal-header">
       <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <!-- Logo + Brand row -->
+      <div style="display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid rgba(198,164,63,0.15);position:relative;z-index:1;">
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div style="position:relative;">
+            <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,rgba(198,164,63,0.15),rgba(198,164,63,0.05));border:1.5px solid rgba(198,164,63,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 4px 16px rgba(198,164,63,0.18);">
+              <img src="gta.png" alt="Kurt Creates" style="width:42px;height:42px;object-fit:contain;border-radius:10px;"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div style="display:none;width:42px;height:42px;align-items:center;justify-content:center;font-family:'Bespoke Stencil',serif;font-size:1rem;color:var(--gold);font-weight:700;">KC</div>
+            </div>
+            <div style="position:absolute;bottom:-3px;right:-3px;width:16px;height:16px;background:linear-gradient(135deg,#27ae60,#2ecc71);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--card-bg);">
+              <i class="fas fa-lock" style="font-size:0.4rem;color:white;"></i>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:'Bespoke Stencil',serif;font-size:1.1rem;background:linear-gradient(90deg,#ffffff,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.04em;line-height:1.1;">Kurt Creates</div>
+            <div style="display:flex;align-items:center;gap:0.35rem;margin-top:0.15rem;">
+              <i class="fas fa-shield-alt" style="font-size:0.6rem;color:var(--gold);"></i>
+              <span style="font-size:0.68rem;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Secure Checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkout title row -->
       <div style="display:flex;align-items:center;gap:0.8rem;position:relative;z-index:1;margin-bottom:0.3rem">
         <div style="width:36px;height:36px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;">
           <i class="fas fa-lock" style="color:white;font-size:0.85rem"></i>
         </div>
         <div>
-          <div class="modal-title">Secure Checkout</div>
-          <div class="modal-subtitle">SSL encrypted · Instant delivery</div>
+          <div class="modal-title">Complete Your Order</div>
+          <div class="modal-subtitle">SSL encrypted · 256-bit security · Instant delivery</div>
         </div>
       </div>
 
@@ -1576,6 +1601,15 @@
 
       <!-- STEP 3 — Success + Download -->
       <div class="success-screen" id="successScreen">
+        <!-- Logo on success screen -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:0.6rem;margin-bottom:1.5rem;">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(198,164,63,0.15),rgba(198,164,63,0.05));border:1.5px solid rgba(198,164,63,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <img src="gta.png" alt="Kurt Creates" style="width:32px;height:32px;object-fit:contain;border-radius:8px;"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <span style="display:none;font-family:'Bespoke Stencil',serif;font-size:0.85rem;color:var(--gold);">KC</span>
+          </div>
+          <span style="font-family:'Bespoke Stencil',serif;font-size:1rem;background:linear-gradient(90deg,var(--text-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Kurt Creates</span>
+        </div>
         <div class="success-icon">
           <i class="fas fa-check"></i>
         </div>

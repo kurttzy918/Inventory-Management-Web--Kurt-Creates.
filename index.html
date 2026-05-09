@@ -64,6 +64,107 @@
     .bg-gold { background-color: var(--gold); }
     .border-gold { border-color: var(--gold); }
 
+    /* ═══════════════════════════════════════════════════════
+       🔥 FIRE / ASH / EMBER LOADING SCREEN
+    ═══════════════════════════════════════════════════════ */
+    #fire-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #0a0500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #fire-loader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Canvas fills the entire loader */
+    #fire-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Loader brand text over the fire */
+    .loader-brand {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .loader-brand-name {
+      font-family: 'Bespoke Stencil', serif;
+      font-size: clamp(2.8rem, 10vw, 5.5rem);
+      letter-spacing: 0.08em;
+      background: linear-gradient(180deg, #fff8e0 0%, #D4B96A 45%, #C6A43F 70%, #8B5E0A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px rgba(255, 140, 0, 0.6)) drop-shadow(0 0 60px rgba(255, 80, 0, 0.3));
+      animation: brandPulse 2s ease-in-out infinite;
+      
+    }
+    @keyframes brandPulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,140,0,0.6)) drop-shadow(0 0 50px rgba(255,80,0,0.3)); }
+      50%       { filter: drop-shadow(0 0 40px rgba(255,160,0,0.9)) drop-shadow(0 0 80px rgba(255,100,0,0.5)); }
+    }
+    .loader-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.65rem, 2.5vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color:white
+    }
+    .loader-progress-wrap {
+      width: clamp(140px, 40vw, 260px);
+      height: 2px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+    }
+    .loader-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #C6A43F, #ffcc44, #C6A43F);
+      background-size: 200% auto;
+      border-radius: 2px;
+      animation: progressFill 2.4s ease forwards, progressShimmer 1.2s linear infinite;
+      transition: width 0.1s;
+    }
+    @keyframes progressFill {
+      0%   { width: 0%; }
+      60%  { width: 80%; }
+      85%  { width: 92%; }
+      100% { width: 100%; }
+    }
+    @keyframes progressShimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Ash drift overlay at bottom */
+    .ash-veil {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35%;
+      background: linear-gradient(to top, rgba(10,5,0,0.85) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
     /* ─── NAVBAR ─── */
     .navbar {
       transition: all 0.4s ease;
@@ -100,28 +201,18 @@
       cursor: default;
       overflow: hidden;
     }
-
     .brand-name .brand-text {
-      background: linear-gradient(
-        90deg,
-        #ffffff 0%,
-        var(--gold-light) 30%,
-        #fff8e0 50%,
-        var(--gold) 70%,
-        #ffffff 100%
-      );
+      background: linear-gradient(90deg, #ffffff 0%, var(--gold-light) 30%, #fff8e0 50%, var(--gold) 70%, #ffffff 100%);
       background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: brandShimmer 4s linear infinite;
     }
-
     @keyframes brandShimmer {
       0%   { background-position: 0% center; }
       100% { background-position: 250% center; }
     }
-
     .brand-name .spark {
       position: absolute;
       width: 4px; height: 4px;
@@ -136,14 +227,12 @@
     .brand-name .spark:nth-child(4) { left: 55%; animation-delay: 1s; }
     .brand-name .spark:nth-child(5) { left: 75%; animation-delay: 1.5s; }
     .brand-name .spark:nth-child(6) { left: 90%; animation-delay: 0.8s; }
-
     @keyframes sparkFloat {
       0%   { bottom: -4px; opacity: 0; transform: scale(0.5); }
       20%  { opacity: 1; }
       80%  { opacity: 0.6; }
       100% { bottom: 110%; opacity: 0; transform: scale(1.5); }
     }
-
     .brand-name::after {
       content: '';
       position: absolute;
@@ -232,7 +321,6 @@
       backdrop-filter: blur(4px);
     }
     .hero-swiper .swiper-pagination-bullet-active { background: var(--gold); }
-
     .hero-title {
       position: relative;
       display: inline-block;
@@ -255,7 +343,7 @@
     .hero-title:hover::after { animation: shine 0.8s forwards; }
     @keyframes shine { 100% { left: 125%; } }
 
-    /* ─── HOVER ANIMATE (parallax heading) ─── */
+    /* ─── HOVER ANIMATE ─── */
     .hover-animate {
       position: relative; display: inline-block;
       transition: all 0.4s ease; cursor: default;
@@ -333,14 +421,13 @@
     }
 
     /* ═══════════════════════════════
-       ABOUT SECTION — MODERN/ELEGANT
+       ABOUT SECTION
     ═══════════════════════════════ */
     #about {
       background-color: var(--card-bg);
       position: relative;
       overflow: hidden;
     }
-
     #about::before {
       content: 'KC';
       position: absolute;
@@ -353,7 +440,6 @@
       line-height: 1;
       user-select: none;
     }
-
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -361,7 +447,6 @@
       align-items: center;
     }
     @media(max-width:768px){ .about-grid { grid-template-columns: 1fr; gap: 2rem; } }
-
     .about-img-wrapper {
       position: relative;
       border-radius: 1.5rem;
@@ -382,7 +467,6 @@
       transition: opacity 0.4s ease;
     }
     .about-img-wrapper:hover::after { opacity: 0.5; }
-
     .about-img-wrapper::before {
       content: '';
       position: absolute;
@@ -394,11 +478,7 @@
       pointer-events: none;
       z-index: 0;
     }
-
-    .about-content-box {
-      position: relative;
-    }
-
+    .about-content-box { position: relative; }
     .about-badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
@@ -411,28 +491,24 @@
       border-radius: 999px;
       margin-bottom: 1.2rem;
     }
-
     .about-title {
       font-size: clamp(1.8rem, 4vw, 2.8rem);
       color: var(--text-light);
       line-height: 1.2;
       margin-bottom: 1.2rem;
     }
-
     .about-divider {
       width: 3rem; height: 3px;
       background: linear-gradient(90deg, var(--gold), transparent);
       border-radius: 3px;
       margin-bottom: 1.2rem;
     }
-
     .about-text {
       color: var(--text-muted);
       line-height: 1.85;
       margin-bottom: 1.8rem;
       font-size: 0.95rem;
     }
-
     .skill-list { display: flex; flex-direction: column; gap: 0.85rem; }
     .skill-item {
       display: flex; align-items: center; gap: 1rem;
@@ -464,7 +540,6 @@
       text-align: center;
       margin-bottom: 4rem;
     }
-
     .what-i-offer-header .section-label {
       display: inline-block;
       font-size: 0.72rem;
@@ -474,14 +549,13 @@
       color: var(--gold);
       margin-bottom: 0.6rem;
     }
-
     .what-i-offer-header h2 {
       font-size: clamp(2rem, 5vw, 3.5rem);
       color: var(--text-light);
       position: relative;
       display: inline-block;
+      padding-bottom: 1rem;
     }
-
     .what-i-offer-header h2::after {
       content: '';
       position: absolute;
@@ -490,7 +564,6 @@
       background: linear-gradient(90deg, var(--gold), var(--gold-light));
       border-radius: 3px;
     }
-
     .offer-avatar {
       position: absolute;
       top: -10px;
@@ -565,11 +638,11 @@
     .orb-1 { width: 400px; height: 400px; top: -100px; right: -80px; animation-delay: 0s; }
     .orb-2 { width: 280px; height: 280px; bottom: -60px; left: 5%; animation-delay: 3s; }
     .orb-3 { width: 180px; height: 180px; top: 40%; left: 45%; animation-delay: 5s; opacity: 0.5; }
-
     @keyframes orbFloat {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-30px) scale(1.05); }
     }
+
     /* video responsive */
     .video-responsive {
       width: 100%;
@@ -577,9 +650,27 @@
       overflow: hidden;
       box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
     }
+
+    /* Prevent scroll while loader is visible */
+    body.loading { overflow: hidden; }
   </style>
 </head>
-<body>
+<body class="loading">
+
+  <!-- ═══════════════════════════════════════════════════════
+       🔥 FIRE / ASH LOADING SCREEN
+  ═══════════════════════════════════════════════════════ -->
+  <div id="fire-loader">
+    <canvas id="fire-canvas"></canvas>
+    <div class="ash-veil"></div>
+    <div class="loader-brand">
+      <div class="loader-brand-name">Kurt Creates.</div>
+      <div class="loader-sub">Excel Tricks & Tutorials &amp; Inventory Management System</div>
+      <div class="loader-progress-wrap">
+        <div class="loader-progress-bar" id="loader-bar"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ NAVIGATION ═══ -->
   <nav class="navbar fixed w-full z-50 transition-all duration-300">
@@ -645,7 +736,7 @@
     </div>
   </div>
 
-  <!-- PARALLAX CTA SECTION (fixed stats) -->
+  <!-- PARALLAX CTA SECTION -->
   <div class="parallax w-full py-32 relative overflow-hidden">
     <img src="akoto.png" alt="Background" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
     <div class="parallax-overlay absolute inset-0"></div>
@@ -654,9 +745,8 @@
       <h2 class="hover-animate parallax-heading mb-4 reveal">Automate your Business with<br>Inventory Management</h2>
       <p class="text-xl text-white/80 mb-10 max-w-2xl mx-auto reveal reveal-delay-2">Perfect for Retail and Wholesale Business owners who want to save time and gain clarity.</p>
       <div class="flex justify-center gap-12 mb-10 flex-wrap">
-        <div class="reveal reveal-delay-2 text-center"><span class="stat-counter" id="stat1">0</span><span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Tutorials</span></div>
-        <div class="reveal reveal-delay-3 text-center"><span class="stat-counter" id="stat2">0</span><span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Students</span></div>
-        <div class="reveal reveal-delay-4 text-center"><span class="stat-counter" id="stat3">0</span><span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Hours Saved</span></div>
+        <div class="reveal reveal-delay-2 text-center"><span class="stat-counter" id="stat1">0</span><span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Satisfied Clients</span></div>
+        <div class="reveal reveal-delay-3 text-center"><span class="stat-counter" id="stat2">0</span><span style="color:rgba(255,255,255,0.65);font-size:0.8rem;display:block;margin-top:0.2rem;">Excel Video Tutorials</span></div>
       </div>
       <a href="services.html" class="btn-primary reveal reveal-delay-3 inline-block">Click Here →</a>
     </div>
@@ -673,15 +763,18 @@
         <div style="margin-top:1.2rem" class="section-line mx-auto" id="offer-line"></div>
       </div>
       <div class="about-grid">
-        <div class="about-img-wrapper reveal reveal-left"><img src="images/about-img.jpg" alt="Excel Tips" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80'"></div>
+        <div class="about-img-wrapper reveal reveal-left"><img src="inventory.png" alt="Excel Tips" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80'"></div>
         <div class="about-content-box">
           <div class="about-badge reveal reveal-delay-1"><i class="fas fa-star" style="font-size:0.7rem"></i> Excel &amp; Inventory Expert</div>
           <h3 class="about-title reveal reveal-delay-2">Empower Your Workflow<br>and Business</h3>
           <div class="about-divider reveal reveal-delay-2"></div>
           <p class="about-text reveal reveal-delay-2">I provide practical knowledge and insider tricks to help you master <strong style="color:var(--gold)">Excel basics, advanced formulas, and powerful inventory management techniques</strong>. Whether you're a beginner or looking to level up, my tutorials simplify complex topics into easy-to-follow steps.</p>
           <div class="skill-list">
-            <div class="skill-item reveal reveal-delay-2"><div class="skill-icon"><i class="fas fa-table"></i></div><div><div class="skill-label">VLOOKUP, XLOOKUP &amp; FILTER</div><div class="skill-sub">Master the most powerful Excel lookup functions</div></div></div>
-            <div class="skill-item reveal reveal-delay-3"><div class="skill-icon"><i class="fas fa-boxes"></i></div><div><div class="skill-label">Inventory Tracking &amp; Management</div><div class="skill-sub">Automated systems for retail &amp; wholesale</div></div></div>
+            <div class="skill-item reveal reveal-delay-2"><div class="skill-icon"><i class="fas fa-table"></i></div><div><div class="skill-label">VLOOKUP, XLOOKUP, INDEX MATCH &amp; FILTER</div><div class="skill-sub">Master the most powerful Excel lookup functions</div></div></div>
+            <div class="skill-item reveal reveal-delay-2"><div class="skill-icon"><i class="fas fa-table"></i></div><div><div class="skill-label">IF, SUMIFS &amp; COUNTIFS FUNCTIONS</div><div class="skill-sub">Master essential Excel logical and statistical functions</div></div></div>
+            <div class="skill-item reveal reveal-delay-2"><div class="skill-icon"><i class="fas fa-table"></i></div><div><div class="skill-label">POWER QUERY &amp; POWER PIVOT</div><div class="skill-sub">Combine and transform data with ease</div></div></div>
+            <div class="skill-item reveal reveal-delay-2"><div class="skill-icon"><i class="fas fa-table"></i></div><div><div class="skill-label">MACROS &amp; VBA</div><div class="skill-sub">Automate repetitive tasks with powerful scripting</div></div></div>
+            <div class="skill-item reveal reveal-delay-3"><div class="skill-icon"><i class="fas fa-boxes"></i></div><div><div class="skill-label">INVENTORY MANAGEMENT &amp; SYSTEM</div><div class="skill-sub">Automated Excel Application for retail &amp; wholesale</div></div></div>
             <div class="skill-item reveal reveal-delay-4"><div class="skill-icon"><i class="fas fa-chart-bar"></i></div><div><div class="skill-label">Data Visualization &amp; Dashboards</div><div class="skill-sub">Turn raw data into stunning insights</div></div></div>
           </div>
         </div>
@@ -689,9 +782,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════ -->
-  <!-- 🔥 TRICK #1 SECTION: WATCH EXCEL TUTORIAL VIDEO (EMBED) -->
-  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- TUTORIAL VIDEO SECTION -->
   <section class="py-24 relative" style="background-color: var(--bg-light); border-top: 1px solid rgba(198,164,63,0.2); border-bottom: 1px solid rgba(198,164,63,0.1);">
     <div class="container mx-auto px-6">
       <div class="reveal reveal-scale text-center mb-12">
@@ -717,12 +808,11 @@
         </div>
         <div class="flex-1 w-full reveal reveal-right">
           <div class="video-responsive bg-black/5 rounded-2xl transition-all hover:shadow-2xl">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560&t=0" 
-                    style="border:none; overflow:hidden; width:100%; aspect-ratio:471/476; display:block;" 
-                    scrolling="no" 
-                    frameborder="0" 
-                    allowfullscreen="true" 
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+            <iframe src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560&t=0"
+                    style="border:none; overflow:hidden; width:100%; aspect-ratio:471/476; display:block;"
+                    scrolling="no" frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                     title="Excel Tutorial Trick 1">
             </iframe>
           </div>
@@ -743,34 +833,251 @@
   </footer>
 
   <script>
+    /* ════════════════════════════════════════════════════════
+       🔥 FIRE + ASH + EMBER CANVAS ENGINE
+    ════════════════════════════════════════════════════════ */
+    (function() {
+      const canvas  = document.getElementById('fire-canvas');
+      const ctx     = canvas.getContext('2d');
+      const loader  = document.getElementById('fire-loader');
+      let W, H, animId;
+
+      /* ── Resize canvas to fill ── */
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth  || window.innerWidth;
+        H = canvas.height = canvas.offsetHeight || window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      /* ══════════ FLAME PARTICLES ══════════ */
+      const flames = [];
+      const FLAME_COUNT = Math.min(120, Math.floor(window.innerWidth / 8));
+
+      function randBetween(a, b) { return a + Math.random() * (b - a); }
+
+      function createFlame() {
+        const xBase = W * 0.5;
+        return {
+          x: xBase + randBetween(-W * 0.38, W * 0.38),
+          y: H + randBetween(0, 40),
+          vx: randBetween(-0.6, 0.6),
+          vy: randBetween(-3.5, -1.8),
+          life: 0,
+          maxLife: randBetween(60, 130),
+          size: randBetween(6, 28),
+          type: 'flame', // flame | ember | ash
+          hue: randBetween(10, 40),
+        };
+      }
+
+      function createEmber() {
+        return {
+          x: W * 0.5 + randBetween(-W * 0.3, W * 0.3),
+          y: H * 0.6 + randBetween(-60, 0),
+          vx: randBetween(-1.2, 1.2),
+          vy: randBetween(-4, -1.5),
+          life: 0,
+          maxLife: randBetween(80, 180),
+          size: randBetween(1.5, 4),
+          type: 'ember',
+          hue: randBetween(20, 55),
+          drift: randBetween(-0.02, 0.02),
+        };
+      }
+
+      function createAsh() {
+        return {
+          x: randBetween(0, W),
+          y: randBetween(-10, H * 0.4),
+          vx: randBetween(-0.4, 0.4),
+          vy: randBetween(0.3, 0.9),
+          life: 0,
+          maxLife: randBetween(140, 280),
+          size: randBetween(1, 3.5),
+          type: 'ash',
+          angle: Math.random() * Math.PI * 2,
+          spin: randBetween(-0.03, 0.03),
+          opacity: randBetween(0.15, 0.45),
+        };
+      }
+
+      /* seed initial particles */
+      for (let i = 0; i < FLAME_COUNT; i++) {
+        const f = createFlame();
+        f.life = Math.random() * f.maxLife; // stagger starts
+        flames.push(f);
+      }
+      for (let i = 0; i < 60; i++) {
+        const e = createEmber();
+        e.life = Math.random() * e.maxLife;
+        flames.push(e);
+      }
+      for (let i = 0; i < 40; i++) {
+        const a = createAsh();
+        a.life = Math.random() * a.maxLife;
+        flames.push(a);
+      }
+
+      /* ══════════ DRAW LOOP ══════════ */
+      function draw() {
+        /* Dark smoky background with subtle persistence → motion blur */
+        ctx.fillStyle = 'rgba(10, 5, 0, 0.18)';
+        ctx.fillRect(0, 0, W, H);
+
+        /* Bottom glow — heat pool */
+        const grd = ctx.createRadialGradient(W/2, H, 0, W/2, H, W * 0.55);
+        grd.addColorStop(0,   'rgba(255, 80, 0, 0.22)');
+        grd.addColorStop(0.4, 'rgba(200, 50, 0, 0.08)');
+        grd.addColorStop(1,   'rgba(0,0,0,0)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, W, H);
+
+        flames.forEach((p, i) => {
+          p.life++;
+
+          if (p.type === 'flame') {
+            /* turbulence */
+            p.vx += randBetween(-0.12, 0.12);
+            p.vx *= 0.96;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy -= 0.04; /* accelerate upward */
+
+            const t = p.life / p.maxLife;
+            const alpha = t < 0.2 ? t / 0.2 : 1 - (t - 0.2) / 0.8;
+            const sz    = p.size * (1 + t * 0.5);
+            const light = Math.round(35 + t * 30);
+            const sat   = Math.round(90 + t * 10);
+            const hue   = Math.round(p.hue + t * 20);
+
+            const fg = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sz);
+            fg.addColorStop(0,   `hsla(${hue + 20}, 100%, 95%, ${alpha * 0.9})`);
+            fg.addColorStop(0.3, `hsla(${hue}, ${sat}%, ${light + 20}%, ${alpha * 0.7})`);
+            fg.addColorStop(0.7, `hsla(${hue - 10}, ${sat}%, ${light}%, ${alpha * 0.35})`);
+            fg.addColorStop(1,   `hsla(${hue - 20}, 80%, 10%, 0)`);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, sz, 0, Math.PI * 2);
+            ctx.fillStyle = fg;
+            ctx.fill();
+
+            if (p.life >= p.maxLife) flames[i] = createFlame();
+
+          } else if (p.type === 'ember') {
+            p.vx += p.drift;
+            p.vx *= 0.98;
+            p.vy -= 0.02;
+            p.x += p.vx;
+            p.y += p.vy;
+
+            const t = p.life / p.maxLife;
+            const alpha = t < 0.15 ? t / 0.15 : 1 - ((t - 0.15) / 0.85);
+            const sz    = p.size * (1 - t * 0.3);
+            const hue   = Math.round(p.hue + t * 30);
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, Math.max(sz, 0.5), 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${hue}, 100%, 70%, ${alpha})`;
+            ctx.shadowColor = `hsla(${hue}, 100%, 60%, ${alpha * 0.8})`;
+            ctx.shadowBlur  = 8;
+            ctx.fill();
+            ctx.shadowBlur  = 0;
+
+            if (p.life >= p.maxLife || p.y < -20) flames[i] = createEmber();
+
+          } else { /* ash */
+            p.x  += p.vx + Math.sin(p.life * 0.04) * 0.3;
+            p.y  += p.vy;
+            p.angle += p.spin;
+
+            const t     = p.life / p.maxLife;
+            const alpha = t < 0.1 ? (t / 0.1) * p.opacity : t > 0.85 ? p.opacity * (1 - (t - 0.85) / 0.15) : p.opacity;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+            ctx.fillStyle = `rgba(180, 160, 140, ${alpha})`;
+            /* ash flake shape */
+            ctx.beginPath();
+            ctx.ellipse(0, 0, p.size, p.size * 0.4, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            if (p.life >= p.maxLife || p.y > H + 20) flames[i] = createAsh();
+          }
+        });
+
+        animId = requestAnimationFrame(draw);
+      }
+
+      draw();
+
+      /* ══════════ DISMISS AFTER 2.6 s ══════════ */
+      setTimeout(() => {
+        cancelAnimationFrame(animId);
+        loader.classList.add('fade-out');
+        document.body.classList.remove('loading');
+
+        /* trigger hero reveals after loader gone */
+        setTimeout(() => {
+          document.querySelectorAll('.hero-swiper .reveal').forEach(el => el.classList.add('visible'));
+        }, 300);
+      }, 2600);
+    })();
+
+    /* ════════════════════════════════════════════════════════
+       PAGE SCRIPTS
+    ════════════════════════════════════════════════════════ */
     // Swiper
-    const swiper = new Swiper('.hero-swiper', { loop: true, autoplay: { delay: 5500, disableOnInteraction: false }, navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }, pagination: { el: '.swiper-pagination', clickable: true }, effect: 'fade', fadeEffect: { crossFade: true } });
-    // navbar scroll
-    window.addEventListener('scroll', () => { document.querySelector('.navbar').classList.toggle('navbar-scrolled', window.scrollY > 50); });
-    // mobile menu
+    const swiper = new Swiper('.hero-swiper', {
+      loop: true,
+      autoplay: { delay: 5500, disableOnInteraction: false },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      effect: 'fade',
+      fadeEffect: { crossFade: true }
+    });
+
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('navbar-scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
     const menuBtn = document.getElementById('menu-btn'), mobileMenu = document.getElementById('mobile-menu');
     if(menuBtn) menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-    // dark mode
+
+    // Dark mode
     function initDarkMode() {
       const btns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
       const stored = localStorage.getItem('theme');
       if (stored === 'dark') { document.body.classList.add('dark'); setIcons(true); }
       function setIcons(dark) { btns.forEach(b => b.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'); }
-      btns.forEach(b => b.addEventListener('click', () => { const dark = document.body.classList.toggle('dark'); localStorage.setItem('theme', dark ? 'dark' : 'light'); setIcons(dark); }));
+      btns.forEach(b => b.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        setIcons(dark);
+      }));
     }
     initDarkMode();
-    // scroll reveal
+
+    // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    const observer  = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
     revealEls.forEach(el => observer.observe(el));
-    const lineObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.5 });
+
+    const lineObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.5 });
     document.querySelectorAll('.section-line').forEach(l => lineObs.observe(l));
-    document.querySelectorAll('.hero-swiper .reveal').forEach(el => { setTimeout(() => el.classList.add('visible'), 300); });
-    // responsive counters (fixed stat2)
+
+    // Counters
     function animateCounter(el, target, suffix = '') {
       if(!el) return;
       let current = 0;
-      const step = Math.ceil(target / 60);
+      const step  = Math.ceil(target / 60);
       const timer = setInterval(() => {
         current = Math.min(current + step, target);
         el.textContent = current.toLocaleString() + suffix;
@@ -780,8 +1087,8 @@
     const statsObs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if(e.isIntersecting) {
-          animateCounter(document.getElementById('stat1'), 120, '+');
-          animateCounter(document.getElementById('stat2'), 8500, '+');
+          animateCounter(document.getElementById('stat1'), 5, '+');
+          animateCounter(document.getElementById('stat2'), 7, '+');
           animateCounter(document.getElementById('stat3'), 10000, '+');
           statsObs.disconnect();
         }
@@ -789,13 +1096,14 @@
     }, { threshold: 0.5 });
     const parallaxSection = document.querySelector('.parallax');
     if(parallaxSection) statsObs.observe(parallaxSection);
-    // floating particles
+
+    // Floating particles
     const container = document.getElementById('particles-container');
     if(container) {
       for(let i = 0; i < 12; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
-        p.style.cssText = `left: ${Math.random() * 100}%; bottom: -10px; width: ${2 + Math.random() * 5}px; height: ${2 + Math.random() * 5}px; animation-duration: ${5 + Math.random() * 8}s; animation-delay: ${Math.random() * 6}s; opacity: 0;`;
+        p.style.cssText = `left:${Math.random()*100}%;bottom:-10px;width:${2+Math.random()*5}px;height:${2+Math.random()*5}px;animation-duration:${5+Math.random()*8}s;animation-delay:${Math.random()*6}s;opacity:0;`;
         container.appendChild(p);
       }
     }

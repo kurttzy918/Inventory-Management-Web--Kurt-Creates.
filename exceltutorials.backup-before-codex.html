@@ -484,11 +484,11 @@
     </div>
     <div class="nav-links" id="desktop-nav">
       <a href="index.html"          class="nav-link">Home</a>
-      <a href="exceltutorials.html" class="nav-link active">Excel Tutorials</a>
-      <a href="InventoryQuote.html"      class="nav-link" style="color:var(--gold-light)">&#128722; Shop</a>
+      <a href="exceltutorials.html" class="nav-link">Excel Tutorials</a>
+      <a href="InventoryQuote.html"      class="nav-link active" style="color:var(--gold-light)">&#128722; Shop</a>
       <a href="about.html"    class="nav-link">About</a>
       <a href="contact.html"  class="nav-link">Contact</a>
-      <button id="theme-toggle-desktop" class="theme-toggle"><i class="fas fa-moon"></i></button>
+      <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
     </div>
     <div style="display:none;align-items:center;gap:0.75rem;" id="mobile-controls">
       <button id="theme-toggle-mobile" class="theme-toggle"><i class="fas fa-moon"></i></button>
@@ -510,384 +510,180 @@
   <section class="pt-28 md:pt-36 pb-12 md:pb-16 text-center bg-gradient-to-r from-navy/5 to-gold/10">
     <div class="container mx-auto px-5" data-aos="fade-down">
       <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl mb-4 font-bold" style="color: var(--text-light);">Excel Video Tutorials</h1>
-      <p class="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-3" style="color: var(--text-muted);">Master VLOOKUP, FILTER, and common Excel error fixes with step-by-step reels</p>
-      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
-        <a href="#vlookup"    style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;font-weight:700;font-size:0.85rem;padding:9px 22px;border-radius:40px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-search"></i> VLOOKUP</a>
-        <a href="#filter"     style="background:linear-gradient(135deg,#2980b9,#1a6e9e);color:#fff;font-weight:700;font-size:0.85rem;padding:9px 22px;border-radius:40px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-filter"></i> FILTER</a>
-        <a href="#fix-errors" style="background:linear-gradient(135deg,#e05252,#c0392b);color:#fff;font-weight:700;font-size:0.85rem;padding:9px 22px;border-radius:40px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-wrench"></i> Fix Errors</a>
-      </div>
+      <p class="text-base md:text-xl text-gray-600 max-w-2xl mx-auto px-3" style="color: var(--text-muted);">Master VLOOKUP, FILTER, XLOOKUP and more with step-by-step reels</p>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       TOPIC SECTIONS — VLOOKUP · FILTER · FIX
-  ══════════════════════════════════════════════ -->
+  <!-- ========================
+       FACEBOOK VIDEO CAROUSEL
+  ======================== -->
+  <section class="carousel-section py-16 md:py-24 relative overflow-hidden">
+    <!-- Decorative blobs -->
+    <div class="blob blob-gold" style="top: -100px; right: -100px;"></div>
+    <div class="blob blob-navy" style="bottom: -80px; left: -60px;"></div>
 
-  <style>
-    /* ── Topic Section Styles ── */
-    .topic-section {
-      padding: 5rem 0 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .topic-section:nth-child(odd) {
-      background-color: var(--bg-light);
-    }
-    .topic-section:nth-child(even) {
-      background-color: var(--card-bg);
-    }
-
-    .topic-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .topic-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 40px;
-      margin-bottom: 1rem;
-    }
-    .topic-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-      line-height: 1.1;
-    }
-    .topic-divider {
-      width: 60px; height: 3px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light));
-      margin: 1rem auto;
-      border-radius: 4px;
-    }
-    .topic-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-
-    /* Video grid */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    @media (max-width: 640px) {
-      .video-grid { grid-template-columns: 1fr; }
-    }
-
-    /* Enhanced video card */
-    .vid-card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid rgba(198,164,63,0.12);
-      display: flex;
-      flex-direction: column;
-    }
-    .vid-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(198,164,63,0.18);
-    }
-    body.dark .vid-card {
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-      border-color: rgba(198,164,63,0.18);
-    }
-
-    .vid-card-top {
-      background: linear-gradient(135deg, var(--navy), var(--navy-light));
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .vid-avatar {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 700; font-size: 12px; flex-shrink: 0;
-    }
-    .vid-meta { flex: 1; }
-    .vid-name  { color: #fff; font-size: 12px; font-weight: 600; }
-    .vid-sub   { color: rgba(255,255,255,0.45); font-size: 10px; }
-    .vid-fb    { color: #1877F2; font-size: 20px; }
-
-    .vid-embed {
-      position: relative;
-      width: 100%;
-      background: #000;
-      overflow: hidden;
-    }
-    .vid-embed iframe {
-      width: 100%;
-      height: 380px;
-      border: none;
-      display: block;
-    }
-    @media (max-width: 768px) {
-      .vid-embed iframe { height: 300px; }
-    }
-
-    .vid-footer {
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      border-top: 1px solid rgba(0,0,0,0.06);
-      flex-wrap: wrap;
-    }
-    body.dark .vid-footer { border-top-color: rgba(255,255,255,0.06); }
-    .vid-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      flex: 1;
-    }
-    .vid-watch-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold);
-      text-decoration: none;
-      white-space: nowrap;
-      transition: opacity 0.2s;
-    }
-    .vid-watch-link:hover { opacity: 0.75; }
-
-    /* Fix/Unavailable section badge */
-    .badge-fix {
-      background: linear-gradient(135deg, #e05252, #c0392b);
-    }
-    .badge-filter {
-      background: linear-gradient(135deg, #2980b9, #1a6e9e);
-    }
-
-    /* Decorative corner accent */
-    .topic-accent {
-      position: absolute;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.08;
-      pointer-events: none;
-    }
-  </style>
-
-  <!-- ── SECTION 1: VLOOKUP ── -->
-  <section class="topic-section" id="vlookup" data-aos="fade-up">
-    <div class="topic-accent" style="background:var(--gold); top:-60px; right:-60px;"></div>
-
-    <div class="topic-header" data-aos="fade-up">
-      <div class="topic-pill"><i class="fas fa-search"></i> Formula Series</div>
-      <h2 class="topic-title font-heading">VLOOKUP Tutorials</h2>
-      <div class="topic-divider"></div>
-      <p class="topic-desc">Learn how to look up values across tables, match data, and eliminate manual searching — all in seconds.</p>
-    </div>
-
-    <div class="video-grid">
-
-      <!-- Video 1 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">VLOOKUP · Reel</div>
-          </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=473&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1304850951587183%2F&show_text=false&width=560&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">🔍 VLOOKUP Made Simple</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/1304850951587183/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
+    <div class="container mx-auto px-5 max-w-3xl">
+      <div class="text-center mb-12" data-aos="fade-up">
+        <h2 class="section-title text-3xl md:text-5xl mb-4" style="color: var(--text-light);">Latest Excel Reels</h2>
+        <div class="w-20 h-1 mx-auto rounded-full" style="background: var(--gold);"></div>
+        <p class="mt-4 max-w-xl mx-auto text-sm md:text-base" style="color: var(--text-muted);">Follow my Facebook page for daily Excel tips and tutorials!</p>
       </div>
 
-      <!-- Video 2 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">VLOOKUP · Reel</div>
+      <!-- Carousel outer (relative for arrow buttons) -->
+      <div class="relative px-6 md:px-8" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Prev Button -->
+        <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous video">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- Track Wrapper -->
+        <div class="carousel-track-wrapper">
+          <!-- Slide counter badge -->
+          <span class="slide-counter" id="slide-counter">1 / 1</span>
+
+          <!-- Autoplay progress bar -->
+          <div class="autoplay-bar-wrap">
+            <div class="autoplay-bar" id="autoplay-bar"></div>
           </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F26666070726392451%2F&show_text=false&width=471&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">📋 VLOOKUP with Multiple Criteria</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/26666070726392451/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
+
+          <!-- Track -->
+          <div class="carousel-track" id="carousel-track">
+
+            <!-- SLIDE 1 — Facebook Reel -->
+<div class="carousel-slide" data-index="0">
+  <div class="video-card">
+
+    <!-- Card Header -->
+    <div class="video-card-header">
+      <div class="video-card-avatar">KC</div>
+
+      <div class="video-card-meta">
+        <div class="video-card-name">Kurt Creates</div>
+        <div class="video-card-time">Excel Tutorial Reel</div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- ── SECTION 2: FILTER ── -->
-  <section class="topic-section" id="filter" data-aos="fade-up">
-    <div class="topic-accent" style="background:#2980b9; bottom:-60px; left:-60px;"></div>
-
-    <div class="topic-header" data-aos="fade-up">
-      <div class="topic-pill badge-filter"><i class="fas fa-filter"></i> Dynamic Arrays</div>
-      <h2 class="topic-title font-heading">FILTER Tutorials</h2>
-      <div class="topic-divider"></div>
-      <p class="topic-desc">Use Excel's FILTER function to pull exactly the rows you need — no more manual sorting or copying.</p>
+      <i class="fab fa-facebook video-card-fb-icon"></i>
     </div>
 
-    <div class="video-grid">
-
-      <!-- Video 3 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">FILTER · Reel</div>
-          </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=485&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1711458396884596%2F&show_text=false&width=560&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">⚡ FILTER Function Basics</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/1711458396884596/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Video 4 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">FILTER · Reel</div>
-          </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=293&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F4008802955923392%2F&show_text=false&width=560&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">🎯 FILTER with Conditions</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/4008802955923392/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── SECTION 3: FIX THE UNAVAILABLE ── -->
-  <section class="topic-section" id="fix-errors" data-aos="fade-up">
-    <div class="topic-accent" style="background:#e05252; top:-40px; left:-40px;"></div>
-
-    <div class="topic-header" data-aos="fade-up">
-      <div class="topic-pill badge-fix"><i class="fas fa-wrench"></i> Error Fixing</div>
-      <h2 class="topic-title font-heading">Fix the Unavailable</h2>
-      <div class="topic-divider"></div>
-      <p class="topic-desc">Troubleshoot common Excel errors like #N/A, #VALUE!, and broken lookups — turn red cells green again.</p>
+    <!-- Embedded Video -->
+    <div class="video-embed-container">
+      <iframe
+        src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F4008802955923392%2F&show_text=false&autoplay=1&mute=1"
+        loading="lazy"
+        width="100%"
+        height="480"
+        style="border:none;overflow:hidden;border-radius:18px;"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+      </iframe>
     </div>
 
-    <div class="video-grid">
+    <!-- Card Footer -->
+    <div class="video-card-footer">
+      <span class="video-caption">
+        ✨ Excel Tips & Tricks Reel
+      </span>
 
-      <!-- Video 5 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="0">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">Error Fix · Reel</div>
-          </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">🛠 Fix #N/A Errors Fast</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/1659630918697394/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-      </div>
+      <a
+        href="https://www.facebook.com/reel/4008802955923392/"
+        target="_blank"
+        rel="noopener"
+        class="flex items-center gap-1 text-xs font-semibold"
+        style="color: var(--gold);">
 
-      <!-- Video 6 -->
-      <div class="vid-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="vid-card-top">
-          <div class="vid-avatar">KC</div>
-          <div class="vid-meta">
-            <div class="vid-name">Kurt Creates</div>
-            <div class="vid-sub">Error Fix · Reel</div>
-          </div>
-          <i class="fab fa-facebook vid-fb"></i>
-        </div>
-        <div class="vid-embed">
-          <iframe
-            src="https://www.facebook.com/plugins/video.php?height=368&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F960342639821462%2F&show_text=false&width=560&t=0"
-            scrolling="no" frameborder="0" allowfullscreen="true"
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="vid-footer">
-          <span class="vid-label">✅ IFERROR & IFNA Explained</span>
-          <a class="vid-watch-link" href="https://www.facebook.com/reel/960342639821462/" target="_blank" rel="noopener">
-            Watch on Facebook <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
+        Watch on Facebook
+        <i class="fas fa-external-link-alt text-xs ml-1"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+            <!-- SLIDE 2 — placeholder for a second video (duplicate same for now) -->
+            <div class="carousel-slide" data-index="1">
+              <div class="video-card">
+                <div class="video-card-header">
+                  <div class="video-card-avatar">KC</div>
+                  <div class="video-card-meta">
+                    <div class="video-card-name">Kurt Creates</div>
+                    <div class="video-card-time">Excel Tutorial Reel</div>
+                  </div>
+                  <i class="fab fa-facebook video-card-fb-icon"></i>
+                </div>
+                <div class="video-embed-container">
+                  <iframe
+                    src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560&t=0"
+                    width="560"
+                    height="483"
+                    style="border:none;overflow:hidden;width:100%;max-height:483px;"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen="true">
+                  </iframe>
+                </div>
+                <div class="video-card-footer">
+                  <span class="video-caption">📊 Master XLOOKUP in 60 Seconds</span>
+                  <a href="https://www.facebook.com/profile.php?id=61580609335581/" target="_blank" rel="noopener"
+                     class="flex items-center gap-1 text-xs font-semibold" style="color: var(--gold);">
+                    Watch on Facebook <i class="fas fa-external-link-alt text-xs ml-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- SLIDE 3 — placeholder third video -->
+            <div class="carousel-slide" data-index="2">
+              <div class="video-card">
+                <div class="video-card-header">
+                  <div class="video-card-avatar">KC</div>
+                  <div class="video-card-meta">
+                    <div class="video-card-name">Kurt Creates</div>
+                    <div class="video-card-time">Excel Tutorial Reel</div>
+                  </div>
+                  <i class="fab fa-facebook video-card-fb-icon"></i>
+                </div>
+                <div class="video-embed-container">
+                  <iframe
+                    src="https://www.facebook.com/plugins/video.php?height=293&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F4008802955923392%2F&show_text=false&width=560&t=0"
+                    width="560"
+                    height="293"
+                    style="border:none;overflow:hidden;width:100%;max-height:293px;"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen="true">
+                  </iframe>
+                </div>
+                <div class="video-card-footer">
+                  <span class="video-caption">🔍 VLOOKUP Made Simple</span>
+                  <a href="https://www.facebook.com/reel/4008802955923392/" target="_blank" rel="noopener"
+                     class="flex items-center gap-1 text-xs font-semibold" style="color: var(--gold);">
+                    Watch on Facebook <i class="fas fa-external-link-alt text-xs ml-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /carousel-track -->
+        </div><!-- /carousel-track-wrapper -->
+
+        <!-- Next Button -->
+        <button class="carousel-btn next" id="carousel-next" aria-label="Next video">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div><!-- /relative px wrapper -->
+
+      <!-- Dots -->
+      <div class="carousel-dots" id="carousel-dots">
+        <button class="dot active" data-dot="0"></button>
+        <button class="dot" data-dot="1"></button>
+        <button class="dot" data-dot="2"></button>
       </div>
 
     </div>
@@ -923,7 +719,98 @@
     // AOS
     AOS.init({ duration: 800, once: false, mirror: true, offset: 20 });
 
-    // Carousel removed — videos now live in dedicated topic sections
+    // ========================
+    // CAROUSEL LOGIC
+    // ========================
+    (function initCarousel() {
+      const track = document.getElementById('carousel-track');
+      const slides = track.querySelectorAll('.carousel-slide');
+      const prevBtn = document.getElementById('carousel-prev');
+      const nextBtn = document.getElementById('carousel-next');
+      const counter = document.getElementById('slide-counter');
+      const dotsContainer = document.getElementById('carousel-dots');
+      const dots = dotsContainer.querySelectorAll('.dot');
+      const autoplayBar = document.getElementById('autoplay-bar');
+
+      const total = slides.length;
+      let current = 0;
+      let autoplayTimer = null;
+      const AUTOPLAY_DELAY = 7000; // 7 seconds per slide
+
+      function goTo(index) {
+        // Clamp
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        current = index;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        // Update counter
+        counter.textContent = `${current + 1} / ${total}`;
+        // Update dots
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+        // Reset autoplay bar
+        resetAutoplayBar();
+      }
+
+      function next() { goTo(current + 1); }
+      function prev() { goTo(current - 1); }
+
+      prevBtn.addEventListener('click', () => { stopAutoplay(); prev(); startAutoplay(); });
+      nextBtn.addEventListener('click', () => { stopAutoplay(); next(); startAutoplay(); });
+
+      dots.forEach(d => {
+        d.addEventListener('click', () => {
+          stopAutoplay();
+          goTo(parseInt(d.dataset.dot));
+          startAutoplay();
+        });
+      });
+
+      // Swipe support
+      let touchStartX = 0;
+      track.parentElement.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      track.parentElement.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) {
+          stopAutoplay();
+          dx < 0 ? next() : prev();
+          startAutoplay();
+        }
+      }, { passive: true });
+
+      // Autoplay progress bar
+      function resetAutoplayBar() {
+        autoplayBar.style.transition = 'none';
+        autoplayBar.style.width = '0%';
+        // Force reflow
+        void autoplayBar.offsetWidth;
+        autoplayBar.style.transition = `width ${AUTOPLAY_DELAY}ms linear`;
+        autoplayBar.style.width = '100%';
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        resetAutoplayBar();
+        autoplayTimer = setInterval(() => { next(); }, AUTOPLAY_DELAY);
+      }
+
+      function stopAutoplay() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+        autoplayBar.style.transition = 'none';
+        autoplayBar.style.width = '0%';
+      }
+
+      // Pause autoplay when user hovers over carousel
+      const carouselSection = document.querySelector('.carousel-track-wrapper');
+      carouselSection.addEventListener('mouseenter', stopAutoplay);
+      carouselSection.addEventListener('mouseleave', startAutoplay);
+
+      // Init
+      goTo(0);
+      startAutoplay();
+    })();
 
     // ─── NAVBAR SCROLL ───
     window.addEventListener('scroll', () => {
@@ -1099,6 +986,44 @@ function loop(ts) {
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+function goTo(index) {
+
+  if (index < 0) index = total - 1;
+  if (index >= total) index = 0;
+
+  current = index;
+
+  track.style.transform = `translateX(-${current * 100}%)`;
+
+  counter.textContent = `${current + 1} / ${total}`;
+
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+
+  // FACEBOOK VIDEO AUTOPLAY FIX
+  slides.forEach((slide, i) => {
+
+    const iframe = slide.querySelector("iframe");
+
+    if (!iframe) return;
+
+    const originalSrc = iframe.getAttribute("src");
+
+    // reload only active slide
+    if (i === current) {
+
+      iframe.src = "";
+
+      setTimeout(() => {
+        iframe.src = originalSrc;
+      }, 150);
+
+    }
+  });
+
+  resetAutoplayBar();
+}
   </script>
 </body>
 </html>

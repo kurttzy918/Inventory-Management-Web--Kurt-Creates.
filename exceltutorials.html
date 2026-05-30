@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Excel Tutorials | Kurt Creates</title>
+  <title>Excel Tutorials | Kurt Creates — Master Excel with Video Guides</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700&display=swap" rel="stylesheet">
@@ -203,7 +203,6 @@
       padding: 0.6rem 0;
     }
     
-    /* Responsive breakpoint */
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -216,7 +215,7 @@
       }
     }
     
-    /* rest of original styles (hero, carousel, grid, footer) */
+    /* hero section */
     .hero-with-image {
       padding: 7rem 2rem 3rem;
       max-width: 1200px;
@@ -299,7 +298,7 @@
       .hero-right { max-width: 350px; margin: 0 auto; }
     }
     
-    /* Carousel */
+    /* Carousel Section (original) */
     .carousel-section { max-width: 850px; margin: 0 auto 4rem; padding: 0 1.5rem; }
     .carousel-wrapper {
       background: var(--card);
@@ -405,9 +404,20 @@
     }
     .nav-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; }
     
-    /* Grid sections */
-    .content-wrapper { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem 5rem; }
-    .topic-section { margin-bottom: 3.5rem; }
+    /* ========== FIXED: UNIFIED VIDEO GRID (orderly, same size for future uploads) ========== */
+    .video-library {
+      padding: 4rem 2rem;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+    }
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
     .topic-badge {
       display: inline-block;
       background: rgba(198, 164, 63, 0.08);
@@ -421,39 +431,95 @@
       text-transform: uppercase;
       margin-bottom: 0.6rem;
     }
-    .topic-header h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: 0.5rem; }
-    .topic-divider-small { width: 2rem; height: 2px; background: var(--gold); margin: 0.6rem 0; }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+    .section-header h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-top: 0.5rem;
+      color: var(--text);
     }
-    .youtube-card {
+    .topic-divider-small {
+      width: 2rem;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.8rem auto 0;
+    }
+    
+    /* 🟢 UNIFORM GRID — each card has fixed proportions, perfect for any future embed */
+    .uniform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    
+    .tutorial-card {
       background: var(--card);
-      border-radius: 12px;
+      border-radius: 20px;
       border: 1px solid var(--border);
       overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 14px var(--shadow);
     }
-    .youtube-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow); }
-    .youtube-embed {
+    
+    .tutorial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
+      border-color: rgba(198, 164, 63, 0.3);
+    }
+    
+    /* fixed embed wrapper: consistent 16:9 ratio, same size every time */
+    .video-embed-fixed {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
       height: 0;
-      background: #000;
+      background: #000000;
+      overflow: hidden;
     }
-    .youtube-embed iframe {
+    
+    .video-embed-fixed iframe {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       border: none;
+      display: block;
     }
-    .youtube-info { padding: 1rem 1.2rem; }
-    .youtube-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-    .youtube-info p { font-size: 0.85rem; color: var(--text-muted); }
+    
+    .card-content {
+      padding: 1.25rem 1.3rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    
+    .card-content p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .badge-light {
+      align-self: flex-start;
+      background: rgba(198, 164, 63, 0.1);
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.3px;
+    }
     
     /* CTA & Footer */
     .cta-section {
@@ -502,18 +568,26 @@
       transition: all 0.2s;
     }
     .social-icon:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-2px); }
+    
+    @media (max-width: 680px) {
+      .uniform-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .video-library {
+        padding: 2rem 1rem;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- ========== FIXED NAVBAR (FULLY RESPONSIVE + HAMBURGER) ========== -->
+<!-- ========== FIXED NAVBAR ========== -->
 <nav class="navbar">
   <a href="index.html" class="nav-brand">
     <img src="gta.png" alt="Kurt Creates" onerror="this.style.display='none'">
     Kurt Creates.
   </a>
-  
-  <!-- Desktop Navigation -->
   <div class="nav-links">
     <a href="index.html" class="nav-link">Home</a>
     <a href="exceltutorials.html" class="nav-link active">Excel Tutorials</a>
@@ -524,8 +598,6 @@
       <i class="fas fa-moon"></i>
     </button>
   </div>
-  
-  <!-- Mobile controls (hamburger + theme) -->
   <div class="mobile-controls">
     <button id="themeToggleMobileBtn" class="theme-toggle" aria-label="Dark mode">
       <i class="fas fa-moon"></i>
@@ -535,8 +607,6 @@
     </button>
   </div>
 </nav>
-
-<!-- Mobile menu panel (hidden by default) -->
 <div id="mobileMenuPanel" class="mobile-menu">
   <a href="index.html" class="nav-link">Home</a>
   <a href="exceltutorials.html" class="nav-link active">Excel Tutorials</a>
@@ -560,7 +630,7 @@
   </div>
 </section>
 
-<!-- YOUTUBE CAROUSEL -->
+<!-- YOUTUBE CAROUSEL (unchanged but functional) -->
 <section class="carousel-section">
   <div class="carousel-wrapper">
     <div class="carousel-header">
@@ -588,41 +658,26 @@
   </div>
 </section>
 
-<!-- CTA SECTION -->
+<!-- CTA Section -->
 <section class="cta-section">
   <h2>Ready to automate your inventory?</h2>
   <a href="index.html#contact" class="btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
 </section>
 
-<!-- VIDEO PLAYLIST GRID -->
-<section style="padding: 4rem 2rem; background: var(--card); border-top: 1px solid var(--border);">
+<!-- ========== VIDEO PLAYLIST GRID – ORDERLY & FUTURE-PROOF (uniform card size) ========== -->
+<section class="video-library">
   <div class="content-wrapper">
-    <div style="text-align: center; margin-bottom: 2rem;">
+    <div class="section-header">
       <span class="topic-badge"><i class="fab fa-youtube"></i> Video Playlist</span>
-      <h2 style="font-size: 1.8rem; margin-top: 0.5rem;">More Excel Tutorials</h2>
-      <div class="topic-divider-small" style="margin-left: auto; margin-right: auto;"></div>
+      <h2>Master Excel with step-by-step tutorials</h2>
+      <div class="topic-divider-small"></div>
     </div>
-    <div class="video-grid" style="max-width: 1000px; margin: 0 auto;">
-      <div class="youtube-card">
-        <div class="youtube-embed">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/r799_FGhe3w?si=Knm1aCVdoj3wTYIG" title="Excel Advanced Formula Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="youtube-info"><h3>Calculate Large Datasets Based on Multiple Criteria</h3><p>Learn how to use advanced Excel functions to calculate large datasets with multiple conditions</p></div>
-      </div>
-      <div class="youtube-card">
-        <div class="youtube-embed">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/hVmBdmowE_s?si=tDdLymh2UBJ__KHb" title="Dynamic Invoice Using Filter" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="youtube-info"><h3>Dynamic Invoice Using Filter Function</h3><p>Auto-filter your large datasets with dynamic formulas</p></div>
-      </div>
+    <div class="uniform-grid" id="tutorialGrid">
+      <!-- All tutorial cards will be generated dynamically from data array for perfect consistency -->
     </div>
-    <div class="youtube-card">
-        <div class="youtube-embed">
-          <iframe width="100%" height="315" src="https://www.youtube.com/embed/WSsGXJoMOq8?si=Pzin4vlLHM4w0BGa" title="Dynamic Invoice Using Filter" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <div class="youtube-info"><h3>Auto-Search Using Filter Function</h3><p>Search and filter specific keywords in your Dataset</p></div>
-      </div>
-    </div>
+    <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+      <i class="fas fa-plus-circle"></i> More videos added regularly — all cards maintain the same professional size & layout.
+    </p>
   </div>
 </section>
 
@@ -636,10 +691,12 @@
 </footer>
 
 <script>
-  // ========== YOUTUBE CAROUSEL (preserved & functional) ==========
+  // ========== YOUTUBE CAROUSEL (preserved logic) ==========
   const videos = [
     { id: 'r799_FGhe3w', title: '📊 Excel Advanced Formula Tutorial', desc: 'Master advanced formulas' },
-    { id: 'hVmBdmowE_s', title: '📄 Dynamic Invoice Using Filter', desc: 'Auto-filter large datasets' }
+    { id: 'hVmBdmowE_s', title: '📄 Dynamic Invoice Using Filter', desc: 'Auto-filter large datasets' },
+    { id: 'OJ6yc0a_xKU', title: '📦 Simple Shipping Tracker', desc: 'Create a simple shipping tracker in Excel' },
+    { id: 'WSsGXJoMOq8', title: '🔍 Auto-Search Using Filter Function', desc: 'Search and filter specific keywords in your Dataset' }
   ];
   let currentIndex = 0;
   let players = [];
@@ -716,13 +773,61 @@
   nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1, true));
   autoplayBtn.addEventListener('click', toggleAutoplay);
 
-  // ========== NAVIGATION: DARK MODE + HAMBURGER MENU (FIXED) ==========
+  // ========== UNIFIED TUTORIAL GRID (SAME SIZE, ORDERLY, FUTURE PROOF) ==========
+  // Adding new videos is easy: just push object to this array. All cards will be same dimensions.
+  const tutorialList = [
+    { id: 'r799_FGhe3w', title: 'Calculate Large Datasets Based on Multiple Criteria', description: 'Learn advanced Excel functions to compute large datasets with multiple conditions.', badge: 'Advanced Formulas' },
+    { id: 'hVmBdmowE_s', title: 'Dynamic Invoice Using Filter Function', description: 'Auto-filter large datasets and generate dynamic invoices effortlessly.', badge: 'Dynamic Excel' },
+    { id: 'WSsGXJoMOq8', title: 'Auto-Search Using Filter Function', description: 'Search and filter specific keywords in your Dataset with this powerful technique.', badge: 'Search & Filter' },
+    { id: 'OJ6yc0a_xKU', title: 'Simple Shipping Tracker', description: 'Create a simple shipping tracker in Excel to monitor deliveries in real-time.', badge: 'Project Tracker' }
+  ];
+
+  function renderTutorialGrid() {
+    const gridContainer = document.getElementById('tutorialGrid');
+    if (!gridContainer) return;
+    gridContainer.innerHTML = '';
+    tutorialList.forEach(tutorial => {
+      const card = document.createElement('div');
+      card.className = 'tutorial-card';
+      
+      // uniform embed container
+      card.innerHTML = `
+        <div class="video-embed-fixed">
+          <iframe src="https://www.youtube.com/embed/${tutorial.id}?rel=0&modestbranding=1" 
+                  title="${tutorial.title}"
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+          </iframe>
+        </div>
+        <div class="card-content">
+          <h3>${escapeHtml(tutorial.title)}</h3>
+          <p>${escapeHtml(tutorial.description)}</p>
+          <span class="badge-light"><i class="far fa-play-circle"></i> ${escapeHtml(tutorial.badge)}</span>
+        </div>
+      `;
+      gridContainer.appendChild(card);
+    });
+  }
+
+  // simple helper to avoid XSS
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // Dark Mode & Hamburger menu (same as original but synced)
   const themeToggleDesktop = document.getElementById('themeToggleDesktop');
   const themeToggleMobileBtn = document.getElementById('themeToggleMobileBtn');
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobilePanel = document.getElementById('mobileMenuPanel');
   
-  // Dark mode initialization & sync
   const storedTheme = localStorage.getItem('theme');
   if (storedTheme === 'dark') document.body.classList.add('dark');
   
@@ -741,43 +846,23 @@
   
   if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
   if (themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
-  setDarkModeUI(); // sync icon on load
+  setDarkModeUI();
   
-  // Mobile hamburger menu
   if (hamburgerBtn && mobilePanel) {
     hamburgerBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       mobilePanel.classList.toggle('open');
     });
-    // Close mobile menu when any link inside is clicked
     const mobileLinks = mobilePanel.querySelectorAll('.nav-link');
     mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobilePanel.classList.remove('open');
-      });
+      link.addEventListener('click', () => { mobilePanel.classList.remove('open'); });
     });
   }
   
-  // Close mobile menu on window resize (if screen goes above mobile breakpoint)
   window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && mobilePanel) {
-      mobilePanel.classList.remove('open');
-    }
+    if (window.innerWidth > 768 && mobilePanel) mobilePanel.classList.remove('open');
   });
-  
-  // Prevent body scroll when menu open? (optional)
-  if (mobilePanel && hamburgerBtn) {
-    const observer = new MutationObserver(() => {
-      if (mobilePanel.classList.contains('open')) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
-    });
-    observer.observe(mobilePanel, { attributes: true, attributeFilter: ['class'] });
-  }
-  
-  // Smooth scrolling for anchor links
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const targetId = this.getAttribute('href');
@@ -789,6 +874,11 @@
         if (mobilePanel) mobilePanel.classList.remove('open');
       }
     });
+  });
+  
+  // Initialize uniform tutorial grid after DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    renderTutorialGrid();
   });
 </script>
 </body>

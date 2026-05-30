@@ -191,7 +191,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(circle, rgba(198,164,63,0.08) 1px, transparent 1px);
+      background-image: radial-gradienta(circle, rgba(198,164,63,0.08) 1px, transparent 1px);
       background-size: 28px 28px;
       pointer-events: none;
     }
@@ -809,10 +809,12 @@
             const src = iframe.src;
             iframe.src = '';
             iframe.src = src;
+            
           });
         }
       }
     });
+    
   </script>
 </body>
 </html>

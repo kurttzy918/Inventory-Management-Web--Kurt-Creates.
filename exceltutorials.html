@@ -5,21 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Excel Tutorials | Kurt Creates — Master Excel with Video Guides</title>
   
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://www.youtube.com/iframe_api"></script>
   
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     :root {
       --gold: #C6A43F;
       --gold-light: #D4B96A;
+      --gold-dim: rgba(198,164,63,0.15);
       --navy: #0f1419;
       --cream: #fafaf9;
       --text: #1a1a1a;
@@ -27,16 +23,19 @@
       --card: #ffffff;
       --border: #e5e7eb;
       --shadow: rgba(0,0,0,0.08);
+      --ember: #ff4500;
+      --ember2: #ff6b35;
+      --ash: #b0b0b0;
       --transition: all 0.25s ease;
     }
     
     body.dark {
-      --cream: #0a0a0a;
-      --text: #f5f5f5;
-      --text-muted: #a0a0a0;
-      --card: #1a1a2e;
-      --border: #2d2d44;
-      --shadow: rgba(0,0,0,0.4);
+      --cream: #080a0c;
+      --text: #f0ede8;
+      --text-muted: #909090;
+      --card: #111318;
+      --border: #222630;
+      --shadow: rgba(0,0,0,0.5);
     }
     
     body {
@@ -45,19 +44,26 @@
       color: var(--text);
       line-height: 1.6;
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
     
-    h1, h2, h3 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
+    h1, h2, h3 { font-family: 'Syne', sans-serif; font-weight: 700; }
+
+    /* ========== ASH & FIRE BACKGROUND CANVAS ========== */
+    #fireCanvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.22;
     }
-    
-    /* ========== FIXED NAVIGATION (DESKTOP + MOBILE HAMBURGER) ========== */
+    body.dark #fireCanvas { opacity: 0.38; }
+
+    /* ========== NAVBAR ========== */
     .navbar {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 1000;
       background: rgba(15, 20, 25, 0.96);
       backdrop-filter: blur(12px);
@@ -79,22 +85,12 @@
       gap: 0.6rem;
       letter-spacing: -0.01em;
     }
+    .nav-brand img { height: 2rem; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2)); }
     
-    .nav-brand img {
-      height: 2rem;
-      width: auto;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
-    }
-    
-    /* Desktop menu */
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
     
     .nav-link {
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255,255,255,0.85);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
@@ -102,121 +98,94 @@
       position: relative;
       padding: 0.25rem 0;
     }
-    
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
       background: var(--gold);
       transition: width 0.25s ease;
     }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link:hover, .nav-link.active { color: var(--gold-light); }
     
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
-    }
-    
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--gold-light);
-    }
-    
-    /* Theme toggle (both desktop & mobile) */
     .theme-toggle {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 50%;
-      width: 38px;
-      height: 38px;
+      width: 38px; height: 38px;
       cursor: pointer;
       color: white;
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       transition: var(--transition);
       font-size: 1rem;
     }
+    .theme-toggle:hover { background: var(--gold); border-color: var(--gold); transform: scale(1.02); }
     
-    .theme-toggle:hover {
-      background: var(--gold);
-      border-color: var(--gold);
-      transform: scale(1.02);
-    }
-    
-    /* Mobile controls (hamburger + mobile theme toggle) */
-    .mobile-controls {
-      display: none;
-      align-items: center;
-      gap: 0.8rem;
-    }
-    
+    .mobile-controls { display: none; align-items: center; gap: 0.8rem; }
     .menu-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 12px;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: white;
-      font-size: 1.2rem;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: white; font-size: 1.2rem;
       transition: var(--transition);
     }
+    .menu-btn:hover { background: var(--gold); border-color: var(--gold); }
     
-    .menu-btn:hover {
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-    
-    /* Mobile menu panel (hidden by default) */
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background: rgba(15, 20, 25, 0.98);
+      top: 70px; left: 0; right: 0;
+      background: rgba(15,20,25,0.98);
       backdrop-filter: blur(16px);
       flex-direction: column;
       align-items: center;
       gap: 1.2rem;
       padding: 1.8rem 1.5rem;
-      border-top: 1px solid rgba(198, 164, 63, 0.2);
-      border-bottom: 1px solid rgba(198, 164, 63, 0.1);
+      border-top: 1px solid rgba(198,164,63,0.2);
+      border-bottom: 1px solid rgba(198,164,63,0.1);
       z-index: 999;
-      transition: all 0.2s;
     }
-    
-    .mobile-menu.open {
-      display: flex;
-    }
-    
-    .mobile-menu .nav-link {
-      font-size: 1rem;
-      width: 100%;
-      text-align: center;
-      padding: 0.6rem 0;
-    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu .nav-link { font-size: 1rem; width: 100%; text-align: center; padding: 0.6rem 0; }
     
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-      .mobile-controls {
-        display: flex;
-      }
-      .navbar {
-        padding: 0.7rem 1.5rem;
-      }
+      .nav-links { display: none; }
+      .mobile-controls { display: flex; }
+      .navbar { padding: 0.7rem 1.5rem; }
     }
-    
-    /* hero section */
+
+    /* ========== SECTION TITLE WITH LOGO ========== */
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+    .section-logo {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(198,164,63,0.3));
+      flex-shrink: 0;
+    }
+    .section-logo-fallback {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: white;
+      flex-shrink: 0;
+    }
+
+    /* ========== HERO ========== */
     .hero-with-image {
+      position: relative;
+      z-index: 2;
       padding: 7rem 2rem 3rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -225,64 +194,60 @@
       gap: 3rem;
       align-items: center;
     }
-    
     .hero-left { z-index: 2; }
     .hero-pill {
       display: inline-block;
-      background: rgba(198, 164, 63, 0.1);
-      border: 1px solid rgba(198, 164, 63, 0.3);
+      background: rgba(198,164,63,0.1);
+      border: 1px solid rgba(198,164,63,0.3);
       color: var(--gold);
       padding: 0.35rem 1rem;
       border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 700;
+      font-size: 0.7rem; font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 1rem;
+      animation: fadeSlideUp 0.6s ease both;
     }
     .hero-with-image h1 {
       font-size: clamp(2rem, 5vw, 3.5rem);
       margin-bottom: 0.8rem;
       color: var(--text);
       line-height: 1.1;
+      animation: fadeSlideUp 0.7s ease both;
     }
     .hero-with-image p {
       color: var(--text-muted);
       font-size: 1rem;
+      animation: fadeSlideUp 0.8s ease both;
     }
     .hero-right { display: flex; justify-content: center; align-items: center; }
     .hero-image-wrapper {
       position: relative;
-      width: 100%;
-      max-width: 400px;
+      width: 100%; max-width: 400px;
       aspect-ratio: 3/4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; justify-content: center; align-items: center;
+      animation: fadeSlideUp 0.9s ease both;
     }
     .hero-image-animated {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       border-radius: 16px;
-      filter: drop-shadow(0 20px 40px rgba(198, 164, 63, 0.15));
+      filter: drop-shadow(0 20px 40px rgba(198,164,63,0.15));
       animation: float 4s ease-in-out infinite, glow-pulse 3s ease-in-out infinite;
-      position: relative;
-      z-index: 2;
+      position: relative; z-index: 2;
     }
     @keyframes float {
       0%, 100% { transform: translateY(0px) scale(1); }
       50% { transform: translateY(-20px) scale(1.02); }
     }
     @keyframes glow-pulse {
-      0%, 100% { filter: drop-shadow(0 20px 40px rgba(198, 164, 63, 0.15)); }
-      50% { filter: drop-shadow(0 25px 50px rgba(198, 164, 63, 0.3)); }
+      0%, 100% { filter: drop-shadow(0 20px 40px rgba(198,164,63,0.15)); }
+      50% { filter: drop-shadow(0 25px 50px rgba(198,164,63,0.35)); }
     }
     .image-glow {
-      position: absolute;
-      inset: -30px;
+      position: absolute; inset: -30px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(198, 164, 63, 0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(198,164,63,0.12) 0%, transparent 70%);
       animation: glow-expand 4s ease-in-out infinite;
       z-index: 0;
     }
@@ -290,86 +255,76 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.15); }
     }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     @media (max-width: 968px) {
-      .hero-with-image {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
+      .hero-with-image { grid-template-columns: 1fr; gap: 2rem; }
       .hero-right { max-width: 350px; margin: 0 auto; }
     }
-    
-    /* Carousel Section (original) */
-    .carousel-section { max-width: 850px; margin: 0 auto 4rem; padding: 0 1.5rem; }
+
+    /* ========== CAROUSEL ========== */
+    .carousel-section {
+      position: relative; z-index: 2;
+      max-width: 850px; margin: 0 auto 4rem; padding: 0 1.5rem;
+    }
     .carousel-wrapper {
       background: var(--card);
       border-radius: 16px;
       border: 1px solid var(--border);
       overflow: hidden;
       box-shadow: 0 4px 20px var(--shadow);
+      transition: box-shadow 0.3s;
+    }
+    .carousel-wrapper:hover {
+      box-shadow: 0 8px 40px rgba(198,164,63,0.15);
     }
     .carousel-header {
       background: var(--navy);
       padding: 1rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
     }
-    .carousel-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-    }
+    .carousel-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.2); }
     .carousel-dot:nth-child(1) { background: #ff5f57; }
     .carousel-dot:nth-child(2) { background: #febc2e; }
     .carousel-dot:nth-child(3) { background: #28c840; }
     .carousel-title {
-      flex: 1;
-      text-align: center;
+      flex: 1; text-align: center;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.5);
+      font-weight: 600; letter-spacing: 0.05em;
     }
     .carousel-inner { position: relative; overflow: hidden; }
     .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .carousel-slide { flex: 0 0 100%; min-width: 100%; }
-    .video-container { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+    .video-container { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
     .video-container iframe { width: 100%; height: 100%; border: none; display: block; }
     .carousel-footer {
       padding: 1rem 1.2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
       border-top: 1px solid var(--border);
-      gap: 1rem;
-      flex-wrap: wrap;
+      gap: 1rem; flex-wrap: wrap;
     }
     .video-title { font-size: 0.9rem; font-weight: 600; color: var(--text); }
     .video-desc {
-      background: rgba(198, 164, 63, 0.08);
-      border: 1px solid rgba(198, 164, 63, 0.2);
+      background: rgba(198,164,63,0.08);
+      border: 1px solid rgba(198,164,63,0.2);
       color: var(--gold);
       padding: 0.2rem 0.7rem;
       border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-size: 0.7rem; font-weight: 600;
     }
     .carousel-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.2rem;
-      padding: 0 0.2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 1.2rem; padding: 0 0.2rem;
     }
     .carousel-dots { display: flex; gap: 8px; }
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 999px;
-      background: rgba(198, 164, 63, 0.25);
-      cursor: pointer;
-      transition: all 0.2s;
+      background: rgba(198,164,63,0.25);
+      cursor: pointer; transition: all 0.2s;
     }
     .dot.active { background: var(--gold); width: 24px; }
     .control-buttons { display: flex; gap: 0.6rem; align-items: center; }
@@ -379,210 +334,254 @@
       color: var(--text-muted);
       padding: 0.35rem 0.9rem;
       border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-size: 0.7rem; font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      display: flex; align-items: center; gap: 5px;
       transition: all 0.2s;
     }
-    .auto-btn.on { color: var(--gold); border-color: rgba(198, 164, 63, 0.3); }
+    .auto-btn.on { color: var(--gold); border-color: rgba(198,164,63,0.3); }
     .auto-btn:hover { border-color: var(--gold); color: var(--gold); }
     .nav-arrow {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       border: 1px solid var(--border);
       background: var(--card);
       color: var(--text);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
     .nav-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; }
-    
-    /* ========== FIXED: UNIFIED VIDEO GRID (orderly, same size for future uploads) ========== */
-    .video-library {
-      padding: 4rem 2rem;
-      background: var(--card);
-      border-top: 1px solid var(--border);
-    }
-    .content-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-    .topic-badge {
-      display: inline-block;
-      background: rgba(198, 164, 63, 0.08);
-      border: 1px solid rgba(198, 164, 63, 0.2);
-      color: var(--gold);
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-    .section-header h2 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      margin-top: 0.5rem;
-      color: var(--text);
-    }
-    .topic-divider-small {
-      width: 2rem;
-      height: 2px;
-      background: var(--gold);
-      margin: 0.8rem auto 0;
-    }
-    
-    /* 🟢 UNIFORM GRID — each card has fixed proportions, perfect for any future embed */
-    .uniform-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-    
-    .tutorial-card {
-      background: var(--card);
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      transition: transform 0.25s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 6px 14px var(--shadow);
-    }
-    
-    .tutorial-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
-      border-color: rgba(198, 164, 63, 0.3);
-    }
-    
-    /* fixed embed wrapper: consistent 16:9 ratio, same size every time */
-    .video-embed-fixed {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
-      height: 0;
-      background: #000000;
-      overflow: hidden;
-    }
-    
-    .video-embed-fixed iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-    
-    .card-content {
-      padding: 1.25rem 1.3rem 1.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .card-content h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
-      color: var(--text);
-    }
-    
-    .card-content p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.9rem;
-      line-height: 1.5;
-    }
-    
-    .badge-light {
-      align-self: flex-start;
-      background: rgba(198, 164, 63, 0.1);
-      padding: 0.2rem 0.7rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.3px;
-    }
-    
-    /* CTA & Footer */
+
+    /* ========== CTA ========== */
     .cta-section {
+      position: relative; z-index: 2;
       background: var(--navy);
-      padding: 3rem 2rem;
-      text-align: center;
+      padding: 3rem 2rem; text-align: center;
+      overflow: hidden;
     }
-    .cta-section h2 { color: white; margin-bottom: 1.2rem; font-size: 1.6rem; }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(198,164,63,0.08) 0%, transparent 70%);
+    }
+    .cta-section h2 { color: white; margin-bottom: 1.2rem; font-size: 1.6rem; position: relative; }
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      position: relative;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
       color: white;
       padding: 0.8rem 1.8rem;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 600;
-      transition: all 0.2s;
+      transition: all 0.25s;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(198, 164, 63, 0.3); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(198,164,63,0.35); }
+
+    /* ========== VIDEO LIBRARY ========== */
+    .video-library {
+      position: relative; z-index: 2;
+      padding: 4rem 2rem;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+    }
+    .content-wrapper { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 2.5rem; }
+    .topic-badge {
+      display: inline-block;
+      background: rgba(198,164,63,0.08);
+      border: 1px solid rgba(198,164,63,0.2);
+      color: var(--gold);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .section-header h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin-top: 0.5rem; color: var(--text); }
+    .topic-divider-small {
+      width: 2rem; height: 2px;
+      background: var(--gold);
+      margin: 0.8rem auto 0;
+    }
+    .uniform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem; margin-top: 1rem;
+    }
+    .tutorial-card {
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      display: flex; flex-direction: column;
+      box-shadow: 0 6px 14px var(--shadow);
+      animation: cardReveal 0.5s ease both;
+    }
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .tutorial-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgba(198,164,63,0.2);
+      border-color: rgba(198,164,63,0.35);
+    }
+    .video-embed-fixed {
+      position: relative; width: 100%;
+      padding-bottom: 56.25%; height: 0;
+      background: #000; overflow: hidden;
+    }
+    .video-embed-fixed iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none; display: block;
+    }
+    .card-content {
+      padding: 1.25rem 1.3rem 1.5rem;
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .card-content h3 {
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.5rem; line-height: 1.4;
+      color: var(--text);
+    }
+    .card-content p {
+      font-size: 0.85rem; color: var(--text-muted);
+      margin-bottom: 0.9rem; line-height: 1.5;
+    }
+    .badge-light {
+      align-self: flex-start;
+      background: rgba(198,164,63,0.1);
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--gold); letter-spacing: 0.3px;
+    }
+
+    /* ========== YOUTUBE REELS SECTION ========== */
+    .reels-section {
+      position: relative; z-index: 2;
+      padding: 4rem 2rem 5rem;
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .reels-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(198,164,63,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .reels-grid {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .reel-card {
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      width: 220px;
+      flex-shrink: 0;
+      display: flex; flex-direction: column;
+      box-shadow: 0 6px 20px var(--shadow);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+      animation: cardReveal 0.5s ease both;
+    }
+    .reel-card:nth-child(1) { animation-delay: 0.05s; }
+    .reel-card:nth-child(2) { animation-delay: 0.1s; }
+    .reel-card:nth-child(3) { animation-delay: 0.15s; }
+    .reel-card:nth-child(4) { animation-delay: 0.2s; }
+    .reel-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 48px -10px rgba(198,164,63,0.25);
+      border-color: rgba(198,164,63,0.4);
+    }
+    /* Vertical 9:16 embed */
+    .reel-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 177.77%; /* 16:9 inverted */
+      height: 0;
+      background: #000;
+      overflow: hidden;
+    }
+    .reel-embed iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none; display: block;
+    }
+    .reel-label {
+      padding: 0.8rem 1rem 1rem;
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .reel-label span {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text); line-height: 1.3;
+    }
+    .reel-label small {
+      font-size: 0.68rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .reel-label small i { color: #ff0000; }
+
+    /* ========== FOOTER ========== */
     footer {
+      position: relative; z-index: 2;
       background: var(--navy);
-      color: white;
-      padding: 2rem;
+      color: white; padding: 2rem;
       text-align: center;
-      border-top: 1px solid rgba(198, 164, 63, 0.1);
+      border-top: 1px solid rgba(198,164,63,0.1);
     }
     footer p { opacity: 0.6; font-size: 0.85rem; margin-bottom: 1rem; }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 0.8rem;
-    }
+    .social-icons { display: flex; justify-content: center; gap: 0.8rem; }
     .social-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-decoration: none;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: white; text-decoration: none;
       transition: all 0.2s;
     }
     .social-icon:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-2px); }
-    
+
     @media (max-width: 680px) {
-      .uniform-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .video-library {
-        padding: 2rem 1rem;
-      }
+      .uniform-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .video-library { padding: 2rem 1rem; }
+      .reels-section { padding: 2.5rem 1rem 3rem; }
+      .reels-grid { gap: 1rem; }
+      .reel-card { width: 160px; }
     }
+    .hero-carousel-text {
+  color: var(--text-muted);
+  font-size: 1rem;
+  min-height: 60px;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.hero-carousel-text.fade-out {
+  opacity: 0;
+}
+
+.hero-carousel-text.fade-in {
+  opacity: 1;
+}
   </style>
 </head>
 <body>
 
-<!-- ========== FIXED NAVBAR ========== -->
+<!-- ASH & FIRE CANVAS -->
+<canvas id="fireCanvas"></canvas>
+
+<!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="nav-brand">
     <img src="gta.png" alt="Kurt Creates" onerror="this.style.display='none'">
@@ -615,12 +614,14 @@
   <a href="#contact" class="nav-link">Contact</a>
 </div>
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <section class="hero-with-image">
   <div class="hero-left">
     <div class="hero-pill"><i class="fab fa-youtube"></i> YouTube Series</div>
     <h1>Excel Video Tutorials</h1>
-    <p>Master Excel formulas, functions, and inventory systems with step-by-step video guides.</p>
+    <p class="hero-carousel-text" id="heroText">
+  Master Excel formulas, functions, and inventory systems with step-by-step video guides.
+</p>
   </div>
   <div class="hero-right">
     <div class="hero-image-wrapper">
@@ -630,7 +631,7 @@
   </div>
 </section>
 
-<!-- YOUTUBE CAROUSEL (unchanged but functional) -->
+<!-- YOUTUBE CAROUSEL -->
 <section class="carousel-section">
   <div class="carousel-wrapper">
     <div class="carousel-header">
@@ -638,7 +639,7 @@
       <div class="carousel-dot"></div>
       <div class="carousel-dot"></div>
       <div class="carousel-title" id="carouselTitle">Kurt Creates · Excel Tutorials</div>
-      <i class="fab fa-youtube" style="color: #ff0000; font-size: 0.9rem;"></i>
+      <i class="fab fa-youtube" style="color:#ff0000;font-size:0.9rem;"></i>
     </div>
     <div class="carousel-inner">
       <div class="carousel-track" id="carouselTrack"></div>
@@ -658,26 +659,48 @@
   </div>
 </section>
 
-<!-- CTA Section -->
+<!-- CTA -->
 <section class="cta-section">
   <h2>Ready to automate your inventory?</h2>
   <a href="index.html#contact" class="btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
 </section>
 
-<!-- ========== VIDEO PLAYLIST GRID – ORDERLY & FUTURE-PROOF (uniform card size) ========== -->
+<!-- VIDEO LIBRARY -->
 <section class="video-library">
   <div class="content-wrapper">
     <div class="section-header">
       <span class="topic-badge"><i class="fab fa-youtube"></i> Video Playlist</span>
-      <h2>Master Excel with step-by-step tutorials</h2>
+      <div class="section-title-row">
+        <img src="gta.png" alt="Kurt Creates" class="section-logo" onerror="this.outerHTML='<div class=\'section-logo-fallback\'><i class=\'fab fa-youtube\'></i></div>'">
+        <h2>Master Excel with step-by-step tutorials</h2>
+      </div>
       <div class="topic-divider-small"></div>
     </div>
-    <div class="uniform-grid" id="tutorialGrid">
-      <!-- All tutorial cards will be generated dynamically from data array for perfect consistency -->
-    </div>
-    <p style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted);">
-      <i class="fas fa-plus-circle"></i> More videos added regularly — all cards maintain the same professional size & layout.
+    <div class="uniform-grid" id="tutorialGrid"></div>
+    <p style="text-align:center;margin-top:2rem;font-size:0.85rem;color:var(--text-muted);">
+      <i class="fas fa-plus-circle"></i> More videos added regularly — all cards maintain the same professional size &amp; layout.
     </p>
+  </div>
+</section>
+
+<!-- ========== YOUTUBE REELS SECTION ========== -->
+<section class="reels-section" id="reels">
+  <div class="content-wrapper">
+    <div class="section-header">
+      <span class="topic-badge"><i class="fab fa-youtube"></i> Shorts &amp; Reels</span>
+      <div class="section-title-row">
+        <img src="gta.png" alt="Kurt Creates" class="section-logo" onerror="this.outerHTML='<div class=\'section-logo-fallback\'><i class=\'fab fa-youtube\'></i></div>'">
+        <h2>Quick Tips &amp; Reels</h2>
+      </div>
+      <div class="topic-divider-small"></div>
+      <p style="margin-top:0.8rem;font-size:0.9rem;color:var(--text-muted);max-width:480px;margin-left:auto;margin-right:auto;">
+        Bite-sized Excel tips — watch vertical shorts directly below.
+      </p>
+    </div>
+
+    <div class="reels-grid" id="reelsGrid">
+      <!-- Reel cards are injected by JS. Replace the YouTube Short IDs below with your actual ones. -->
+    </div>
   </div>
 </section>
 
@@ -691,195 +714,329 @@
 </footer>
 
 <script>
-  // ========== YOUTUBE CAROUSEL (preserved logic) ==========
-  const videos = [
-    { id: 'r799_FGhe3w', title: '📊 Excel Advanced Formula Tutorial', desc: 'Master advanced formulas' },
-    { id: 'hVmBdmowE_s', title: '📄 Dynamic Invoice Using Filter', desc: 'Auto-filter large datasets' },
-    { id: 'OJ6yc0a_xKU', title: '📦 Simple Shipping Tracker', desc: 'Create a simple shipping tracker in Excel' },
-    { id: 'WSsGXJoMOq8', title: '🔍 Auto-Search Using Filter Function', desc: 'Search and filter specific keywords in your Dataset' }
-  ];
-  let currentIndex = 0;
-  let players = [];
-  let autoplayEnabled = true;
-  let autoplayTimer = null;
-  const track = document.getElementById('carouselTrack');
-  const dotsContainer = document.getElementById('carouselDots');
-  const videoTitle = document.getElementById('videoTitle');
-  const videoDesc = document.getElementById('videoDesc');
-  const carouselTitle = document.getElementById('carouselTitle');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const autoplayBtn = document.getElementById('autoplayBtn');
+// ============================================================
+// ASH & FIRE PARTICLE SYSTEM
+// ============================================================
+(function() {
+  const canvas = document.getElementById('fireCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
 
-  function buildSlides() {
-    track.innerHTML = '';
-    videos.forEach((video, idx) => {
-      const slide = document.createElement('div');
-      slide.className = 'carousel-slide';
-      slide.innerHTML = `<div class="video-container" id="yt-wrap-${idx}"><div id="yt-player-${idx}"></div></div>`;
-      track.appendChild(slide);
-    });
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
   }
-  function updateUI() {
-    const video = videos[currentIndex];
-    videoTitle.textContent = video.title;
-    videoDesc.textContent = video.desc;
-    carouselTitle.textContent = `Kurt Creates · ${currentIndex + 1}/${videos.length}`;
-    if (dotsContainer) {
-      const dots = dotsContainer.querySelectorAll('.dot');
-      dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Particle types: ember (bright dot) or ash (grey flake)
+  function createParticle(type) {
+    const x = Math.random() * W;
+    const fromBottom = type === 'ember';
+    return {
+      type,
+      x,
+      y: fromBottom ? H + 10 : Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: type === 'ember' ? -(Math.random() * 1.5 + 0.5) : -(Math.random() * 0.6 + 0.1),
+      size: type === 'ember' ? Math.random() * 2.5 + 0.8 : Math.random() * 3 + 1,
+      life: 1,
+      decay: type === 'ember' ? Math.random() * 0.004 + 0.003 : Math.random() * 0.002 + 0.001,
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: Math.random() * 0.04 + 0.01,
+      hue: type === 'ember' ? Math.random() * 30 + 15 : 0,
+      saturation: type === 'ember' ? 80 : 0,
+      lightness: type === 'ember' ? Math.random() * 20 + 50 : Math.random() * 30 + 50,
+    };
+  }
+
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 60; i++) particles.push(createParticle('ash'));
+    for (let i = 0; i < 30; i++) particles.push(createParticle('ember'));
+  }
+  initParticles();
+
+  function drawParticle(p) {
+    ctx.save();
+    ctx.globalAlpha = p.life * (p.type === 'ember' ? 0.85 : 0.45);
+    if (p.type === 'ember') {
+      // Glowing ember dot
+      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 2.5);
+      grd.addColorStop(0, `hsla(${p.hue}, ${p.saturation}%, ${p.lightness}%, 1)`);
+      grd.addColorStop(0.4, `hsla(${p.hue - 10}, 90%, 40%, 0.6)`);
+      grd.addColorStop(1, `hsla(${p.hue}, 80%, 20%, 0)`);
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      // Inner bright core
+      ctx.fillStyle = `hsl(${p.hue}, ${p.saturation}%, ${p.lightness}%)`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Ash flake — tiny rotated rect
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.wobble);
+      ctx.fillStyle = `hsl(0, 0%, ${p.lightness}%)`;
+      const s = p.size;
+      ctx.fillRect(-s / 2, -s / 4, s, s / 2);
     }
-  }
-  function goToSlide(index, autoPlay = true) {
-    players.forEach((p, idx) => { if (p && idx !== index && p.stopVideo) try { p.stopVideo(); } catch(e) {} });
-    currentIndex = (index + videos.length) % videos.length;
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateUI();
-    if (autoPlay && players[currentIndex]) {
-      try { players[currentIndex].mute(); players[currentIndex].playVideo(); } catch(e) {}
-    }
-    resetAutoplayTimer();
-  }
-  function resetAutoplayTimer() {
-    clearInterval(autoplayTimer);
-    if (autoplayEnabled) autoplayTimer = setInterval(() => goToSlide(currentIndex + 1, true), 7000);
-  }
-  function toggleAutoplay() {
-    autoplayEnabled = !autoplayEnabled;
-    autoplayBtn.classList.toggle('on', autoplayEnabled);
-    autoplayBtn.innerHTML = autoplayEnabled ? '<i class="fas fa-play-circle"></i> Autoplay' : '<i class="fas fa-pause-circle"></i> Paused';
-    autoplayEnabled ? resetAutoplayTimer() : clearInterval(autoplayTimer);
+    ctx.restore();
   }
 
-  window.onYouTubeIframeAPIReady = function() {
-    buildSlides();
-    dotsContainer.innerHTML = '';
-    videos.forEach((_, idx) => {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (idx === 0 ? ' active' : '');
-      dot.addEventListener('click', () => goToSlide(idx, true));
-      dotsContainer.appendChild(dot);
-    });
-    videos.forEach((video, idx) => {
-      players[idx] = new YT.Player(`yt-player-${idx}`, {
-        height: '100%', width: '100%', videoId: video.id,
-        playerVars: { autoplay: 1, mute: 1, controls: 1, rel: 0, modestbranding: 1, playsinline: 1 },
-        events: { onReady: (event) => { if (idx === 0) { event.target.mute(); event.target.playVideo(); } } }
-      });
-    });
-    resetAutoplayTimer();
-  };
-  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1, true));
-  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1, true));
-  autoplayBtn.addEventListener('click', toggleAutoplay);
-
-  // ========== UNIFIED TUTORIAL GRID (SAME SIZE, ORDERLY, FUTURE PROOF) ==========
-  // Adding new videos is easy: just push object to this array. All cards will be same dimensions.
-  const tutorialList = [
-    { id: 'r799_FGhe3w', title: 'Calculate Large Datasets Based on Multiple Criteria', description: 'Learn advanced Excel functions to compute large datasets with multiple conditions.', badge: 'Advanced Formulas' },
-    { id: 'hVmBdmowE_s', title: 'Dynamic Invoice Using Filter Function', description: 'Auto-filter large datasets and generate dynamic invoices effortlessly.', badge: 'Dynamic Excel' },
-    { id: 'WSsGXJoMOq8', title: 'Auto-Search Using Filter Function', description: 'Search and filter specific keywords in your Dataset with this powerful technique.', badge: 'Search & Filter' },
-    { id: 'OJ6yc0a_xKU', title: 'Simple Shipping Tracker', description: 'Create a simple shipping tracker in Excel to monitor deliveries in real-time.', badge: 'Project Tracker' }
-  ];
-
-  function renderTutorialGrid() {
-    const gridContainer = document.getElementById('tutorialGrid');
-    if (!gridContainer) return;
-    gridContainer.innerHTML = '';
-    tutorialList.forEach(tutorial => {
-      const card = document.createElement('div');
-      card.className = 'tutorial-card';
-      
-      // uniform embed container
-      card.innerHTML = `
-        <div class="video-embed-fixed">
-          <iframe src="https://www.youtube.com/embed/${tutorial.id}?rel=0&modestbranding=1" 
-                  title="${tutorial.title}"
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  allowfullscreen>
-          </iframe>
-        </div>
-        <div class="card-content">
-          <h3>${escapeHtml(tutorial.title)}</h3>
-          <p>${escapeHtml(tutorial.description)}</p>
-          <span class="badge-light"><i class="far fa-play-circle"></i> ${escapeHtml(tutorial.badge)}</span>
-        </div>
-      `;
-      gridContainer.appendChild(card);
-    });
-  }
-
-  // simple helper to avoid XSS
-  function escapeHtml(str) {
-    return str.replace(/[&<>]/g, function(m) {
-      if(m === '&') return '&amp;';
-      if(m === '<') return '&lt;';
-      if(m === '>') return '&gt;';
-      return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
-    });
-  }
-
-  // Dark Mode & Hamburger menu (same as original but synced)
-  const themeToggleDesktop = document.getElementById('themeToggleDesktop');
-  const themeToggleMobileBtn = document.getElementById('themeToggleMobileBtn');
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const mobilePanel = document.getElementById('mobileMenuPanel');
-  
-  const storedTheme = localStorage.getItem('theme');
-  if (storedTheme === 'dark') document.body.classList.add('dark');
-  
-  function setDarkModeUI() {
-    const isDark = document.body.classList.contains('dark');
-    const iconSunMoon = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    if (themeToggleDesktop) themeToggleDesktop.innerHTML = iconSunMoon;
-    if (themeToggleMobileBtn) themeToggleMobileBtn.innerHTML = iconSunMoon;
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
-  
-  function toggleTheme() {
-    document.body.classList.toggle('dark');
-    setDarkModeUI();
-  }
-  
-  if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
-  if (themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
-  setDarkModeUI();
-  
-  if (hamburgerBtn && mobilePanel) {
-    hamburgerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      mobilePanel.classList.toggle('open');
-    });
-    const mobileLinks = mobilePanel.querySelectorAll('.nav-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => { mobilePanel.classList.remove('open'); });
-    });
-  }
-  
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && mobilePanel) mobilePanel.classList.remove('open');
-  });
-
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      const targetElem = document.querySelector(targetId);
-      if (targetElem) {
-        e.preventDefault();
-        targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        if (mobilePanel) mobilePanel.classList.remove('open');
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.wobble += p.wobbleSpeed;
+      p.x += p.vx + Math.sin(p.wobble) * (p.type === 'ash' ? 0.4 : 0.2);
+      p.y += p.vy;
+      p.life -= p.decay;
+      drawParticle(p);
+      if (p.life <= 0 || p.y < -20) {
+        particles[i] = createParticle(p.type);
+        if (p.type === 'ember') particles[i].y = H + 10;
       }
+    }
+    // Occasionally spawn extra embers from random bottom x
+    if (Math.random() < 0.15) {
+      const e = createParticle('ember');
+      e.x = Math.random() * W;
+      e.y = H + 5;
+      particles.push(e);
+      if (particles.length > 120) particles.splice(0, 1);
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ============================================================
+// YOUTUBE CAROUSEL
+// ============================================================
+const videos = [
+  { id: 'r799_FGhe3w', title: '📊 Excel Advanced Formula Tutorial', desc: 'Master advanced formulas' },
+  { id: 'hVmBdmowE_s', title: '📄 Dynamic Invoice Using Filter', desc: 'Auto-filter large datasets' },
+  { id: 'OJ6yc0a_xKU', title: '📦 Simple Shipping Tracker', desc: 'Create a simple shipping tracker in Excel' },
+  { id: 'WSsGXJoMOq8', title: '🔍 Auto-Search Using Filter Function', desc: 'Search and filter specific keywords in your Dataset' },
+  { id: 'ZYT1mVjmKys', title: '🔍 Automated Data Entry', desc: 'Learn how to automate data entry processes using MACROS' }
+];
+let currentIndex = 0, players = [], autoplayEnabled = true, autoplayTimer = null;
+const track = document.getElementById('carouselTrack');
+const dotsContainer = document.getElementById('carouselDots');
+const videoTitle = document.getElementById('videoTitle');
+const videoDesc = document.getElementById('videoDesc');
+const carouselTitle = document.getElementById('carouselTitle');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const autoplayBtn = document.getElementById('autoplayBtn');
+
+function buildSlides() {
+  track.innerHTML = '';
+  videos.forEach((video, idx) => {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    slide.innerHTML = `<div class="video-container" id="yt-wrap-${idx}"><div id="yt-player-${idx}"></div></div>`;
+    track.appendChild(slide);
+  });
+}
+function updateUI() {
+  const video = videos[currentIndex];
+  videoTitle.textContent = video.title;
+  videoDesc.textContent = video.desc;
+  carouselTitle.textContent = `Kurt Creates · ${currentIndex + 1}/${videos.length}`;
+  if (dotsContainer) {
+    dotsContainer.querySelectorAll('.dot').forEach((dot, idx) => dot.classList.toggle('active', idx === currentIndex));
+  }
+}
+function goToSlide(index, autoPlay = true) {
+  players.forEach((p, idx) => { if (p && idx !== index && p.stopVideo) try { p.stopVideo(); } catch(e) {} });
+  currentIndex = (index + videos.length) % videos.length;
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  updateUI();
+  if (autoPlay && players[currentIndex]) {
+    try { players[currentIndex].mute(); players[currentIndex].playVideo(); } catch(e) {}
+  }
+  resetAutoplayTimer();
+}
+function resetAutoplayTimer() {
+  clearInterval(autoplayTimer);
+  if (autoplayEnabled) autoplayTimer = setInterval(() => goToSlide(currentIndex + 1, true), 7000);
+}
+function toggleAutoplay() {
+  autoplayEnabled = !autoplayEnabled;
+  autoplayBtn.classList.toggle('on', autoplayEnabled);
+  autoplayBtn.innerHTML = autoplayEnabled ? '<i class="fas fa-play-circle"></i> Autoplay' : '<i class="fas fa-pause-circle"></i> Paused';
+  autoplayEnabled ? resetAutoplayTimer() : clearInterval(autoplayTimer);
+}
+
+window.onYouTubeIframeAPIReady = function() {
+  buildSlides();
+  dotsContainer.innerHTML = '';
+  videos.forEach((_, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (idx === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(idx, true));
+    dotsContainer.appendChild(dot);
+  });
+  videos.forEach((video, idx) => {
+    players[idx] = new YT.Player(`yt-player-${idx}`, {
+      height: '100%', width: '100%', videoId: video.id,
+      playerVars: { autoplay: 1, mute: 1, controls: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+      events: { onReady: (event) => { if (idx === 0) { event.target.mute(); event.target.playVideo(); } } }
     });
   });
-  
-  // Initialize uniform tutorial grid after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
-    renderTutorialGrid();
+  resetAutoplayTimer();
+};
+prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1, true));
+nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1, true));
+autoplayBtn.addEventListener('click', toggleAutoplay);
+
+// ============================================================
+// TUTORIAL GRID
+// ============================================================
+const tutorialList = [
+  { id: 'r799_FGhe3w', title: 'Calculate Large Datasets Based on Multiple Criteria', description: 'Learn advanced Excel functions to compute large datasets with multiple conditions.', badge: 'Advanced Formulas' },
+  { id: 'hVmBdmowE_s', title: 'Dynamic Invoice Using Filter Function', description: 'Auto-filter large datasets and generate dynamic invoices effortlessly.', badge: 'Dynamic Excel' },
+  { id: 'WSsGXJoMOq8', title: 'Auto-Search Using Filter Function', description: 'Search and filter specific keywords in your Dataset with this powerful technique.', badge: 'Search & Filter' },
+  { id: 'OJ6yc0a_xKU', title: 'Simple Shipping Tracker', description: 'Create a simple shipping tracker in Excel to monitor deliveries in real-time.', badge: 'Project Tracker' },
+  { id: 'ZYT1mVjmKys', title: 'Automated Data Entry', description: 'Learn how to automate data entry processes using MACROS', badge: 'Recording MACROS' },
+  { id: 'Oi5_Ltt66yw', title: 'Calculate Multiple Criteria', description: 'Learn how to calculate values based on multiple criteria using SUMIFS & XLOOKUP', badge: 'Recording MACROS' }
+];
+
+function escapeHtml(str) {
+  return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m] || m));
+}
+
+function renderTutorialGrid() {
+  const grid = document.getElementById('tutorialGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  tutorialList.forEach((t, i) => {
+    const card = document.createElement('div');
+    card.className = 'tutorial-card';
+    card.style.animationDelay = `${i * 0.08}s`;
+    card.innerHTML = `
+      <div class="video-embed-fixed">
+        <iframe src="https://www.youtube.com/embed/${t.id}?rel=0&modestbranding=1"
+                title="${t.title}" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      <div class="card-content">
+        <h3>${escapeHtml(t.title)}</h3>
+        <p>${escapeHtml(t.description)}</p>
+        <span class="badge-light"><i class="far fa-play-circle"></i> ${escapeHtml(t.badge)}</span>
+      </div>`;
+    grid.appendChild(card);
   });
+}
+
+// ============================================================
+// YOUTUBE REELS / SHORTS
+// Replace the `id` values below with your actual YouTube Shorts IDs.
+// You can also paste a full iframe embed string into `embedHtml` instead.
+// ============================================================
+const reelsList = [
+  // ↓↓↓ REPLACE these IDs with your actual YouTube Shorts IDs ↓↓↓
+  { id: '1OEA4YcqTO4', title: 'Excel Quick Tip #1', label: 'YouTube Short' },
+  { id: '_Gab2GwxrfQ', title: 'Excel Quick Tip #2', label: 'YouTube Short' },
+  { id: 'OJ6yc0a_xKU', title: 'Excel Quick Tip #3', label: 'YouTube Short' },
+  { id: 'WSsGXJoMOq8', title: 'Excel Quick Tip #4', label: 'YouTube Short' },
+];
+
+function renderReels() {
+  const grid = document.getElementById('reelsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  reelsList.forEach((r, i) => {
+    const card = document.createElement('div');
+    card.className = 'reel-card';
+    card.style.animationDelay = `${i * 0.07}s`;
+    card.innerHTML = `
+      <div class="reel-embed">
+        <iframe src="https://www.youtube.com/embed/${r.id}?rel=0&modestbranding=1"
+                title="${escapeHtml(r.title)}" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+      </div>
+      <div class="reel-label">
+        <span>${escapeHtml(r.title)}</span>
+        <small><i class="fab fa-youtube"></i> ${escapeHtml(r.label)}</small>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ============================================================
+// DARK MODE & HAMBURGER
+// ============================================================
+const themeToggleDesktop = document.getElementById('themeToggleDesktop');
+const themeToggleMobileBtn = document.getElementById('themeToggleMobileBtn');
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobilePanel = document.getElementById('mobileMenuPanel');
+
+const storedTheme = localStorage.getItem('theme');
+if (storedTheme === 'dark') document.body.classList.add('dark');
+
+function setDarkModeUI() {
+  const isDark = document.body.classList.contains('dark');
+  const icon = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  if (themeToggleDesktop) themeToggleDesktop.innerHTML = icon;
+  if (themeToggleMobileBtn) themeToggleMobileBtn.innerHTML = icon;
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+function toggleTheme() { document.body.classList.toggle('dark'); setDarkModeUI(); }
+if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+if (themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
+setDarkModeUI();
+
+if (hamburgerBtn && mobilePanel) {
+  hamburgerBtn.addEventListener('click', e => { e.stopPropagation(); mobilePanel.classList.toggle('open'); });
+  mobilePanel.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => mobilePanel.classList.remove('open')));
+}
+window.addEventListener('resize', () => { if (window.innerWidth > 768 && mobilePanel) mobilePanel.classList.remove('open'); });
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    const el = document.querySelector(targetId);
+    if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (mobilePanel) mobilePanel.classList.remove('open'); }
+  });
+});
+
+// Init on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+  renderTutorialGrid();
+  renderReels();
+});
+const heroTexts = [
+  "Master Excel formulas, functions, and inventory systems with step-by-step video guides.",
+  "Learn automation, dashboards, and Basic Excel techniques.",
+  "Boost productivity with powerful Excel shortcuts and formulas."
+];
+
+const heroText = document.getElementById("heroText");
+let heroIndex = 0;
+
+setInterval(() => {
+  heroText.classList.add("fade-out");
+
+  setTimeout(() => {
+    heroIndex = (heroIndex + 1) % heroTexts.length;
+    heroText.textContent = heroTexts[heroIndex];
+
+    heroText.classList.remove("fade-out");
+    heroText.classList.add("fade-in");
+
+    setTimeout(() => {
+      heroText.classList.remove("fade-in");
+    }, 800);
+  }, 800);
+}, 4000);
 </script>
 </body>
 </html>

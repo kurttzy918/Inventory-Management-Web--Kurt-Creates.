@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
@@ -42,7 +41,7 @@
       --text-light: #1a2a3a;
       --text-muted: #4a5568;
       --card-bg: #ffffff;
-      --footer-bg: #1A2A3A;
+      --footer-bg: #0a0f18;
       --footer-text: #ffffff;
       --navbar-bg: rgba(26, 42, 58, 0.95);
     }
@@ -58,7 +57,7 @@
       --text-light: #e0e0e0;
       --text-muted: #a0aec0;
       --card-bg: #1e2a3a;
-      --footer-bg: #0a0a0a;
+      --footer-bg: #060a10;
       --footer-text: #e0e0e0;
       --navbar-bg: rgba(18, 18, 18, 0.95);
     }
@@ -68,16 +67,13 @@
     .bg-gold { background-color: var(--gold); }
     .border-gold { border-color: var(--gold); }
 
-    /* General reveal */
+    /* ── Reveal animations ── */
     .reveal {
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0) translateX(0) scale(1) rotate(0deg);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0) translateX(0) scale(1) rotate(0deg); }
     .section-line {
       width: 0; height: 3px;
       background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
@@ -85,6 +81,8 @@
       border-radius: 3px;
     }
     .section-line.visible { width: 6rem; }
+
+    /* ── Navbar ── */
     .navbar {
       transition: all 0.4s ease;
       backdrop-filter: blur(12px);
@@ -92,28 +90,21 @@
     }
     .navbar-scrolled { background-color: rgba(0,0,0,0.92); box-shadow: 0 2px 30px rgba(0,0,0,0.4); }
     .nav-link {
-      position: relative;
-      font-weight: 500;
-      transition: color 0.3s ease;
-      color: white;
+      position: relative; font-weight: 500;
+      transition: color 0.3s ease; color: white;
     }
     .nav-link::after {
-      content: '';
-      position: absolute;
+      content: ''; position: absolute;
       bottom: -5px; left: 0;
       width: 0; height: 2px;
-      background: var(--gold);
-      transition: width 0.3s ease;
+      background: var(--gold); transition: width 0.3s ease;
     }
     .nav-link:hover::after, .nav-link.active::after { width: 100%; }
     .brand-name {
-      position: relative;
-      display: inline-block;
-      font-size: 1.5rem;
-      font-weight: 800;
+      position: relative; display: inline-block;
+      font-size: 1.5rem; font-weight: 800;
       font-family: 'Bespoke Stencil', serif;
-      color: white;
-      letter-spacing: 0.05em;
+      color: white; letter-spacing: 0.05em;
     }
     .brand-name .brand-text {
       background: linear-gradient(90deg, #ffffff 0%, var(--gold-light) 30%, #fff8e0 50%, var(--gold) 70%, #ffffff 100%);
@@ -129,53 +120,48 @@
     }
     .btn-primary {
       background: linear-gradient(135deg, var(--gold), var(--gold-light));
-      color: white;
+      color: #fff;
       padding: 0.85rem 2rem;
       border-radius: 40px;
       font-weight: 600;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px var(--gold-glow);
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
+      position: relative; overflow: hidden; display: inline-block;
     }
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--gold-glow); }
     .theme-toggle {
-      background: rgba(255,255,255,0.15);
-      border: none; border-radius: 50%;
-      width: 40px; height: 40px;
-      cursor: pointer;
+      background: rgba(255,255,255,0.15); border: none; border-radius: 50%;
+      width: 40px; height: 40px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s ease;
-      color: white;
+      transition: all 0.3s ease; color: white;
     }
     .theme-toggle:hover { background: var(--gold); transform: rotate(20deg); }
     .social-icon {
       display: inline-flex; align-items: center; justify-content: center;
       width: 42px; height: 42px;
       background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      transition: all 0.3s ease; color: white;
+      border-radius: 50%; transition: all 0.3s ease; color: white;
     }
     .social-icon:hover { background: var(--gold); transform: translateY(-3px); }
-    .facebook-section {
-      background: linear-gradient(145deg, var(--card-bg) 0%, var(--bg-light) 100%);
-      border-radius: 2rem;
-      box-shadow: 0 25px 40px -18px rgba(0,0,0,0.2);
-      border: 1px solid rgba(198,164,63,0.25);
-    }
     .stat-counter {
       font-family: 'Bespoke Stencil', serif;
-      font-size: 3rem;
-      color: var(--gold);
-      display: block;
+      font-size: 3rem; color: var(--gold); display: block;
     }
-    .video-responsive iframe { border-radius: 1rem; }
-    @media(max-width:768px){ .facebook-section { padding: 1rem; } }
 
-    /* ============================================================
-       MINIMALIST HERO STYLES
-       ============================================================ */
+    /* ═══════════════════════════════════════════════════
+       FIRE + ASH CANVAS BACKGROUND
+    ═══════════════════════════════════════════════════ */
+    #fireCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════ */
     .hero {
       position: relative;
       width: 100%;
@@ -183,49 +169,31 @@
       display: flex;
       align-items: center;
       overflow: hidden;
-      background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 50%, #12212e 100%);
+      background: linear-gradient(160deg, #060e18 0%, #0f1e2e 45%, #0a1520 100%);
     }
 
-    /* Subtle dot grid overlay — replaces all fire/ash particles */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradienta(circle, rgba(198,164,63,0.08) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-    }
-
-    /* Soft vignette corners */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
-      pointer-events: none;
+    /* Vignette */
+    .hero-vignette {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 35%, rgba(0,0,0,0.55) 100%);
     }
 
     .hero__inner {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      max-width: 1280px;
+      position: relative; z-index: 10;
+      width: 100%; max-width: 1400px;
       margin: 0 auto;
-      padding: 120px 48px 80px;
+      padding: 120px 64px 100px;
       display: grid;
       grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 48px;
+      align-items: flex-end;
+      gap: 32px;
     }
 
     .hero__text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 12px;
       animation: heroFadeIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
     }
-
     @keyframes heroFadeIn {
       from { opacity: 0; transform: translateY(32px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -234,248 +202,347 @@
     .hero__label {
       font-family: 'Rajdhani', sans-serif;
       font-size: clamp(0.8rem, 2vw, 1.1rem);
-      font-weight: 700;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      font-weight: 700; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 12px;
       opacity: 0;
       animation: heroFadeIn 0.8s 0.15s cubic-bezier(0.22,1,0.36,1) forwards;
     }
-
     .hero__label::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 2px;
-      background: var(--gold);
+      content: ''; display: block;
+      width: 40px; height: 2px; background: var(--gold);
     }
 
     .hero__title {
       font-family: 'Black Ops One', cursive;
-      font-size: clamp(5rem, 16vw, 12rem);
-      line-height: 0.85;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: #ffffff;
+      font-size: clamp(5rem, 16vw, 13rem);
+      line-height: 0.85; text-transform: uppercase;
+      letter-spacing: -0.02em; color: #ffffff;
       opacity: 0;
       animation: heroFadeIn 0.8s 0.3s cubic-bezier(0.22,1,0.36,1) forwards;
     }
-
-    .hero__title span {
-      color: var(--gold);
-    }
+    .hero__title span { color: var(--gold); }
 
     .hero__sub {
       font-family: 'Bebas Neue', cursive;
       font-size: clamp(1.8rem, 5vw, 4.5rem);
       letter-spacing: 0.3em;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.5);
       opacity: 0;
       animation: heroFadeIn 0.8s 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
-    .hero__tagline {
-      font-size: clamp(0.75rem, 1.6vw, 0.95rem);
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
+    /* ── Tagline carousel ── */
+    .hero__tagline-wrap {
+      height: 1.8rem;
+      overflow: hidden;
       margin-top: 8px;
       opacity: 0;
       animation: heroFadeIn 0.8s 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
     }
+    .tagline-item {
+      display: block;
+      font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+      font-weight: 500; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      line-height: 1.8rem;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.65s cubic-bezier(0.22,1,0.36,1), opacity 0.65s ease;
+      position: absolute;
+    }
+    .tagline-item.active { transform: translateY(0); opacity: 1; }
+    .tagline-item.exit   { transform: translateY(-100%); opacity: 0; }
 
     .hero__cta {
-      margin-top: 24px;
-      opacity: 0;
+      margin-top: 24px; opacity: 0;
       animation: heroFadeIn 0.8s 0.75s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
-    /* ============================================================
-       HERO PHOTO PLACEHOLDER — easy to swap
-       ============================================================
-       TO CHANGE PHOTO: Replace the src="YOUR_PHOTO.png" below.
-       The placeholder shows when the image is missing.
-       ============================================================ */
+    /* ── Hero photo ── */
     .hero__photo-wrap {
       position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      width: clamp(240px, 30vw, 480px);
+      display: flex; align-items: flex-end; justify-content: center;
+      /* Big on desktop, responsive on smaller */
+      width: clamp(300px, 38vw, 620px);
       opacity: 0;
       animation: heroFadeIn 1s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
-    /* The image — change src to your own cutout PNG anytime */
+    /* Gold glow underneath photo */
+    .hero__photo-wrap::before {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: 50%;
+      transform: translateX(-50%);
+      width: 70%; height: 60px;
+      background: radial-gradient(ellipse, rgba(198,164,63,0.4) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .hero__photo {
-      display: block;
-      width: 100%;
-      max-width: 440px;
+      display: block; width: 100%;
+      max-width: 100%;
       object-fit: contain;
       transform-origin: bottom center;
       animation: floatPhoto 5s ease-in-out infinite;
-      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.6));
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(198,164,63,0.12));
       transition: filter 0.4s ease;
+      position: relative; z-index: 1;
     }
-
     .hero__photo:hover {
-      filter: drop-shadow(0 24px 64px rgba(198,164,63,0.35)) drop-shadow(0 0 30px rgba(198,164,63,0.2));
+      filter: drop-shadow(0 24px 64px rgba(198,164,63,0.4)) drop-shadow(0 0 40px rgba(198,164,63,0.25));
       animation-play-state: paused;
     }
-
     @keyframes floatPhoto {
       0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-12px); }
+      50%       { transform: translateY(-14px); }
     }
 
-    /* Placeholder shown when image is missing */
     .hero__photo-placeholder {
-      width: 100%;
-      max-width: 440px;
-      aspect-ratio: 2/3;
-      border: 2px dashed rgba(198,164,63,0.4);
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+      width: 100%; max-width: 500px; aspect-ratio: 2/3;
+      border: 2px dashed rgba(198,164,63,0.4); border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
       color: rgba(198,164,63,0.6);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
       background: rgba(198,164,63,0.04);
-      animation: floatPhoto 5s ease-in-out infinite;
     }
-
-    .hero__photo-placeholder i {
-      font-size: 3rem;
-      opacity: 0.4;
-    }
+    .hero__photo-placeholder i { font-size: 3rem; opacity: 0.4; }
 
     /* Scroll indicator */
     .hero__scroll {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      opacity: 0;
-      animation: heroFadeIn 0.8s 1s forwards;
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%); z-index: 10;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0; animation: heroFadeIn 0.8s 1s forwards;
     }
-    .hero__scroll span {
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-    }
-    .scroll-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: scrollBob 1.5s ease-in-out infinite;
-    }
+    .hero__scroll span { font-size: 0.6rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.3); text-transform: uppercase; }
+    .scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: scrollBob 1.5s ease-in-out infinite; }
     @keyframes scrollBob {
       0%,100% { opacity: 0.3; transform: translateY(0); }
       50%      { opacity: 1;   transform: translateY(6px); }
     }
 
     /* Responsive hero */
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       .hero__inner {
         grid-template-columns: 1fr;
-        align-items: center;
-        padding: 100px 24px 100px;
-        gap: 0;
+        align-items: center; padding: 100px 28px 110px; gap: 0;
       }
       .hero__text { text-align: center; align-items: center; }
       .hero__label { justify-content: center; }
       .hero__photo-wrap {
-        width: 70vw;
-        max-width: 300px;
-        margin: 0 auto -40px;
-        order: -1;
+        width: clamp(220px, 65vw, 420px);
+        margin: 0 auto -50px; order: -1;
       }
     }
     @media (max-width: 520px) {
-      .hero__inner { padding: 80px 16px 90px; }
-      .hero__photo-wrap { width: 80vw; }
+      .hero__inner { padding: 80px 16px 100px; }
+      .hero__photo-wrap { width: 78vw; }
     }
 
-    /* ============================================================
-       ABOUT SECTION — YouTube Carousel
-       ============================================================ */
-    .yt-carousel-wrap {
-      position: relative;
-      width: 100%;
+    /* ═══════════════════════════════════════════════════
+       BRAND TICKER
+    ═══════════════════════════════════════════════════ */
+    @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .infinite-carousel-track { animation: slide 25s linear infinite; display: flex; gap: 3rem; width: max-content; }
+    .infinite-carousel-track:hover { animation-play-state: paused; }
+    .brand-item { display: inline-flex; align-items: center; gap: 10px; opacity: 0.8; transition: all 0.3s ease; font-family: 'Bespoke Stencil', serif; font-size: 1rem; color: var(--gold-light); }
+    @media(max-width: 640px) { .infinite-carousel-track { gap: 1.5rem; animation-duration: 18s; } .brand-item { font-size: 0.8rem; } }
+
+    /* ═══════════════════════════════════════════════════
+       ABOUT / SKILLS SECTION — redesigned
+    ═══════════════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media(max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    .skills-masonry {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media(max-width: 480px) { .skills-masonry { grid-template-columns: 1fr; } }
+
+    .skill-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(198,164,63,0.18);
+      border-radius: 18px;
+      padding: 20px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .skill-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(198,164,63,0.06) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .skill-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(198,164,63,0.12);
+    }
+    .skill-card:hover::before { opacity: 1; }
+    .skill-card .skill-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: white;
+    }
+    .skill-card strong { font-size: 0.82rem; letter-spacing: 0.05em; color: var(--text-light); }
+    .skill-card p { font-size: 0.72rem; color: var(--text-muted); line-height: 1.4; }
+    .skill-card-wide { grid-column: span 2; }
+    @media(max-width: 480px) { .skill-card-wide { grid-column: span 1; } }
+
+    /* About text column */
+    .about-bio {
+      display: flex; flex-direction: column; gap: 18px;
     }
 
+    /* ── YouTube carousel (BIG center version) ── */
+    .yt-section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
     .yt-swiper {
       width: 100%;
       border-radius: 1.5rem;
       overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.35);
     }
-
     .yt-swiper .swiper-slide {
-      border-radius: 1.5rem;
-      overflow: hidden;
-      background: #000;
+      border-radius: 1.5rem; overflow: hidden; background: #000;
     }
-
     .yt-embed-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16/9;
+      position: relative; width: 100%; aspect-ratio: 16/9;
     }
-
-    .yt-embed-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
+    .yt-embed-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
     .yt-swiper .swiper-button-next,
     .yt-swiper .swiper-button-prev {
-      color: var(--gold);
-      background: rgba(0,0,0,0.5);
-      width: 42px; height: 42px;
-      border-radius: 50%;
+      color: var(--gold); background: rgba(0,0,0,0.6);
+      width: 48px; height: 48px; border-radius: 50%;
       backdrop-filter: blur(4px);
     }
     .yt-swiper .swiper-button-next::after,
     .yt-swiper .swiper-button-prev::after { font-size: 16px; }
     .yt-swiper .swiper-pagination-bullet-active { background: var(--gold); }
 
-    /* ============================================================
-       SKILL ITEMS
-       ============================================================ */
-    .skill-item { transition: all 0.3s ease; cursor: default; }
-    .skill-item:hover { border-color: var(--gold); background: rgba(198,164,63,0.06); transform: translateX(6px); box-shadow: 0 4px 20px var(--gold-glow); }
-    .facebook-section iframe, .fb-page { width: 100% !important; }
+    /* ═══════════════════════════════════════════════════
+       PARALLAX STRIP
+    ═══════════════════════════════════════════════════ */
+    .parallax {
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
 
-    /* ============================================================
-       BRAND CAROUSEL
-       ============================================================ */
-    @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .infinite-carousel-track { animation: slide 25s linear infinite; display: flex; gap: 3rem; width: max-content; }
-    .infinite-carousel-track:hover { animation-play-state: paused; }
-    .brand-item { display: inline-flex; align-items: center; gap: 10px; opacity: 0.8; transition: all 0.3s ease; font-family: 'Bespoke Stencil', serif; font-size: 1rem; color: var(--gold-light); }
-    @media(max-width: 640px) { .infinite-carousel-track { gap: 1.5rem; animation-duration: 18s; } .brand-item { font-size: 0.8rem; } }
+    /* ═══════════════════════════════════════════════════
+       FOOTER — lively redesign
+    ═══════════════════════════════════════════════════ */
+    .footer-main {
+      position: relative;
+      background: var(--footer-bg);
+      overflow: hidden;
+    }
+    .footer-main::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(198,164,63,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* Footer fire canvas */
+    #footerCanvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+    .footer-inner {
+      position: relative; z-index: 1;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+    }
+    @media(max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    .footer-brand-name {
+      font-family: 'Bespoke Stencil', serif;
+      font-size: 2.4rem;
+      background: linear-gradient(90deg, #ffffff 0%, var(--gold-light) 40%, var(--gold) 70%, #fff8e0 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: brandShimmer 5s linear infinite;
+    }
+    .footer-link {
+      color: rgba(255,255,255,0.55);
+      transition: color 0.3s ease; display: block;
+      font-size: 0.87rem; padding: 4px 0;
+      text-decoration: none;
+    }
+    .footer-link:hover { color: var(--gold); transform: translateX(4px); }
+    .footer-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(198,164,63,0.3), transparent);
+      margin: 32px 0;
+    }
+    .footer-social-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px;
+      border: 1px solid rgba(198,164,63,0.3);
+      border-radius: 50%; color: rgba(255,255,255,0.6);
+      transition: all 0.3s ease; font-size: 1rem;
+      text-decoration: none;
+    }
+    .footer-social-icon:hover {
+      background: var(--gold); border-color: var(--gold);
+      color: white; transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(198,164,63,0.3);
+    }
+    .footer-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(198,164,63,0.1);
+      border: 1px solid rgba(198,164,63,0.2);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.72rem; color: var(--gold);
+      letter-spacing: 0.1em; font-weight: 600;
+    }
+    .pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%; background: #22c55e;
+      animation: pulseDot 2s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(1.5); }
+    }
+
+    /* ember float for footer */
+    @keyframes emberRise {
+      0%   { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(-120px) scale(0.3); opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
   <nav class="navbar fixed w-full z-50 transition-all duration-300">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-3">
@@ -506,10 +573,13 @@
     </div>
   </nav>
 
-  <!-- ============================================================
-       MINIMALIST HERO SECTION
-       ============================================================ -->
+  <!-- ══════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════ -->
   <section class="hero" id="hero">
+    <canvas id="fireCanvas"></canvas>
+    <div class="hero-vignette"></div>
+
     <div class="hero__inner">
 
       <!-- TEXT COLUMN -->
@@ -517,19 +587,21 @@
         <p class="hero__label">Excel</p>
         <h1 class="hero__title">TRICKS</h1>
         <h2 class="hero__sub">TUTORIAL</h2>
-        <p class="hero__tagline">Master Spreadsheets &nbsp;·&nbsp; from Scratch</p>
+
+        <!-- Tagline carousel -->
+        <div class="hero__tagline-wrap" style="position:relative;">
+          <span class="tagline-item active" id="tag-0">Master Spreadsheets &nbsp;·&nbsp; From Scratch</span>
+          <span class="tagline-item" id="tag-1">Automate &nbsp;·&nbsp; Save Hours Every Week</span>
+          <span class="tagline-item" id="tag-2">Inventory Systems &nbsp;·&nbsp; Built for Business</span>
+          <span class="tagline-item" id="tag-3">VBA &amp; Macros &nbsp;·&nbsp; Next Level Workflows</span>
+        </div>
+
         <div class="hero__cta">
           <a href="exceltutorials.html" class="btn-primary">Explore Tutorials →</a>
         </div>
       </div>
 
-      <!-- PHOTO COLUMN
-           ══════════════════════════════════════════════════════
-           TO CHANGE YOUR PHOTO:
-             Replace  src="YOUR_PHOTO.png"  with your image path.
-             Example: src="kurt.png"  or  src="images/me.png"
-           The dashed placeholder box shows if the image is missing.
-           ══════════════════════════════════════════════════════ -->
+      <!-- PHOTO COLUMN -->
       <div class="hero__photo-wrap">
         <img
           src="new1.png"
@@ -541,7 +613,7 @@
         <div class="hero__photo-placeholder" id="heroPlaceholder" style="display:none;">
           <i class="fas fa-user-circle"></i>
           <span>Your Photo Here</span>
-          <span style="font-size: 1px;rem; opacity:0.6;">Change src="YOUR_PHOTO.png"</span>
+          <span style="font-size: 0.7rem; opacity:0.6;">Change src="YOUR_PHOTO.png"</span>
         </div>
       </div>
 
@@ -554,218 +626,296 @@
     </div>
   </section>
 
-  <!-- BRAND CAROUSEL -->
-  <div class="carousel-section py-6 overflow-hidden border-y border-gold/20 bg-[var(--navy)]">
+  <!-- ══════════════════════════════════════
+       BRAND TICKER
+  ══════════════════════════════════════ -->
+  <div class="carousel-section py-6 overflow-hidden border-y border-gold/20" style="background:var(--navy);">
     <div class="infinite-carousel-track flex whitespace-nowrap" style="display:flex; gap:3rem; width:max-content;">
-      <span class="brand-item flex items-center gap-2 text-gold-light">⚡ Automate &amp; Create. <i class="fas fa-bolt"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">📊 Excel Mastery. <i class="fas fa-chart-line"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">📦 Inventory Systems. <i class="fas fa-boxes"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">✨ VBA &amp; Macros. <i class="fas fa-code"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">⚡ Automate &amp; Create. <i class="fas fa-bolt"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">📊 Excel Mastery. <i class="fas fa-chart-line"></i></span>
-      <span class="brand-item flex items-center gap-2 text-gold-light">📦 Inventory Systems. <i class="fas fa-boxes"></i></span>
+      <span class="brand-item">⚡ Automate &amp; Create. <i class="fas fa-bolt"></i></span>
+      <span class="brand-item">📊 Excel Mastery. <i class="fas fa-chart-line"></i></span>
+      <span class="brand-item">📦 Inventory Systems. <i class="fas fa-boxes"></i></span>
+      <span class="brand-item">✨ VBA &amp; Macros. <i class="fas fa-code"></i></span>
+      <span class="brand-item">🎯 Real-World Results. <i class="fas fa-bullseye"></i></span>
+      <span class="brand-item">⚡ Automate &amp; Create. <i class="fas fa-bolt"></i></span>
+      <span class="brand-item">📊 Excel Mastery. <i class="fas fa-chart-line"></i></span>
+      <span class="brand-item">📦 Inventory Systems. <i class="fas fa-boxes"></i></span>
+      <span class="brand-item">✨ VBA &amp; Macros. <i class="fas fa-code"></i></span>
+      <span class="brand-item">🎯 Real-World Results. <i class="fas fa-bullseye"></i></span>
     </div>
   </div>
 
-  <!-- PARALLAX WITH COUNTERS -->
+  <!-- ══════════════════════════════════════
+       PARALLAX STRIP WITH STATS
+  ══════════════════════════════════════ -->
   <div class="parallax w-full py-32 relative overflow-hidden" style="background-image: url('akoto.png'); background-attachment: fixed; background-size: cover; background-position: center;">
-    <div class="parallax-overlay absolute inset-0 bg-black/70"></div>
+    <div class="absolute inset-0 bg-black/70"></div>
     <div class="container mx-auto px-6 relative z-10 text-center">
-      <div class="reveal reveal-scale"><span style="background:rgba(198,164,63,0.3);border:1px solid var(--gold);color:var(--gold-light);padding:0.3rem 1.2rem;border-radius:999px;">⚡ Automation Toolkit ⚡</span></div>
-      <h2 class="hover-animate parallax-heading mb-4 reveal text-white text-4xl md:text-5xl">Automate your Business with<br>Inventory Management</h2>
-      <p class="text-xl text-white/80 mb-10 max-w-2xl mx-auto reveal reveal-delay-2">Perfect for Retail and Wholesale Business owners.</p>
-      <div class="flex justify-center gap-12 mb-10 flex-wrap">
-        <div class="reveal text-center"><span class="stat-counter" id="stat1">0</span><span style="color:white;display:block;">Satisfied Clients</span></div>
-        <div class="reveal text-center"><span class="stat-counter" id="stat2">0</span><span style="color:white;display:block;">Video Tutorials</span></div>
+      <div class="reveal reveal-scale mb-6">
+        <span style="background:rgba(198,164,63,0.25);border:1px solid var(--gold);color:var(--gold-light);padding:0.35rem 1.4rem;border-radius:999px;font-size:0.8rem;letter-spacing:0.15em;font-weight:700;">⚡ AUTOMATION TOOLKIT ⚡</span>
       </div>
-      <a href="InventoryQuote.html" class="btn-primary inline-block">Explore Solutions →</a>
+      <h2 class="reveal text-white font-heading mb-4" style="font-size:clamp(2rem,5vw,3.5rem);">Automate Your Business with<br>Inventory Management</h2>
+      <p class="text-xl text-white/70 mb-10 max-w-2xl mx-auto reveal">Perfect for Retail and Wholesale Business owners.</p>
+      <div class="flex justify-center gap-16 mb-10 flex-wrap">
+        <div class="reveal text-center">
+          <span class="stat-counter" id="stat1">0</span>
+          <span style="color:rgba(255,255,255,0.7);display:block;font-size:0.85rem;letter-spacing:0.1em;margin-top:4px;">SATISFIED CLIENTS</span>
+        </div>
+        <div class="reveal text-center">
+          <span class="stat-counter" id="stat2">0</span>
+          <span style="color:rgba(255,255,255,0.7);display:block;font-size:0.85rem;letter-spacing:0.1em;margin-top:4px;">VIDEO TUTORIALS</span>
+        </div>
+      </div>
+      <div class="reveal"><a href="InventoryQuote.html" class="btn-primary">Explore Solutions →</a></div>
     </div>
   </div>
 
-  <!-- ============================================================
-       ABOUT SECTION — YouTube Embed Carousel
-       ============================================================
-       HOW TO ADD YOUR YOUTUBE VIDEOS:
-       1. Get your YouTube video embed URL:
-          https://www.youtube.com/embed/VIDEO_ID
-       2. Replace the placeholder src values below with your URLs.
-       3. You can add/remove <div class="swiper-slide"> blocks freely.
-       ============================================================ -->
+  <!-- ══════════════════════════════════════
+       ABOUT + SKILLS SECTION
+  ══════════════════════════════════════ -->
   <section id="about" class="py-24 relative overflow-hidden" style="background-color: var(--card-bg);">
     <div class="container mx-auto px-6">
 
-      <!-- Header -->
-      <div class="what-i-offer-header text-center reveal reveal-scale">
-        <span class="text-gold text-xs tracking-[0.2em] uppercase font-bold">My Expertise</span>
+      <!-- Section header -->
+      <div class="text-center reveal reveal-scale mb-16">
+        <span style="color:var(--gold);font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">My Expertise</span>
         <h2 class="text-3xl md:text-5xl font-heading mt-2 text-[var(--text-light)]">What I Offer</h2>
-        <div class="section-line mx-auto mt-4" id="offer-line"></div>
+        <div class="section-line mx-auto mt-4"></div>
       </div>
 
-      <!-- Skills text -->
-      <div class="grid md:grid-cols-2 gap-12 items-center mt-16">
-        <div class="space-y-5 reveal">
-          <div class="flex items-center gap-2 text-gold text-sm font-bold"><i class="fas fa-crown"></i> Excel &amp; Inventory Expert</div>
-          <h3 class="text-3xl font-heading text-[var(--text-light)]">Empower Your Workflow<br>and Business</h3>
-          <div class="w-16 h-1 bg-gold rounded-full"></div>
-          <p class="text-[var(--text-muted)] leading-relaxed">Master Excel basics, advanced formulas, and powerful inventory management systems. Tutorials designed for real-world success.</p>
-          <div class="grid grid-cols-1 gap-3 mt-4">
-            <div class="skill-item flex items-center gap-4 p-3 rounded-xl bg-[var(--bg-light)] border border-gold/20"><i class="fas fa-table text-gold text-xl"></i><div><strong>VLOOKUP, XLOOKUP, INDEX MATCH</strong><p class="text-xs text-[var(--text-muted)]">Powerful lookups</p></div></div>
-            <div class="skill-item flex items-center gap-4 p-3 rounded-xl bg-[var(--bg-light)] border border-gold/20"><i class="fas fa-calculator text-gold text-xl"></i><div><strong>IF, SUMIFS, COUNTIFS</strong><p class="text-xs text-[var(--text-muted)]">Logical &amp; statistical mastery</p></div></div>
-            <div class="skill-item flex items-center gap-4 p-3 rounded-xl bg-[var(--bg-light)] border border-gold/20"><i class="fas fa-chart-pie text-gold text-xl"></i><div><strong>POWER QUERY &amp; DASHBOARDS</strong><p class="text-xs text-[var(--text-muted)]">Data transformation &amp; visualization</p></div></div>
-            <div class="skill-item flex items-center gap-4 p-3 rounded-xl bg-[var(--bg-light)] border border-gold/20"><i class="fas fa-boxes text-gold text-xl"></i><div><strong>INVENTORY MANAGEMENT SYSTEM</strong><p class="text-xs text-[var(--text-muted)]">Automated Excel for retail/wholesale</p></div></div>
+      <!-- About grid: bio left, skills right -->
+      <div class="about-grid mb-20">
+
+        <!-- BIO / ABOUT LEFT -->
+        <div class="about-bio reveal">
+          <div style="display:flex;align-items:center;gap:8px;color:var(--gold);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;">
+            <i class="fas fa-crown"></i> EXCEL &amp; INVENTORY EXPERT
+          </div>
+          <h3 class="font-heading text-[var(--text-light)]" style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;">Empower Your Workflow<br>and Business</h3>
+          <div style="width:3rem;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;"></div>
+          <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem;">
+            I'm Kurt — an Excel educator and inventory systems builder. I help retail and wholesale business owners
+            ditch manual processes and build powerful, automated spreadsheet systems that save hours every week.
+          </p>
+          <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem;">
+            From beginner-friendly formula walkthroughs to fully automated inventory dashboards, my tutorials are
+            built for real-world success — not just theory.
+          </p>
+          <div style="margin-top:8px;">
+            <a href="exceltutorials.html" class="btn-primary" style="font-size:0.85rem;">Watch Tutorials →</a>
           </div>
         </div>
 
-        <!-- YouTube Carousel -->
-        <div class="yt-carousel-wrap reveal">
-          <div class="yt-swiper swiper">
-            <div class="swiper-wrapper">
-
-              <!-- ── SLIDE 1 ─────────────────────────────────────────────
-                   Replace  YOUTUBE_VIDEO_ID_1  with your actual video ID
-                   Example: https://www.youtube.com/embed/dQw4w9WgXcQ
-                   ─────────────────────────────────────────────────────── -->
-              <div class="swiper-slide">
-                <div class="yt-embed-wrap">
-                  <iframe
-                    src="https://www.youtube.com/embed/hVmBdmowE_s?"
-                    title="Kurt Creates — Tutorial 1"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                </div>
-              </div>
-
-              <!-- ── SLIDE 2 ─────────────────────────────────────────────
-                   Replace  YOUTUBE_VIDEO_ID_2  with your actual video ID
-                   ─────────────────────────────────────────────────────── -->
-              <div class="swiper-slide">
-                <div class="yt-embed-wrap">
-                  <iframe
-                    src="https://www.youtube.com/embed/r799_FGhe3w?"
-                    title="Kurt Creates — Tutorial 2"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                </div>
-              </div>
-
-              <!-- ── SLIDE 3 ─────────────────────────────────────────────
-                   Replace  YOUTUBE_VIDEO_ID_3  with your actual video ID
-                   ─────────────────────────────────────────────────────── -->
-              <div class="swiper-slide">
-                <div class="yt-embed-wrap">
-                  <iframe
-                    src="https://www.youtube.com/embed/WSsGXJoMOq8?"
-                    title="Kurt Creates — Tutorial 3"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                </div>
-              </div>
-
-              <!-- ── ADD MORE SLIDES HERE ───────────────────────────────
-                   Copy the block above and change the video ID
-                   ─────────────────────────────────────────────────────── -->
-
+        <!-- SKILLS RIGHT -->
+        <div class="reveal" style="transition-delay:0.15s;">
+          <div class="skills-masonry">
+            <div class="skill-card">
+              <div class="skill-icon"><i class="fas fa-table"></i></div>
+              <strong>VLOOKUP · XLOOKUP · INDEX MATCH</strong>
+              <p>Master every lookup function for dynamic, error-free data retrieval.</p>
             </div>
-            <!-- Carousel controls -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination"></div>
+            <div class="skill-card">
+              <div class="skill-icon"><i class="fas fa-calculator"></i></div>
+              <strong>IF · SUMIFS · COUNTIFS</strong>
+              <p>Logical and statistical formulas that automate real business decisions.</p>
+            </div>
+            <div class="skill-card">
+              <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
+              <strong>POWER QUERY &amp; DASHBOARDS</strong>
+              <p>Transform raw data into clean, visual dashboards automatically.</p>
+            </div>
+            <div class="skill-card">
+              <div class="skill-icon"><i class="fas fa-code"></i></div>
+              <strong>VBA &amp; MACROS</strong>
+              <p>Automate repetitive tasks with custom Excel macros and VBA scripts.</p>
+            </div>
+            <div class="skill-card skill-card-wide">
+              <div class="skill-icon"><i class="fas fa-boxes"></i></div>
+              <strong>INVENTORY MANAGEMENT SYSTEM</strong>
+              <p>End-to-end automated Excel systems built for retail and wholesale — track stock, generate reports, and manage orders with zero manual effort.</p>
+            </div>
           </div>
-          <p class="text-center text-xs text-[var(--text-muted)] mt-4"><i class="fab fa-youtube text-red-500"></i> Swipe or use arrows to browse tutorials</p>
         </div>
       </div>
+
+      <!-- ── YouTube carousel: BIG, centered ── -->
+      <div class="text-center reveal mb-8">
+        <span style="color:var(--gold);font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">
+          <i class="fab fa-youtube" style="color:#ff0000;"></i> &nbsp; Latest Tutorials
+        </span>
+        <h3 class="font-heading text-[var(--text-light)] mt-2" style="font-size:clamp(1.6rem,3vw,2.2rem);">Watch &amp; Learn</h3>
+        <div class="section-line mx-auto mt-3"></div>
+      </div>
+
+      <div class="yt-section-inner reveal" style="transition-delay:0.1s;">
+        <div class="yt-swiper swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/OJ6yc0a_xKU?" title="Kurt Creates — Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/hVmBdmowE_s?" title="Kurt Creates — Tutorial 2"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/Oi5_Ltt66yw?" title="Kurt Creates — Tutorial 3"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/ZYT1mVjmKys?" title="Kurt Creates — Tutorial 3"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/WSsGXJoMOq8?" title="Kurt Creates — Tutorial 3"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+        <!-- Description paragraph below carousel -->
+        <div class="text-center mt-8 reveal" style="max-width:640px;margin-left:auto;margin-right:auto;transition-delay:0.2s;">
+          <p style="color:var(--text-muted);line-height:1.8;font-size:0.92rem;">
+            Each tutorial is crafted to take you from zero to confident — covering real-world Excel problems,
+            step-by-step inventory setups, and automation tricks used by actual business owners.
+            Swipe through and start learning today.
+          </p>
+          <div style="margin-top:16px;">
+            <a href="https://www.youtube.com/@KurtCreates" target="_blank" class="btn-primary" style="font-size:0.82rem;padding:0.65rem 1.5rem;">
+              <i class="fab fa-youtube"></i> &nbsp; View All Tutorials
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- VIDEO TUTORIAL SECTION -->
-  <section class="py-24 relative" style="background-color: var(--bg-light); border-top: 1px solid rgba(198,164,63,0.2);">
+  <!-- ══════════════════════════════════════
+       FEATURED VIDEO SECTION
+  ══════════════════════════════════════ -->
+  <section class="py-24 relative" style="background-color: var(--bg-light); border-top: 1px solid rgba(198,164,63,0.15);">
     <div class="container mx-auto px-6">
-      <div class="text-center reveal reveal-scale mb-12">
-        <span class="bg-gold/10 text-gold px-5 py-1.5 rounded-full text-xs font-bold">⚡ EXCEL TRICK #1 ⚡</span>
-        <h2 class="text-3xl md:text-4xl font-heading mt-4">Watch The Tutorial Video</h2>
+      <div class="text-center reveal mb-12">
+        <span style="background:rgba(198,164,63,0.1);color:var(--gold);padding:0.3rem 1.2rem;border-radius:999px;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;">⚡ EXCEL TRICK #1 ⚡</span>
+        <h2 class="text-3xl md:text-4xl font-heading mt-4 text-[var(--text-light)]">Watch The Tutorial Video</h2>
         <div class="section-line mx-auto mt-3"></div>
       </div>
       <div class="flex flex-col lg:flex-row gap-12 items-center">
-        <div class="flex-1 reveal reveal-left space-y-4">
-          <i class="fas fa-graduation-cap text-gold"></i>
-          <p class="font-bold">What you'll learn: dynamic arrays, inventory case study, dashboard basics</p>
-          <ul class="space-y-2 text-[var(--text-muted)]">
-            <li>✅ Dynamic array formulas auto-expand</li>
-            <li>✅ Real inventory management case</li>
-            <li>✅ Pro tips to avoid errors</li>
+        <div class="flex-1 reveal space-y-4">
+          <div style="color:var(--gold);font-size:0.82rem;font-weight:700;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-graduation-cap"></i> WHAT YOU'LL LEARN
+          </div>
+          <p class="font-bold text-[var(--text-light)]">Dynamic arrays, inventory case study, dashboard basics</p>
+          <ul style="display:flex;flex-direction:column;gap:8px;color:var(--text-muted);font-size:0.88rem;">
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Dynamic array formulas that auto-expand</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Real inventory management case study</li>
+            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Pro tips to avoid common errors</li>
           </ul>
-          <div class="p-4 bg-[var(--card-bg)] rounded-xl border border-gold/20"><i class="fas fa-lightbulb text-gold"></i> Save hours, reduce errors.</div>
+          <div style="padding:16px;background:var(--card-bg);border-radius:14px;border:1px solid rgba(198,164,63,0.2);font-size:0.85rem;color:var(--text-muted);">
+            <i class="fas fa-lightbulb" style="color:var(--gold);"></i> &nbsp; Save hours, reduce errors, and impress your team.
+          </div>
         </div>
-        <div class="flex-1 w-full reveal reveal-right">
-          <div class="video-responsive rounded-2xl overflow-hidden shadow-2xl">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560" style="width:100%; aspect-ratio:560/476; border:none;" allowfullscreen></iframe>
+        <div class="flex-1 w-full reveal" style="transition-delay:0.15s;">
+          <div style="border-radius:1.2rem;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,0.2);">
+            <iframe src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560"
+              style="width:100%;aspect-ratio:560/476;border:none;" allowfullscreen></iframe>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FACEBOOK SECTION -->
-  <section class="py-16 relative" style="background: var(--bg-light);">
-    <div class="container mx-auto px-6">
-      <div class="facebook-section max-w-4xl mx-auto p-6 md:p-10 transition-all reveal reveal-scale">
-        <div class="flex flex-col md:flex-row items-center gap-6 mb-6">
-          <div class="bg-gold/20 p-4 rounded-full"><i class="fab fa-facebook-f text-4xl text-gold"></i></div>
-          <div class="text-center md:text-left">
-            <h3 class="text-2xl font-heading text-[var(--text-light)]">Connect with Kurt Creates</h3>
-            <p class="text-[var(--text-muted)] text-sm">Get daily Excel tips, inventory hacks and live tutorials on Facebook</p>
-          </div>
-        </div>
-        <div class="flex justify-center overflow-hidden rounded-xl border border-gold/30 bg-white/5 backdrop-blur-sm">
-          <div class="fb-page" data-href="https://www.facebook.com/MicrosoftExcel" data-tabs="timeline" data-width="500" data-height="450" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-lazy="true">
-            <blockquote cite="https://www.facebook.com/MicrosoftExcel" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/MicrosoftExcel">Excel on Facebook</a></blockquote>
-          </div>
-        </div>
-        <p class="text-center text-xs text-[var(--text-muted)] mt-5"><i class="fab fa-facebook-messenger"></i> Follow for exclusive Excel automation tutorials &amp; live sessions</p>
-      </div>
-    </div>
-  </section>
+  <!-- ══════════════════════════════════════
+       FOOTER — lively & cinematic
+  ══════════════════════════════════════ -->
+  <footer id="contact" class="footer-main pt-20 pb-8">
+    <canvas id="footerCanvas"></canvas>
 
-  <!-- FOOTER -->
-  <footer id="contact" class="py-14" style="background-color: var(--footer-bg); color: var(--footer-text);">
-    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="text-center md:text-left">
-        <h3 class="text-2xl font-heading text-gold">Kurt Creates</h3>
-        <p class="text-sm opacity-60">© 2025 All Rights Reserved</p>
+    <div class="footer-inner container mx-auto px-6">
+
+      <!-- Top grid -->
+      <div class="footer-grid mb-12">
+
+        <!-- Brand column -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="footer-brand-name">Kurt Creates.</div>
+          <p style="color:rgba(255,255,255,0.45);font-size:0.85rem;line-height:1.7;max-width:320px;">
+            Teaching Excel &amp; inventory automation to business owners worldwide.
+            Real skills. Real results.
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="#" class="footer-social-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@KurtCreates" target="_blank" class="footer-social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="footer-social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer-social-icon" title="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+          <div style="margin-top:4px;">
+            <span class="footer-badge"><span class="pulse-dot"></span> Available for Projects</span>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div>
+          <p style="color:var(--gold);font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:16px;">Quick Links</p>
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="exceltutorials.html" class="footer-link">Excel Tutorials</a>
+          <a href="InventoryQuote.html" class="footer-link">Shop &amp; Solutions</a>
+          <a href="#about" class="footer-link">About Kurt</a>
+          <a href="#contact" class="footer-link">Contact</a>
+        </div>
+
+        <!-- Topics -->
+        <div>
+          <p style="color:var(--gold);font-size:0.72rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:16px;">What I Teach</p>
+          <a href="#" class="footer-link">VLOOKUP &amp; XLOOKUP</a>
+          <a href="#" class="footer-link">Power Query</a>
+          <a href="#" class="footer-link">Inventory Systems</a>
+          <a href="#" class="footer-link">VBA &amp; Macros</a>
+          <a href="#" class="footer-link">Dynamic Dashboards</a>
+        </div>
       </div>
-      <div class="flex space-x-4">
-        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+
+      <!-- Divider -->
+      <div class="footer-divider"></div>
+
+      <!-- Bottom bar -->
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+        <p style="color:rgba(255,255,255,0.3);font-size:0.75rem;">© 2025 Kurt Creates. All Rights Reserved.</p>
+        <p style="color:rgba(255,255,255,0.25);font-size:0.72rem;letter-spacing:0.05em;">Crafted with <span style="color:var(--gold);">♦</span> for Excel lovers</p>
       </div>
     </div>
   </footer>
 
-  <!-- Facebook SDK -->
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0&appId=1234567890" nonce="KurtCreates"></script>
-
+  <!-- ══════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════ -->
   <script>
-    // ── Navbar scroll effect ────────────────────────────────────────────────
+    /* ── Navbar ── */
     window.addEventListener('scroll', () => {
       document.querySelector('.navbar')?.classList.toggle('navbar-scrolled', window.scrollY > 50);
     });
-
-    // ── Mobile menu ─────────────────────────────────────────────────────────
     document.getElementById('menu-btn')?.addEventListener('click', () => {
       document.getElementById('mobile-menu')?.classList.toggle('hidden');
     });
 
-    // ── Dark mode toggle ────────────────────────────────────────────────────
+    /* ── Dark mode ── */
     const toggleBtns = document.querySelectorAll('#theme-toggle, #theme-toggle-mobile');
     const stored = localStorage.getItem('theme');
     if (stored === 'dark') document.body.classList.add('dark');
-    const setIcon = (dark) => {
-      toggleBtns.forEach(b => b.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>');
-    };
+    const setIcon = dark => toggleBtns.forEach(b => b.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>');
     setIcon(document.body.classList.contains('dark'));
     toggleBtns.forEach(b => b.addEventListener('click', () => {
       const dark = document.body.classList.toggle('dark');
@@ -773,48 +923,226 @@
       setIcon(dark);
     }));
 
-    // ── Scroll reveal observer ───────────────────────────────────────────────
+    /* ── Scroll reveal ── */
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
-    }, { threshold: 0.12 });
+    }, { threshold: 0.10 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     document.querySelectorAll('.section-line').forEach(l => {
       new IntersectionObserver(e => { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, { threshold: 0.5 }).observe(l);
     });
 
-    // ── Stat counters ────────────────────────────────────────────────────────
+    /* ── Stat counters ── */
     const statObserver = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         let s1 = 0, s2 = 0;
-        const i1 = setInterval(() => { if (s1 >= 5) clearInterval(i1); else document.getElementById('stat1').innerText = ++s1; }, 100);
-        const i2 = setInterval(() => { if (s2 >= 7) clearInterval(i2); else document.getElementById('stat2').innerText = ++s2; }, 100);
+        const i1 = setInterval(() => { if (s1 >= 5) clearInterval(i1); else document.getElementById('stat1').innerText = ++s1 + '+'; }, 120);
+        const i2 = setInterval(() => { if (s2 >= 7) clearInterval(i2); else document.getElementById('stat2').innerText = ++s2 + '+'; }, 120);
         statObserver.disconnect();
       }
     }, { threshold: 0.5 });
     const parallaxSec = document.querySelector('.parallax');
     if (parallaxSec) statObserver.observe(parallaxSec);
 
-    // ── YouTube carousel (Swiper) ────────────────────────────────────────────
+    /* ── Tagline fade carousel ── */
+    const taglines = document.querySelectorAll('.tagline-item');
+    let tagIdx = 0;
+    setInterval(() => {
+      taglines[tagIdx].classList.remove('active');
+      taglines[tagIdx].classList.add('exit');
+      const prev = tagIdx;
+      tagIdx = (tagIdx + 1) % taglines.length;
+      taglines[tagIdx].classList.add('active');
+      setTimeout(() => taglines[prev].classList.remove('exit'), 700);
+    }, 3200);
+
+    /* ── YouTube carousel ── */
     new Swiper('.yt-swiper', {
       loop: true,
-      autoplay: { delay: 8000, disableOnInteraction: true },
+      autoplay: { delay: 9000, disableOnInteraction: true },
       navigation: { nextEl: '.yt-swiper .swiper-button-next', prevEl: '.yt-swiper .swiper-button-prev' },
       pagination: { el: '.yt-swiper .swiper-pagination', clickable: true },
       effect: 'slide',
-      // Stop autoplay when a video slide becomes active (so video can play)
       on: {
-        slideChange: function() {
-          // Pause any playing iframes when sliding away
+        slideChange() {
           document.querySelectorAll('.yt-swiper iframe').forEach(iframe => {
-            const src = iframe.src;
-            iframe.src = '';
-            iframe.src = src;
-            
+            const src = iframe.src; iframe.src = ''; iframe.src = src;
           });
         }
       }
     });
-    
+
+    /* ════════════════════════════════════════════════
+       FIRE + ASH PARTICLE ENGINE — hero canvas
+    ════════════════════════════════════════════════ */
+    (function() {
+      const canvas = document.getElementById('fireCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const PARTICLE_COUNT = 180;
+      const particles = [];
+
+      function randRange(min, max) { return min + Math.random() * (max - min); }
+
+      class Particle {
+        constructor() { this.reset(true); }
+        reset(initial) {
+          this.type = Math.random() < 0.55 ? 'ash' : 'ember'; // ash or ember
+          this.x = randRange(0, canvas.width);
+          this.y = initial ? randRange(0, canvas.height) : canvas.height + randRange(0, 40);
+          this.size = this.type === 'ember'
+            ? randRange(1.5, 4.5)
+            : randRange(2, 7);
+          this.speedY = this.type === 'ember'
+            ? randRange(0.6, 2.0)
+            : randRange(0.3, 1.1);
+          this.speedX = randRange(-0.6, 0.6);
+          this.wobble  = randRange(0, Math.PI * 2);
+          this.wobbleSpeed = randRange(0.01, 0.04);
+          this.life  = 1;
+          this.decay = randRange(0.0025, 0.006);
+          if (this.type === 'ember') {
+            // warm gold/orange colours
+            const hue = randRange(15, 42);
+            this.color = `hsl(${hue},90%,60%)`;
+          } else {
+            // greyscale ash
+            const l = randRange(55, 85);
+            this.color = `hsl(0,0%,${l}%)`;
+          }
+          this.rotation     = randRange(0, Math.PI * 2);
+          this.rotSpeed     = randRange(-0.04, 0.04);
+          this.glowRadius   = this.type === 'ember' ? this.size * 4 : 0;
+        }
+        update() {
+          this.wobble += this.wobbleSpeed;
+          this.x += this.speedX + Math.sin(this.wobble) * 0.5;
+          this.y -= this.speedY;
+          this.rotation += this.rotSpeed;
+          this.life -= this.decay;
+          if (this.life <= 0 || this.y < -20) this.reset(false);
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, this.life) * 0.85;
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.rotation);
+
+          if (this.type === 'ember') {
+            // glowing dot
+            if (this.glowRadius > 0) {
+              const grd = ctx.createRadialGradient(0,0,0, 0,0,this.glowRadius);
+              grd.addColorStop(0, this.color);
+              grd.addColorStop(1, 'transparent');
+              ctx.beginPath();
+              ctx.arc(0, 0, this.glowRadius, 0, Math.PI*2);
+              ctx.fillStyle = grd;
+              ctx.fill();
+            }
+            ctx.beginPath();
+            ctx.arc(0, 0, this.size, 0, Math.PI*2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+          } else {
+            // irregular ash flake
+            ctx.beginPath();
+            const s = this.size;
+            ctx.moveTo(-s*0.5, -s*0.3);
+            ctx.lineTo(s*0.4,  -s*0.5);
+            ctx.lineTo(s*0.6,   s*0.2);
+            ctx.lineTo(-s*0.2,  s*0.5);
+            ctx.closePath();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (const p of particles) { p.update(); p.draw(); }
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
+
+    /* ════════════════════════════════════════════════
+       FOOTER EMBER PARTICLES
+    ════════════════════════════════════════════════ */
+    (function() {
+      const canvas = document.getElementById('footerCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const particles = [];
+      const COUNT = 60;
+
+      function r(a,b) { return a + Math.random()*(b-a); }
+
+      class Ember {
+        constructor() { this.reset(true); }
+        reset(init) {
+          this.x = r(0, canvas.width);
+          this.y = init ? r(0, canvas.height) : canvas.height + 10;
+          this.size = r(1, 3.5);
+          this.vy = r(0.4, 1.2);
+          this.vx = r(-0.4, 0.4);
+          this.life = 1;
+          this.decay = r(0.003, 0.007);
+          const hue = r(18, 45);
+          this.color = `hsl(${hue},85%,62%)`;
+        }
+        update() {
+          this.x += this.vx;
+          this.y -= this.vy;
+          this.life -= this.decay;
+          if (this.life <= 0 || this.y < -10) this.reset(false);
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = this.life * 0.7;
+          const grd = ctx.createRadialGradient(this.x,this.y,0, this.x,this.y,this.size*3);
+          grd.addColorStop(0, this.color);
+          grd.addColorStop(1, 'transparent');
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size*3, 0, Math.PI*2);
+          ctx.fillStyle = grd;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      for (let i = 0; i < COUNT; i++) particles.push(new Ember());
+
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(loop);
+      }
+      loop();
+    })();
   </script>
 </body>
 </html>

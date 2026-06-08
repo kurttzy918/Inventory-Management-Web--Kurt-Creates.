@@ -260,11 +260,31 @@
       animation: heroFadeIn 0.8s 0.75s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
+    /* ── Hero subtitle carousel ── */
+    .hero__sub-carousel {
+      position: relative; height: clamp(2.2rem, 5.5vw, 5.2rem);
+      overflow: hidden;
+      opacity: 0;
+      animation: heroFadeIn 0.8s 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .hero__sub-slide {
+      position: absolute; inset: 0;
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(1.8rem, 5vw, 4.5rem);
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.55);
+      display: flex; align-items: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .hero__sub-slide.active { opacity: 1; transform: translateY(0); }
+    .hero__sub-slide.exit   { opacity: 0; transform: translateY(-30px); }
+
     /* ── Hero photo ── */
     .hero__photo-wrap {
       position: relative;
       display: flex; align-items: flex-end; justify-content: center;
-      /* Big on desktop, responsive on smaller */
       width: clamp(300px, 38vw, 620px);
       opacity: 0;
       animation: heroFadeIn 1s 0.4s cubic-bezier(0.22,1,0.36,1) forwards;
@@ -281,6 +301,51 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* ── Hero photo asking/pulse rings ── */
+    .hero__photo-rings {
+      position: absolute; bottom: 10%; left: 50%;
+      transform: translateX(-50%);
+      width: 80%; aspect-ratio: 1;
+      pointer-events: none; z-index: 0;
+    }
+    .photo-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(198,164,63,0.25);
+      animation: photoRingPulse 3s ease-out infinite;
+    }
+    .photo-ring:nth-child(2) { animation-delay: 1s; }
+    .photo-ring:nth-child(3) { animation-delay: 2s; }
+    @keyframes photoRingPulse {
+      0%   { transform: scale(0.6); opacity: 0.7; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    /* ── Floating labels around photo ── */
+    .hero__float-label {
+      position: absolute;
+      background: rgba(10,15,24,0.85);
+      border: 1px solid rgba(198,164,63,0.4);
+      border-radius: 40px;
+      padding: 6px 14px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold-light);
+      white-space: nowrap;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+      animation: floatLabel 4s ease-in-out infinite;
+    }
+    .hero__float-label i { margin-right: 5px; }
+    .hero__float-label--1 { top: 18%; right: -10px; animation-delay: 0s; }
+    .hero__float-label--2 { top: 42%; left: -15px; animation-delay: 1.3s; }
+    .hero__float-label--3 { bottom: 28%; right: -5px; animation-delay: 2.5s; }
+    @keyframes floatLabel {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
     }
 
     .hero__photo {
@@ -544,19 +609,22 @@
        NAVBAR
   ══════════════════════════════════════ -->
   <nav class="navbar fixed w-full z-50 transition-all duration-300">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- LEFT: Logo & Brand -->
+      <div class="flex items-center space-x-3 flex-shrink-0">
         <img src="gta.png" alt="Kurt Creates Logo" class="h-12 w-auto" onerror="this.src='https://placehold.co/60x60/C6A43F/1a2a3a?text=KC'">
         <div class="brand-name"><span class="brand-text">Kurt Creates.</span></div>
       </div>
-      <div class="hidden md:flex items-center space-x-8">
+      <!-- RIGHT: Nav links (large screens) -->
+      <div class="hidden md:flex items-center space-x-8 ml-auto">
         <a href="index.html" class="nav-link">Home</a>
         <a href="exceltutorials.html" class="nav-link">Excel Tutorials</a>
         <a href="InventoryQuote.html" class="nav-link">Shop</a>
-        <a href="#about" class="nav-link">About</a>
+        <a href="#inventory" class="nav-link">Inventory</a>
         <a href="#contact" class="nav-link">Contact</a>
         <button id="theme-toggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
       </div>
+      <!-- Mobile controls -->
       <div class="flex items-center space-x-3 md:hidden">
         <button id="theme-toggle-mobile" class="theme-toggle"><i class="fas fa-moon"></i></button>
         <button id="menu-btn" class="text-white text-2xl"><i class="fas fa-bars"></i></button>
@@ -567,57 +635,38 @@
         <a href="index.html" class="text-white hover:text-gold transition">Home</a>
         <a href="exceltutorials.html" class="text-white hover:text-gold transition">Excel Tutorials</a>
         <a href="InventoryQuote.html" class="text-white hover:text-gold transition">Shop</a>
-        <a href="#about" class="text-white hover:text-gold transition">About</a>
+        <a href="#inventory" class="text-white hover:text-gold transition">Inventory</a>
         <a href="#contact" class="text-white hover:text-gold transition">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- ══════════════════════════════════════
-       HERO SECTION
-  ══════════════════════════════════════ -->
+  <!-- HERO SECTION -->
   <section class="hero" id="hero">
     <canvas id="fireCanvas"></canvas>
     <div class="hero-vignette"></div>
-
     <div class="hero__inner">
-
-      <!-- TEXT COLUMN -->
       <div class="hero__text">
         <p class="hero__label">Excel</p>
         <h1 class="hero__title">TRICKS</h1>
-        <h2 class="hero__sub">TUTORIAL</h2>
-
-        <!-- Tagline carousel -->
-        <div class="hero__tagline-wrap" style="position:relative;">
-          <span class="tagline-item active" id="tag-0">Master Spreadsheets &nbsp;·&nbsp; From Scratch</span>
-          <span class="tagline-item" id="tag-1">Automate &nbsp;·&nbsp; Save Hours Every Week</span>
-          <span class="tagline-item" id="tag-2">Inventory Systems &nbsp;·&nbsp; Built for Business</span>
-          <span class="tagline-item" id="tag-3">VBA &amp; Macros &nbsp;·&nbsp; Next Level Workflows</span>
+        <!-- SMOOTH FADE CAROUSEL -->
+        <div class="hero__sub-carousel">
+          <div class="hero__sub-slide active" data-carousel="0">TUTORIAL</div>
+          <div class="hero__sub-slide" data-carousel="1">AUTOMATE</div>
+          <div class="hero__sub-slide" data-carousel="2">CREATE</div>
         </div>
-
-        <div class="hero__cta">
+        <!-- Typing + asking effect -->
+        <div class="hero__asking" id="askingBox"></div>
+        <div class="hero__cta mt-4">
           <a href="exceltutorials.html" class="btn-primary">Explore Tutorials →</a>
         </div>
       </div>
-
-      <!-- PHOTO COLUMN -->
       <div class="hero__photo-wrap">
-        <img
-          src="new1.png"
-          class="hero__photo"
-          alt="Kurt — Excel & Inventory Tutor"
-          id="heroPhoto"
-          onerror="this.style.display='none'; document.getElementById('heroPlaceholder').style.display='flex';"
-        />
-        <div class="hero__photo-placeholder" id="heroPlaceholder" style="display:none;">
-          <i class="fas fa-user-circle"></i>
-          <span>Your Photo Here</span>
-          <span style="font-size: 0.7rem; opacity:0.6;">Change src="YOUR_PHOTO.png"</span>
-        </div>
+        <img src="new1.png" class="hero__photo" alt="Kurt" onerror="this.style.display='none';">
       </div>
-
     </div>
+    
+  </section>
 
     <!-- Scroll indicator -->
     <div class="hero__scroll">
@@ -670,171 +719,153 @@
   </div>
 
   <!-- ══════════════════════════════════════
-       ABOUT + SKILLS SECTION
+       INVENTORY MANAGEMENT — VIDEO LIST (AUTOPLAY)
   ══════════════════════════════════════ -->
-  <section id="about" class="py-24 relative overflow-hidden" style="background-color: var(--card-bg);">
+  <section id="inventory" class="py-28 relative overflow-hidden" style="background-color: var(--card-bg);">
+
+    <!-- Subtle fire-tone background glow -->
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(198,100,20,0.06) 0%, transparent 65%);"></div>
+
     <div class="container mx-auto px-6">
 
       <!-- Section header -->
-      <div class="text-center reveal reveal-scale mb-16">
-        <span style="color:var(--gold);font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">My Expertise</span>
-        <h2 class="text-3xl md:text-5xl font-heading mt-2 text-[var(--text-light)]">What I Offer</h2>
+      <div class="text-center reveal mb-4">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,164,63,0.12);border:1px solid rgba(198,164,63,0.3);color:var(--gold);padding:0.35rem 1.4rem;border-radius:999px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;">
+          <i class="fas fa-boxes"></i> &nbsp; INVENTORY MANAGEMENT 
+        </span>
+        <h2 class="text-3xl md:text-5xl font-heading mt-4 text-[var(--text-light)]">Dynamic . Automated</h2>
         <div class="section-line mx-auto mt-4"></div>
       </div>
 
-      <!-- About grid: bio left, skills right -->
-      <div class="about-grid mb-20">
+      <!-- Intro paragraph -->
+      <div class="text-center reveal mb-14" style="max-width:680px;margin-left:auto;margin-right:auto;transition-delay:0.1s;">
+        <p style="color:var(--text-muted);line-height:1.9;font-size:0.95rem;">
+          These Inventory Management Application helps Retail and Wholesale business owners to automate their inventory, Expiry items, and Real-time Sales tracking.
+          <strong style="color:var(--text-light);">No to Manual Processes</strong> — Make it Easier by Automating your Business.
+        </p>
+      </div>
 
-        <!-- BIO / ABOUT LEFT -->
-        <div class="about-bio reveal">
-          <div style="display:flex;align-items:center;gap:8px;color:var(--gold);font-size:0.8rem;font-weight:700;letter-spacing:0.1em;">
-            <i class="fas fa-crown"></i> EXCEL &amp; INVENTORY EXPERT
-          </div>
-          <h3 class="font-heading text-[var(--text-light)]" style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;">Empower Your Workflow<br>and Business</h3>
-          <div style="width:3rem;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;"></div>
-          <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem;">
-            I'm Kurt — an Excel educator and inventory systems builder. I help retail and wholesale business owners
-            ditch manual processes and build powerful, automated spreadsheet systems that save hours every week.
-          </p>
-          <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem;">
-            From beginner-friendly formula walkthroughs to fully automated inventory dashboards, my tutorials are
-            built for real-world success — not just theory.
-          </p>
-          <div style="margin-top:8px;">
-            <a href="exceltutorials.html" class="btn-primary" style="font-size:0.85rem;">Watch Tutorials →</a>
-          </div>
+      <!-- ── VIDEO LIST (autoplay on click) ── -->
+      <div class="reveal" style="transition-delay:0.15s;max-width:960px;margin:0 auto;">
+
+        <!-- Main Player -->
+        <div style="border-radius:1.5rem;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.4);background:#000;aspect-ratio:16/9;position:relative;" class="mb-6" id="invMainPlayer">
+          <iframe id="invPlayerFrame"
+            src="https://www.youtube.com/embed/x1_IC28Bdqo?autoplay=1&rel=0"
+            title="Inventory Management Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="width:100%;height:100%;border:none;display:block;"></iframe>
         </div>
 
-        <!-- SKILLS RIGHT -->
-        <div class="reveal" style="transition-delay:0.15s;">
-          <div class="skills-masonry">
-            <div class="skill-card">
-              <div class="skill-icon"><i class="fas fa-table"></i></div>
-              <strong>VLOOKUP · XLOOKUP · INDEX MATCH</strong>
-              <p>Master every lookup function for dynamic, error-free data retrieval.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon"><i class="fas fa-calculator"></i></div>
-              <strong>IF · SUMIFS · COUNTIFS</strong>
-              <p>Logical and statistical formulas that automate real business decisions.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
-              <strong>POWER QUERY &amp; DASHBOARDS</strong>
-              <p>Transform raw data into clean, visual dashboards automatically.</p>
-            </div>
-            <div class="skill-card">
-              <div class="skill-icon"><i class="fas fa-code"></i></div>
-              <strong>VBA &amp; MACROS</strong>
-              <p>Automate repetitive tasks with custom Excel macros and VBA scripts.</p>
-            </div>
-            <div class="skill-card skill-card-wide">
-              <div class="skill-icon"><i class="fas fa-boxes"></i></div>
-              <strong>INVENTORY MANAGEMENT SYSTEM</strong>
-              <p>End-to-end automated Excel systems built for retail and wholesale — track stock, generate reports, and manage orders with zero manual effort.</p>
-            </div>
-          </div>
         </div>
       </div>
 
-      <!-- ── YouTube carousel: BIG, centered ── -->
-      <div class="text-center reveal mb-8">
-        <span style="color:var(--gold);font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;">
-          <i class="fab fa-youtube" style="color:#ff0000;"></i> &nbsp; Latest Tutorials
-        </span>
-        <h3 class="font-heading text-[var(--text-light)] mt-2" style="font-size:clamp(1.6rem,3vw,2.2rem);">Watch &amp; Learn</h3>
-        <div class="section-line mx-auto mt-3"></div>
-      </div>
-
-      <div class="yt-section-inner reveal" style="transition-delay:0.1s;">
-        <div class="yt-swiper swiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="yt-embed-wrap">
-                <iframe src="https://www.youtube.com/embed/OJ6yc0a_xKU?" title="Kurt Creates — Tutorial 1"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="yt-embed-wrap">
-                <iframe src="https://www.youtube.com/embed/hVmBdmowE_s?" title="Kurt Creates — Tutorial 2"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="yt-embed-wrap">
-                <iframe src="https://www.youtube.com/embed/Oi5_Ltt66yw?" title="Kurt Creates — Tutorial 3"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="yt-embed-wrap">
-                <iframe src="https://www.youtube.com/embed/ZYT1mVjmKys?" title="Kurt Creates — Tutorial 3"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="yt-embed-wrap">
-                <iframe src="https://www.youtube.com/embed/WSsGXJoMOq8?" title="Kurt Creates — Tutorial 3"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-        <!-- Description paragraph below carousel -->
-        <div class="text-center mt-8 reveal" style="max-width:640px;margin-left:auto;margin-right:auto;transition-delay:0.2s;">
-          <p style="color:var(--text-muted);line-height:1.8;font-size:0.92rem;">
-            Each tutorial is crafted to take you from zero to confident — covering real-world Excel problems,
-            step-by-step inventory setups, and automation tricks used by actual business owners.
-            Swipe through and start learning today.
-          </p>
-          <div style="margin-top:16px;">
-            <a href="https://www.youtube.com/@KurtCreates" target="_blank" class="btn-primary" style="font-size:0.82rem;padding:0.65rem 1.5rem;">
-              <i class="fab fa-youtube"></i> &nbsp; View All Tutorials
-            </a>
-          </div>
-        </div>
+      <!-- Bottom CTA -->
+      <div class="text-center mt-12 reveal" style="transition-delay:0.25s;">
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.8;max-width:560px;margin:0 auto 20px;">
+          Watch the videos to see how our Inventory Management Application can help you save time, reduce errors, and grow your business.
+        </p>
+        <a href="https://www.youtube.com/@KurtCreates1994" target="_blank" class="btn-primary" style="font-size:0.85rem;padding:0.7rem 1.8rem;">
+          <i class="fab fa-youtube"></i> &nbsp; Subscribe on YouTube
+        </a>
       </div>
 
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════
-       FEATURED VIDEO SECTION
+    <!-- ══════════════════════════════════════
+       INVENTORY TUTORIALS SECTION
   ══════════════════════════════════════ -->
-  <section class="py-24 relative" style="background-color: var(--bg-light); border-top: 1px solid rgba(198,164,63,0.15);">
+  <section id="inventory" class="py-28 relative overflow-hidden" style="background-color: var(--card-bg);">
+
+    <!-- Subtle fire-tone background glow -->
+    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 50% at 50% 0%, rgba(198,100,20,0.06) 0%, transparent 65%);"></div>
+
     <div class="container mx-auto px-6">
-      <div class="text-center reveal mb-12">
-        <span style="background:rgba(198,164,63,0.1);color:var(--gold);padding:0.3rem 1.2rem;border-radius:999px;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;">⚡ EXCEL TRICK #1 ⚡</span>
-        <h2 class="text-3xl md:text-4xl font-heading mt-4 text-[var(--text-light)]">Watch The Tutorial Video</h2>
-        <div class="section-line mx-auto mt-3"></div>
+
+      <!-- Section header -->
+      <div class="text-center reveal mb-4">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,164,63,0.12);border:1px solid rgba(198,164,63,0.3);color:var(--gold);padding:0.35rem 1.4rem;border-radius:999px;font-size:0.72rem;font-weight:700;letter-spacing:0.2em;">
+          <i class="fas fa-boxes"></i> &nbsp; Excel Tricks Tutorial 
+        </span>
+        <h2 class="text-3xl md:text-5xl font-heading mt-4 text-[var(--text-light)]">Learned from Scratch.</h2>
+        <div class="section-line mx-auto mt-4"></div>
       </div>
-      <div class="flex flex-col lg:flex-row gap-12 items-center">
-        <div class="flex-1 reveal space-y-4">
-          <div style="color:var(--gold);font-size:0.82rem;font-weight:700;display:flex;align-items:center;gap:8px;">
-            <i class="fas fa-graduation-cap"></i> WHAT YOU'LL LEARN
+
+      <!-- Intro paragraph — fade-in -->
+      <div class="text-center reveal mb-14" style="max-width:680px;margin-left:auto;margin-right:auto;transition-delay:0.1s;">
+        <p style="color:var(--text-muted);line-height:1.9;font-size:0.95rem;">
+          I shared Excel Tricks Tutorial to simplify complex tasks, boost productivity, and empower users to harness the full potential of Excel for data analysis, automation, and problem-solving.
+          <strong style="color:var(--text-light);">Watch our Excel Tricks Tutorial</strong>
+        </p>
+      </div>
+
+      <!-- ── FADE carousel ── -->
+      <div class="yt-section-inner reveal" style="transition-delay:0.15s;">
+        <div class="yt-swiper-inventory swiper" style="border-radius:1.5rem;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.35);">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/ZYT1mVjmKys?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/Oi5_Ltt66yw?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/r799_FGhe3w?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/hVmBdmowE_s?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/WSsGXJoMOq8?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="yt-embed-wrap">
+                <iframe src="https://www.youtube.com/embed/OJ6yc0a_xKU?" title="Inventory Tutorial 1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+
           </div>
-          <p class="font-bold text-[var(--text-light)]">Dynamic arrays, inventory case study, dashboard basics</p>
-          <ul style="display:flex;flex-direction:column;gap:8px;color:var(--text-muted);font-size:0.88rem;">
-            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Dynamic array formulas that auto-expand</li>
-            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Real inventory management case study</li>
-            <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--gold);">✓</span> Pro tips to avoid common errors</li>
-          </ul>
-          <div style="padding:16px;background:var(--card-bg);border-radius:14px;border:1px solid rgba(198,164,63,0.2);font-size:0.85rem;color:var(--text-muted);">
-            <i class="fas fa-lightbulb" style="color:var(--gold);"></i> &nbsp; Save hours, reduce errors, and impress your team.
-          </div>
-        </div>
-        <div class="flex-1 w-full reveal" style="transition-delay:0.15s;">
-          <div style="border-radius:1.2rem;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,0.2);">
-            <iframe src="https://www.facebook.com/plugins/video.php?height=483&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1659630918697394%2F&show_text=false&width=560"
-              style="width:100%;aspect-ratio:560/476;border:none;" allowfullscreen></iframe>
-          </div>
+          <!-- Nav & pagination -->
+          <div class="yt-inv-prev" style="position:absolute;top:50%;left:14px;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);font-size:14px;transition:background 0.3s;border:1px solid rgba(198,164,63,0.3);">&#8249;</div>
+          <div class="yt-inv-next" style="position:absolute;top:50%;right:14px;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gold);font-size:14px;transition:background 0.3s;border:1px solid rgba(198,164,63,0.3);">&#8250;</div>
+          <div class="yt-inv-pagination" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:8px;"></div>
         </div>
       </div>
+
+      <!-- Bottom paragraph & CTA -->
+      <div class="text-center mt-10 reveal" style="transition-delay:0.25s;">
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.8;max-width:560px;margin:0 auto 20px;">
+          Watch our Excel Tricks Tutorial.
+        </p>
+        <a href="https://www.youtube.com/@KurtCreates1994" target="_blank" class="btn-primary" style="font-size:0.85rem;padding:0.7rem 1.8rem;">
+          <i class="fab fa-youtube"></i> &nbsp; Subscribe on YouTube
+        </a>
+      </div>
+
     </div>
   </section>
 
@@ -873,7 +904,7 @@
           <a href="index.html" class="footer-link">Home</a>
           <a href="exceltutorials.html" class="footer-link">Excel Tutorials</a>
           <a href="InventoryQuote.html" class="footer-link">Shop &amp; Solutions</a>
-          <a href="#about" class="footer-link">About Kurt</a>
+          <a href="#inventory" class="footer-link">Inventory Tutorials</a>
           <a href="#contact" class="footer-link">Contact</a>
         </div>
 
@@ -956,24 +987,23 @@
       setTimeout(() => taglines[prev].classList.remove('exit'), 700);
     }, 3200);
 
-    /* ── YouTube carousel ── */
-    new Swiper('.yt-swiper', {
+    /* ── Inventory YouTube carousel — FADE effect ── */
+    new Swiper('.yt-swiper-inventory', {
       loop: true,
-      autoplay: { delay: 9000, disableOnInteraction: true },
-      navigation: { nextEl: '.yt-swiper .swiper-button-next', prevEl: '.yt-swiper .swiper-button-prev' },
-      pagination: { el: '.yt-swiper .swiper-pagination', clickable: true },
-      effect: 'slide',
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      autoplay: { delay: 8000, disableOnInteraction: true },
+      navigation: { nextEl: '.yt-inv-next', prevEl: '.yt-inv-prev' },
+      pagination: { el: '.yt-inv-pagination', clickable: true, renderBullet: (i, cls) => `<span class="${cls}" style="background:var(--gold);width:10px;height:10px;"></span>` },
       on: {
         slideChange() {
-          document.querySelectorAll('.yt-swiper iframe').forEach(iframe => {
-            const src = iframe.src; iframe.src = ''; iframe.src = src;
-          });
+          document.querySelectorAll('.yt-swiper-inventory iframe').forEach(f => { const s = f.src; f.src = ''; f.src = s; });
         }
       }
     });
 
     /* ════════════════════════════════════════════════
-       FIRE + ASH PARTICLE ENGINE — hero canvas
+       FIRE + ASH PARTICLE ENGINE — hero canvas (ENHANCED)
     ════════════════════════════════════════════════ */
     (function() {
       const canvas = document.getElementById('fireCanvas');
@@ -987,44 +1017,125 @@
       resize();
       window.addEventListener('resize', resize);
 
-      const PARTICLE_COUNT = 180;
+      /* ── Tweak counts for dramatic effect ── */
+      const EMBER_COUNT = 130;
+      const ASH_COUNT   = 90;
+      const FLAME_COUNT = 55;   // big translucent flame tongues
       const particles = [];
 
-      function randRange(min, max) { return min + Math.random() * (max - min); }
+      function rnd(a, b) { return a + Math.random() * (b - a); }
 
-      class Particle {
+      /* ── FLAME TONGUE — large, orange-red, rises from bottom ── */
+      class Flame {
         constructor() { this.reset(true); }
-        reset(initial) {
-          this.type = Math.random() < 0.55 ? 'ash' : 'ember'; // ash or ember
-          this.x = randRange(0, canvas.width);
-          this.y = initial ? randRange(0, canvas.height) : canvas.height + randRange(0, 40);
-          this.size = this.type === 'ember'
-            ? randRange(1.5, 4.5)
-            : randRange(2, 7);
-          this.speedY = this.type === 'ember'
-            ? randRange(0.6, 2.0)
-            : randRange(0.3, 1.1);
-          this.speedX = randRange(-0.6, 0.6);
-          this.wobble  = randRange(0, Math.PI * 2);
-          this.wobbleSpeed = randRange(0.01, 0.04);
-          this.life  = 1;
-          this.decay = randRange(0.0025, 0.006);
-          if (this.type === 'ember') {
-            // warm gold/orange colours
-            const hue = randRange(15, 42);
-            this.color = `hsl(${hue},90%,60%)`;
-          } else {
-            // greyscale ash
-            const l = randRange(55, 85);
-            this.color = `hsl(0,0%,${l}%)`;
-          }
-          this.rotation     = randRange(0, Math.PI * 2);
-          this.rotSpeed     = randRange(-0.04, 0.04);
-          this.glowRadius   = this.type === 'ember' ? this.size * 4 : 0;
+        reset(init) {
+          // Clustered toward bottom-center for a bonfire look
+          this.x = canvas.width * rnd(0.1, 0.9);
+          this.y = init ? rnd(canvas.height * 0.5, canvas.height + 20) : canvas.height + rnd(0, 30);
+          this.w = rnd(30, 100);
+          this.h = rnd(60, 200);
+          this.speedY = rnd(0.8, 2.2);
+          this.wobble = rnd(0, Math.PI * 2);
+          this.wobbleSpeed = rnd(0.015, 0.045);
+          this.life = rnd(0.3, 1);
+          this.decay = rnd(0.004, 0.01);
+          const hue = rnd(8, 38);
+          const sat = rnd(80, 100);
+          this.colorTop    = `hsla(${hue},${sat}%,55%,`;
+          this.colorBottom = `hsla(${hue + 15},${sat}%,35%,`;
         }
         update() {
           this.wobble += this.wobbleSpeed;
-          this.x += this.speedX + Math.sin(this.wobble) * 0.5;
+          this.x += Math.sin(this.wobble) * 1.2;
+          this.y -= this.speedY;
+          this.life -= this.decay;
+          if (this.life <= 0 || this.y + this.h < -20) this.reset(false);
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, this.life) * 0.28;
+          const grd = ctx.createLinearGradient(this.x, this.y + this.h, this.x, this.y);
+          grd.addColorStop(0, this.colorBottom + '0.9)');
+          grd.addColorStop(0.5, this.colorTop + '0.6)');
+          grd.addColorStop(1, 'hsla(55,100%,80%,0)');
+          ctx.beginPath();
+          ctx.moveTo(this.x - this.w / 2, this.y + this.h);
+          ctx.quadraticCurveTo(this.x + Math.sin(this.wobble) * 20, this.y + this.h * 0.4, this.x, this.y);
+          ctx.quadraticCurveTo(this.x + this.w / 3 + Math.sin(this.wobble + 1) * 15, this.y + this.h * 0.5, this.x + this.w / 2, this.y + this.h);
+          ctx.closePath();
+          ctx.fillStyle = grd;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      /* ── EMBER — bright glowing sparks ── */
+      class Ember {
+        constructor() { this.reset(true); }
+        reset(init) {
+          // Rise from bottom across full width, denser at center-bottom
+          const t = Math.random();
+          this.x = canvas.width * (0.15 + t * 0.7 + rnd(-0.1, 0.1));
+          this.y = init ? rnd(0, canvas.height) : canvas.height + rnd(0, 30);
+          this.size = rnd(1.2, 4.2);
+          this.speedY = rnd(0.9, 2.8);
+          this.speedX = rnd(-0.8, 0.8);
+          this.wobble = rnd(0, Math.PI * 2);
+          this.wobbleSpeed = rnd(0.02, 0.055);
+          this.life = 1;
+          this.decay = rnd(0.003, 0.008);
+          const hue = rnd(12, 45);
+          this.color = `hsl(${hue},95%,62%)`;
+          this.glow = this.size * 5;
+        }
+        update() {
+          this.wobble += this.wobbleSpeed;
+          this.x += this.speedX + Math.sin(this.wobble) * 0.7;
+          this.y -= this.speedY;
+          this.life -= this.decay;
+          if (this.life <= 0 || this.y < -20) this.reset(false);
+        }
+        draw() {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, this.life) * 0.9;
+          // Outer glow
+          const grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.glow);
+          grd.addColorStop(0, this.color);
+          grd.addColorStop(1, 'transparent');
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.glow, 0, Math.PI * 2);
+          ctx.fillStyle = grd;
+          ctx.fill();
+          // Core dot
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = '#fff8e0';
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      /* ── ASH FLAKE — greyscale irregular drifters ── */
+      class Ash {
+        constructor() { this.reset(true); }
+        reset(init) {
+          this.x = rnd(0, canvas.width);
+          this.y = init ? rnd(0, canvas.height) : canvas.height + rnd(0, 40);
+          this.size = rnd(2.5, 8);
+          this.speedY = rnd(0.25, 1.0);
+          this.speedX = rnd(-0.5, 0.5);
+          this.wobble = rnd(0, Math.PI * 2);
+          this.wobbleSpeed = rnd(0.008, 0.028);
+          this.rotation = rnd(0, Math.PI * 2);
+          this.rotSpeed = rnd(-0.03, 0.03);
+          this.life = 1;
+          this.decay = rnd(0.002, 0.005);
+          const l = rnd(50, 82);
+          this.color = `hsl(0,0%,${l}%)`;
+        }
+        update() {
+          this.wobble += this.wobbleSpeed;
+          this.x += this.speedX + Math.sin(this.wobble) * 0.6;
           this.y -= this.speedY;
           this.rotation += this.rotSpeed;
           this.life -= this.decay;
@@ -1032,45 +1143,43 @@
         }
         draw() {
           ctx.save();
-          ctx.globalAlpha = Math.max(0, this.life) * 0.85;
+          ctx.globalAlpha = Math.max(0, this.life) * 0.72;
           ctx.translate(this.x, this.y);
           ctx.rotate(this.rotation);
-
-          if (this.type === 'ember') {
-            // glowing dot
-            if (this.glowRadius > 0) {
-              const grd = ctx.createRadialGradient(0,0,0, 0,0,this.glowRadius);
-              grd.addColorStop(0, this.color);
-              grd.addColorStop(1, 'transparent');
-              ctx.beginPath();
-              ctx.arc(0, 0, this.glowRadius, 0, Math.PI*2);
-              ctx.fillStyle = grd;
-              ctx.fill();
-            }
-            ctx.beginPath();
-            ctx.arc(0, 0, this.size, 0, Math.PI*2);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-          } else {
-            // irregular ash flake
-            ctx.beginPath();
-            const s = this.size;
-            ctx.moveTo(-s*0.5, -s*0.3);
-            ctx.lineTo(s*0.4,  -s*0.5);
-            ctx.lineTo(s*0.6,   s*0.2);
-            ctx.lineTo(-s*0.2,  s*0.5);
-            ctx.closePath();
-            ctx.fillStyle = this.color;
-            ctx.fill();
-          }
+          const s = this.size;
+          ctx.beginPath();
+          ctx.moveTo(-s * 0.5, -s * 0.3);
+          ctx.lineTo(s * 0.4,  -s * 0.55);
+          ctx.lineTo(s * 0.65,  s * 0.2);
+          ctx.lineTo(s * 0.1,   s * 0.5);
+          ctx.lineTo(-s * 0.45, s * 0.35);
+          ctx.closePath();
+          ctx.fillStyle = this.color;
+          ctx.fill();
           ctx.restore();
         }
       }
 
-      for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+      /* ── Populate ── */
+      for (let i = 0; i < FLAME_COUNT; i++) particles.push(new Flame());
+      for (let i = 0; i < EMBER_COUNT; i++) particles.push(new Ember());
+      for (let i = 0; i < ASH_COUNT;   i++) particles.push(new Ash());
+
+      /* ── Bottom glow bar (static, drawn each frame) ── */
+      function drawBaseGlow() {
+        const h = canvas.height;
+        const w = canvas.width;
+        const grd = ctx.createLinearGradient(0, h * 0.65, 0, h);
+        grd.addColorStop(0, 'rgba(200,80,10,0)');
+        grd.addColorStop(0.6, 'rgba(200,80,10,0.12)');
+        grd.addColorStop(1, 'rgba(240,100,10,0.22)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, h * 0.65, w, h * 0.35);
+      }
 
       function loop() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBaseGlow();
         for (const p of particles) { p.update(); p.draw(); }
         requestAnimationFrame(loop);
       }
@@ -1143,6 +1252,39 @@
       }
       loop();
     })();
+    // --- HERO FADE CAROUSEL (TUTORIAL / AUTOMATE / CREATE)
+    const subSlides = document.querySelectorAll('.hero__sub-slide');
+    let currentSub = 0;
+    setInterval(() => {
+      subSlides[currentSub].classList.remove('active');
+      currentSub = (currentSub + 1) % subSlides.length;
+      subSlides[currentSub].classList.add('active');
+    }, 2800);
+
+    // --- TYPING + ASKING EFFECT (around hero photo)
+    const phrases = [
+      "❓ Need an automated inventory system?",
+      "⚡ Automate Excel tasks in minutes?",
+      "📦 Track expiry & sales effortlessly?",
+      "🎯 Master VBA and Macros with me."
+    ];
+    let phraseIndex = 0, charIndex = 0, isDeleting = false;
+    const askingBox = document.getElementById("askingBox");
+    function typeEffect() {
+      if (!askingBox) return;
+      let currentPhrase = phrases[phraseIndex];
+      if (isDeleting) {
+        askingBox.innerText = currentPhrase.substring(0, charIndex-1);
+        charIndex--;
+      } else {
+        askingBox.innerText = currentPhrase.substring(0, charIndex+1);
+        charIndex++;
+      }
+      if (!isDeleting && charIndex === currentPhrase.length) { isDeleting = true; setTimeout(typeEffect, 2000); return; }
+      if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex+1) % phrases.length; setTimeout(typeEffect, 400); return; }
+      setTimeout(typeEffect, isDeleting ? 45 : 65);
+    }
+    setTimeout(typeEffect, 600);
   </script>
 </body>
 </html>

@@ -257,7 +257,8 @@
 
     /* ── Hero subtitle carousel ── */
     .hero__sub-carousel {
-      position: relative; height: clamp(2.2rem, 5.5vw, 5.2rem);
+      position: relative;
+      height: clamp(3rem, 8vw, 5.8rem);
       overflow: hidden;
       opacity: 0;
       animation: heroFadeIn 0.8s 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
@@ -265,16 +266,32 @@
     .hero__sub-slide {
       position: absolute; inset: 0;
       font-family: 'Bebas Neue', cursive;
-      font-size: clamp(1.8rem, 5vw, 4.5rem);
+      font-size: clamp(2.2rem, 7vw, 4.8rem);
       letter-spacing: 0.3em;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.65);
       display: flex; align-items: center;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+      white-space: nowrap;
     }
     .hero__sub-slide.active { opacity: 1; transform: translateY(0); }
     .hero__sub-slide.exit   { opacity: 0; transform: translateY(-30px); }
+
+    @media (max-width: 1000px) {
+      .hero__sub-carousel {
+        height: clamp(2.8rem, 11vw, 4.5rem);
+        display: flex; align-items: center;
+      }
+      .hero__sub-slide {
+        font-size: clamp(2rem, 10vw, 3.8rem);
+        justify-content: center;
+      }
+    }
+    @media (max-width: 520px) {
+      .hero__sub-carousel { height: clamp(2.6rem, 13vw, 3.5rem); }
+      .hero__sub-slide { font-size: clamp(1.8rem, 11vw, 3rem); letter-spacing: 0.2em; }
+    }
 
     /* ── Hero photo ── */
     .hero__photo-wrap {
@@ -352,7 +369,73 @@
     .yt-embed-wrap { position: relative; width: 100%; aspect-ratio: 16/9; }
     .yt-embed-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
 
-    /* Footer */
+    /* ── Tricks carousel card styles ── */
+    .trick-card {
+      background: var(--navy);
+      border: 1px solid rgba(198,164,63,0.18);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .trick-card__video {
+      position: relative; width: 100%; aspect-ratio: 16/9;
+      background: #000;
+      overflow: hidden;
+    }
+    .trick-card__video iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+    .trick-card__body {
+      padding: 20px 24px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .trick-card__avatar {
+      flex-shrink: 0;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+      background: rgba(198,164,63,0.12);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .trick-card__avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .trick-card__avatar-fallback {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: var(--gold);
+    }
+    .trick-card__info { flex: 1; min-width: 0; }
+    .trick-card__title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700; font-size: 1.05rem;
+      color: var(--text-light);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .trick-card__meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .trick-card__tag {
+      background: rgba(198,164,63,0.12);
+      border: 1px solid rgba(198,164,63,0.25);
+      color: var(--gold);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    @media (max-width: 520px) {
+      .trick-card__body { padding: 14px 16px 18px; gap: 12px; }
+      .trick-card__avatar { width: 42px; height: 42px; }
+    }
     .footer-main { position: relative; background: var(--footer-bg); overflow: hidden; }
     #footerCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.4; }
     .footer-inner { position: relative; z-index: 1; }
@@ -480,10 +563,34 @@
   <!-- EXCEL TRICKS TUTORIALS CAROUSEL -->
   <section class="py-28 relative overflow-hidden" style="background-color: var(--card-bg);">
     <div class="container mx-auto px-6">
-      <div class="text-center reveal mb-4"><span style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,164,63,0.12);border:1px solid rgba(198,164,63,0.3);color:var(--gold);padding:0.35rem 1.4rem;border-radius:999px;font-size:0.72rem;font-weight:700;"><i class="fas fa-chalkboard-teacher"></i> &nbsp; Excel Tricks Tutorial</span><h2 class="text-3xl md:text-5xl font-heading mt-4 text-[var(--text-light)]">Learned from Scratch.</h2><div class="section-line mx-auto mt-4"></div></div>
-      <div class="text-center reveal mb-14"><p style="color:var(--text-muted);">I share Excel Tricks Tutorial to simplify complex tasks, boost productivity, and empower users.</p></div>
-      <div class="yt-section-inner reveal" style="max-width:960px;margin:0 auto;"><div class="swiper yt-swiper-inventory" style="border-radius:1.5rem;overflow:hidden;"><div class="swiper-wrapper"><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/ZYT1mVjmKys?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/Oi5_Ltt66yw?" allowfullscreen></iframe></div></div><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/r799_FGhe3w?" allowfullscreen></iframe></div></div><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/hVmBdmowE_s?" allowfullscreen></iframe></div></div><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/WSsGXJoMOq8?" allowfullscreen></iframe></div></div><div class="swiper-slide"><div class="yt-embed-wrap"><iframe src="https://www.youtube.com/embed/OJ6yc0a_xKU?" allowfullscreen></iframe></div></div></div><div class="yt-inv-prev swiper-button-prev"></div><div class="yt-inv-next swiper-button-next"></div><div class="swiper-pagination yt-inv-pagination"></div></div></div>
-      <div class="text-center mt-10 reveal"><a href="https://www.youtube.com/@KurtCreates1994" target="_blank" class="btn-primary"><i class="fab fa-youtube"></i> &nbsp; Subscribe on YouTube</a></div>
+      <div class="text-center reveal mb-4">
+        <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,164,63,0.12);border:1px solid rgba(198,164,63,0.3);color:var(--gold);padding:0.35rem 1.4rem;border-radius:999px;font-size:0.72rem;font-weight:700;">
+          <i class="fas fa-chalkboard-teacher"></i> &nbsp; Excel Tricks Tutorial
+        </span>
+        <h2 class="text-3xl md:text-5xl font-heading mt-4 text-[var(--text-light)]">Learned from Scratch.</h2>
+        <div class="section-line mx-auto mt-4"></div>
+      </div>
+      <div class="text-center reveal mb-14">
+        <p style="color:var(--text-muted);">I share Excel Tricks Tutorials to simplify complex tasks, boost productivity, and empower users.</p>
+      </div>
+
+      <!-- Swiper carousel -->
+      <div class="yt-tricks-outer reveal" style="max-width:960px;margin:0 auto;position:relative;">
+        <div class="swiper yt-swiper-tricks" style="border-radius:1.5rem;overflow:hidden;padding-bottom:52px;">
+          <div class="swiper-wrapper" id="tricks-swiper-wrapper">
+            <!-- Slides injected by JS -->
+          </div>
+          <div class="yt-tricks-prev swiper-button-prev"></div>
+          <div class="yt-tricks-next swiper-button-next"></div>
+          <div class="swiper-pagination yt-tricks-pagination"></div>
+        </div>
+      </div>
+
+      <div class="text-center mt-10 reveal">
+        <a href="https://www.youtube.com/@KurtCreates1994" target="_blank" class="btn-primary">
+          <i class="fab fa-youtube"></i> &nbsp; Subscribe on YouTube
+        </a>
+      </div>
     </div>
   </section>
 
@@ -527,7 +634,13 @@
     // Hero subtitle carousel
     const subSlides = document.querySelectorAll('.hero__sub-slide');
     let curSub = 0;
-    setInterval(() => { subSlides[curSub].classList.remove('active'); curSub = (curSub+1)%subSlides.length; subSlides[curSub].classList.add('active'); }, 2800);
+    setInterval(() => {
+      subSlides[curSub].classList.add('exit');
+      subSlides[curSub].classList.remove('active');
+      setTimeout(() => { subSlides[curSub].classList.remove('exit'); }, 700);
+      curSub = (curSub + 1) % subSlides.length;
+      subSlides[curSub].classList.add('active');
+    }, 2800);
 
     // Typing effect
     const phrases = ["❓ Need an automated inventory system?", "⚡ Automate Excel tasks in minutes?", "📦 Track expiry & sales effortlessly?", "🎯 Master VBA and Macros with me."];
@@ -542,6 +655,73 @@
       setTimeout(typeEffect, del ? 45 : 65);
     }
     setTimeout(typeEffect, 600);
+
+    // ─────────────────────────────────────────────────
+    // EXCEL TRICKS — Add / remove entries here easily
+    // Fields: youtubeId, title, tag, avatar (path or URL; leave blank for icon fallback)
+    // ─────────────────────────────────────────────────
+    const excelTricks = [
+      { youtubeId: 'ZYT1mVjmKys', title: 'MACRO AUTOMATED DATA ENTRY',       tag: 'Macros',       avatar: 'new1.png' },
+      { youtubeId: 'Oi5_Ltt66yw', title: 'SUMIFS & XLOOKUP FUNCTION',    tag: 'Modern Formulas',     avatar: 'new1.png' },
+      { youtubeId: 'r799_FGhe3w', title: 'SUMIFS MULTIPLE CRITERIA',         tag: 'Conditional Logic',  avatar: 'new1.png' },
+      { youtubeId: 'hVmBdmowE_s', title: 'DYNAMIC INVOICE USING FILTER FUNCTION',             tag: 'Filtering',    avatar: 'new1.png' },
+      { youtubeId: 'WSsGXJoMOq8', title: 'AUTOFILTER USING SEARCHBOX',  tag: 'VBA & Macros', avatar: 'Filtering' },
+      { youtubeId: 'OJ6yc0a_xKU', title: 'SIMPLE SHIPPING TRACKER WITH CHECKBOXES',             tag: 'Macros',   avatar: 'new1.png' },
+      { youtubeId: '3tS-lB-fSuA', title: 'SUMMARIZING MULTIPLE SHEETS INTO ONE PIVOT TABLE',             tag: 'PowerPivot',   avatar: 'new1.png' },
+      { youtubeId: 'x1_IC28Bdqo', title: 'DYNAMIC INVENTORY MANAGEMENT',             tag: 'VBA',   avatar: 'new1.png' },
+    ];
+
+    // Build slides
+    const trickWrapper = document.getElementById('tricks-swiper-wrapper');
+    if (trickWrapper) {
+      excelTricks.forEach(v => {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `
+          <div class="trick-card">
+            <div class="trick-card__video">
+              <iframe src="https://www.youtube.com/embed/${v.youtubeId}?rel=0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="trick-card__body">
+              <div class="trick-card__avatar">
+                ${v.avatar
+                  ? `<img src="${v.avatar}" alt="Kurt" onerror="this.parentNode.innerHTML='<div class=\\'trick-card__avatar-fallback\\'><i class=\\'fas fa-user\\'></i></div>'">`
+                  : `<div class="trick-card__avatar-fallback"><i class="fas fa-user"></i></div>`
+                }
+              </div>
+              <div class="trick-card__info">
+                <div class="trick-card__title">${v.title}</div>
+                <div class="trick-card__meta">
+                  <span>Kurt Creates</span>
+                  <span class="trick-card__tag">${v.tag}</span>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        trickWrapper.appendChild(slide);
+      });
+    }
+
+    // Initialize Swiper for tricks carousel
+    new Swiper('.yt-swiper-tricks', {
+      loop: true,
+      effect: 'slide',
+      autoplay: { delay: 7000, disableOnInteraction: false },
+      navigation: { nextEl: '.yt-tricks-next', prevEl: '.yt-tricks-prev' },
+      pagination: {
+        el: '.yt-tricks-pagination', clickable: true,
+        renderBullet: (i, cls) => `<span class="${cls}" style="background:var(--gold);width:8px;height:8px;margin:0 6px;"></span>`
+      },
+      on: {
+        slideChange() {
+          document.querySelectorAll('.yt-swiper-tricks iframe').forEach(f => {
+            const s = f.src; f.src = ''; f.src = s;
+          });
+        }
+      }
+    });
 
     // Initialize Swiper for inventory tutorials
     new Swiper('.yt-swiper-inventory', { loop: true, effect: 'fade', fadeEffect: { crossFade: true }, autoplay: { delay: 7000, disableOnInteraction: false }, navigation: { nextEl: '.yt-inv-next', prevEl: '.yt-inv-prev' }, pagination: { el: '.yt-inv-pagination', clickable: true, renderBullet: (i,cls) => `<span class="${cls}" style="background:var(--gold);width:8px;height:8px;margin:0 6px;"></span>` }, on: { slideChange() { document.querySelectorAll('.yt-swiper-inventory iframe').forEach(f => { const src = f.src; f.src = ''; f.src = src; }); } } });
